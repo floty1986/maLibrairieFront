@@ -16,16 +16,18 @@ public class beanLogin implements Serializable {
     }
     
     public boolean check( String email, String password) throws SQLException {
-        
+        Client c = cDAO.selectLogin(email);
+        if(c==null)return false;               
         if( email==null) return false;
         if( password==null) return false;
         if( email.trim().isEmpty()) return false;
         if( password.trim().isEmpty()) return false;
         
-        Client c = cDAO.selectLogin(email);
+        if( email.equals(c.getEmail()))
             if( password.equals(c.getMotDePasse()))
                 return true;
-        
+                       
+
         return false;
     }
     
