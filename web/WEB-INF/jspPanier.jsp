@@ -7,6 +7,6 @@
     </head>
     <body>
         <h1>Hello Panier!</h1>
-        <a href="jspLivraison.jsp">Valider panier</a>
-    </body>
+    <a href="jspLivraison.jsp">Valider panier</a>
+</body>
 </html>
