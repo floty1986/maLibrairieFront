@@ -17,7 +17,7 @@ public class controller extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        
+          
         String pageJSP = "/WEB-INF/jspLogin.jsp";        
         String section = request.getParameter("section");
         
