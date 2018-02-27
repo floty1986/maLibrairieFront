@@ -10,11 +10,11 @@ import java.util.List;
 import javax.naming.NamingException;
 import obj.Ouvrage;
 
-public class CatalogueDAO implements Serializable {
+public class OuvrageDAO implements Serializable {
 
     private MaConnexion mc;
 
-    public CatalogueDAO() throws NamingException {
+    public OuvrageDAO() throws NamingException {
         mc = new MaConnexion();
     }
 
