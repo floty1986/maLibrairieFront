@@ -1,4 +1,4 @@
-package beans;
+package obj;
 
 import java.io.Serializable;
 import java.util.Date;
