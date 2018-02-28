@@ -8,6 +8,8 @@
     </head>
     <body>
         <h1>Hello Accueil!</h1>
+        
+        
         <jsp:include page="/controller?section=login" flush="true"/>
         
         
