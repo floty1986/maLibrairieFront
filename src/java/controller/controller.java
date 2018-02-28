@@ -1,12 +1,11 @@
 package controller;
 
-import accesBDD.ClientDAO;
 import beans.beanLogin;
-import beans.beanPanier;
+//import beans.beanPanier;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.HashMap;
+import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import obj.Client;
+import obj.Ouvrage;
+import traitements.GestionOuvrages;
 
 @WebServlet(name = "controller", urlPatterns = {"/controller"})
 public class controller extends HttpServlet {
@@ -37,11 +37,22 @@ public class controller extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
 
-//         String pageJSP = "/WEB-INF/jspLogin.jsp";
-        String pageJSP = "/WEB-INF/jspPanier.jsp";
-//        String pageJSP = "/WEB-INF/jspMain.jsp";
-        String section = request.getParameter("section");
 
+//         String pageJSP = "/WEB-INF/jspLogin.jsp";
+//        String pageJSP = "/WEB-INF/jspPanier.jsp";
+        String pageJSP = "/WEB-INF/jspMain.jsp";
+
+        String section = request.getParameter("section");
+          if(getServletContext().getAttribute("gestionOuvrages") == null){
+                try {
+                    getServletContext().setAttribute("gestionOuvrages", new GestionOuvrages());
+                } catch (NamingException ex) {
+                    ex.printStackTrace();
+                    
+                }
+            }
+            GestionOuvrages gestionOuvrages = (GestionOuvrages) getServletContext().getAttribute("gestionOuvrages");
+           
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
 
@@ -92,37 +103,37 @@ public class controller extends HttpServlet {
             }
 
             ////////////////////////////////////////////////////////////////////////////////////
-            if ("panier".equals(request.getParameter("section"))) {
-                beanPanier monPanier
-                        = (beanPanier) session.getAttribute("monPanier");
-                if (monPanier == null) {
-                    monPanier = new beanPanier();
-                    session.setAttribute("monPanier", monPanier);
-                }
-                if (request.getParameter("add") != null) {
-                    monPanier.add(request.getParameter("add"));
-                }
-                if (request.getParameter("dec") != null) {
-                    monPanier.dec(request.getParameter("dec"));
-                }
-                if (request.getParameter("del") != null) {
-                    monPanier.del(request.getParameter("del"));
-                }
-                if (request.getParameter("clear") != null) {
-                    monPanier.clear();
-                }
-            }
-            if ("affichePanier".equals(request.getParameter("section"))) {
-                pageJSP = "/WEB-INF/jspPanier.jsp";
-                beanPanier monPanier
-                        = (beanPanier) session.getAttribute("monPanier");
-                if (monPanier == null) {
-                    monPanier = new beanPanier();
-                    session.setAttribute("monPanier", monPanier);
-                }
-                request.setAttribute("panierVide", monPanier.isEmpty());
-                request.setAttribute("list", monPanier.list());
-            }
+//            if ("panier".equals(request.getParameter("section"))) {
+//                beanPanier monPanier
+//                        = (beanPanier) session.getAttribute("monPanier");
+//                if (monPanier == null) {
+//                    monPanier = new beanPanier();
+//                    session.setAttribute("monPanier", monPanier);
+//                }
+//                if (request.getParameter("add") != null) {
+//                    monPanier.add(request.getParameter("add"));
+//                }
+//                if (request.getParameter("dec") != null) {
+//                    monPanier.dec(request.getParameter("dec"));
+//                }
+//                if (request.getParameter("del") != null) {
+//                    monPanier.del(request.getParameter("del"));
+//                }
+//                if (request.getParameter("clear") != null) {
+//                    monPanier.clear();
+//                }
+//            }
+//            if ("affichePanier".equals(request.getParameter("section"))) {
+//                pageJSP = "/WEB-INF/jspPanier.jsp";
+//                beanPanier monPanier
+//                        = (beanPanier) session.getAttribute("monPanier");
+//                if (monPanier == null) {
+//                    monPanier = new beanPanier();
+//                    session.setAttribute("monPanier", monPanier);
+//                }
+//                request.setAttribute("panierVide", monPanier.isEmpty());
+//                request.setAttribute("list", monPanier.list());
+//            }
 
             ////////////////////////////////////////////////////////////////////////////////////
             Cookie c = getCookie(request.getCookies(), "login");
@@ -147,7 +158,21 @@ public class controller extends HttpServlet {
                 }
             }
         }
-
+        if ("catalogue".equals(section)) {
+            
+           try {
+                HashMap<String, List<Ouvrage>> mo = gestionOuvrages.findOuvrages();
+                List<String> clefs = gestionOuvrages.getCleDefaut();
+                request.setAttribute("mapOuvrages", mo);
+                request.setAttribute("clefs", clefs);
+                pageJSP = "/WEB-INF/catalogue.jsp";
+            } 
+            catch (SQLException ex) {
+                ex.printStackTrace();
+                
+            }          
+            
+        }
         pageJSP = response.encodeURL(pageJSP);
         getServletContext().getRequestDispatcher(pageJSP).include(request, response);
 

@@ -1,4 +1,4 @@
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,6 +15,9 @@
             Mot de passe : <input type='password' name='password' /><br>
             <input type='submit' name='doIt' value='Ok' />
         </form>
+        
+        <c:url value="controller?section=catalogue" var="url02" />
+        <a href="${url02}">Catalogue</a>
           
         
     </body>

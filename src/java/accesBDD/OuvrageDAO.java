@@ -19,7 +19,7 @@ public class OuvrageDAO implements Serializable {
     }
 
     public List<Ouvrage> selectAllOuvrages() throws SQLException {
-        String req = "SELECT idOuvrage, titre FROM Ouvrage ORDER BY Ouvrage;";
+        String req = "SELECT idOuvrage, titre FROM ouvrage  ORDER BY titre";
         Connection cnt = mc.getConnection();
         java.sql.Statement stm = cnt.createStatement();
         List<Ouvrage> lo = new ArrayList<>();
@@ -39,7 +39,7 @@ public class OuvrageDAO implements Serializable {
     }
 
     public Ouvrage selectOuvrageById(int idOuvrage) throws SQLException {
-        String req = "SELECT idOuvrage, titre FROM Ouvrage where idOuvrage = ? ORDER BY titre;";
+        String req = "SELECT idOuvrage, titre FROM Ouvrage where idOuvrage = ? ORDER BY titre";
 
         Ouvrage o = null;
         try (Connection cnt = mc.getConnection();

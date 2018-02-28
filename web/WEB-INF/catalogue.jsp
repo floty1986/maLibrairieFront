@@ -8,7 +8,8 @@
     </head>
     <body>
         <h1>CATALOGUE</h1>
-        
+       
+
          <c:forEach items="${clefs}" var="c" >
             <h1>${c}</h1>
             <ul>
@@ -19,6 +20,6 @@
                 </c:forEach>
             </ul>
         </c:forEach>
-        
+       
     </body>
 </html>
