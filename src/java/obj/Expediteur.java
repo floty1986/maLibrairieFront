@@ -30,7 +30,7 @@ public class Expediteur {
 
     @Override
     public String toString() {
-        return "Expediteur{" + "idExpediteur=" + idExpediteur + ", nom=" + nom + '}';
+        return nom;
     }
     
 }

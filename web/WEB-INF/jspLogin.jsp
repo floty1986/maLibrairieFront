@@ -18,7 +18,6 @@
         
         <c:url value="controller?section=catalogue" var="url02" />
         <a href="${url02}">Catalogue</a>
-          
         
     </body>
 </html>

@@ -29,7 +29,6 @@ public class ExpediteurDAO {
             while (rs.next()) {
                 int id = rs.getInt("idExpediteur");
                 String nom = rs.getString("nom");
-               
                 Expediteur ex = new Expediteur(id, nom);
                 le.add(ex);
             }

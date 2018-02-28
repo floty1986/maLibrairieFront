@@ -1,11 +1,15 @@
 package controller;
 
+import beans.beanExpediteur;
 import beans.beanLogin;
+import beans.beanPanier;
 //import beans.beanPanier;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +18,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import obj.Expediteur;
+import obj.LigneCommande;
 import obj.Ouvrage;
 import traitements.GestionOuvrages;
 
@@ -37,22 +43,43 @@ public class controller extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
 
-
 //         String pageJSP = "/WEB-INF/jspLogin.jsp";
 //        String pageJSP = "/WEB-INF/jspPanier.jsp";
         String pageJSP = "/WEB-INF/jspMain.jsp";
-
         String section = request.getParameter("section");
-          if(getServletContext().getAttribute("gestionOuvrages") == null){
-                try {
-                    getServletContext().setAttribute("gestionOuvrages", new GestionOuvrages());
-                } catch (NamingException ex) {
-                    ex.printStackTrace();
-                    
-                }
+
+        if (getServletContext().getAttribute("gestionOuvrages") == null) {
+            try {
+                getServletContext().setAttribute("gestionOuvrages", new GestionOuvrages());
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+
             }
-            GestionOuvrages gestionOuvrages = (GestionOuvrages) getServletContext().getAttribute("gestionOuvrages");
-           
+        }
+        GestionOuvrages gestionOuvrages = (GestionOuvrages) getServletContext().getAttribute("gestionOuvrages");
+
+        if (getServletContext().getAttribute("beanExpediteur") == null) {
+            try {
+                getServletContext().setAttribute("beanExpediteur", new beanExpediteur());
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+
+                //to do
+            }
+        }
+        beanExpediteur beanEx = (beanExpediteur) getServletContext().getAttribute("beanExpediteur");
+
+        if (getServletContext().getAttribute("beanPanier") == null) {
+            try {
+                getServletContext().setAttribute("beanPanier", new beanPanier());
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+
+            }
+        }
+
+        beanPanier beanPa = (beanPanier) getServletContext().getAttribute("beanPanier");
+
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
 
@@ -134,7 +161,6 @@ public class controller extends HttpServlet {
 //                request.setAttribute("panierVide", monPanier.isEmpty());
 //                request.setAttribute("list", monPanier.list());
 //            }
-
             ////////////////////////////////////////////////////////////////////////////////////
             Cookie c = getCookie(request.getCookies(), "login");
             if (c != null) {
@@ -159,19 +185,47 @@ public class controller extends HttpServlet {
             }
         }
         if ("catalogue".equals(section)) {
-            
-           try {
+
+            try {
                 HashMap<String, List<Ouvrage>> mo = gestionOuvrages.findOuvrages();
                 List<String> clefs = gestionOuvrages.getCleDefaut();
                 request.setAttribute("mapOuvrages", mo);
                 request.setAttribute("clefs", clefs);
                 pageJSP = "/WEB-INF/catalogue.jsp";
-            } 
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
-                
-            }          
+
+            }
+
+        }
+if ("jspPanier".equals(section)) {
+                try {
+                    HashMap<String, List<LigneCommande>> mlc = beanPa.findCommande();
+                    List<String> clefs = beanPa.getLC();
+                    request.setAttribute("mapPanier", mlc);
+                    request.setAttribute("clefs", clefs);
+                    pageJSP = "/WEB-INF/jspPanier.jsp";
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+
+            }
+
+
+        if ("jspLivraison".equals(section)) {
+
+            try {
+                HashMap<String, List<Expediteur>> me = beanEx.findExpediteur();
+                List<String> tables = beanEx.getDefaultTable();
+                request.setAttribute("mapExpediteur", me);
+                request.setAttribute("tables", tables);
+                pageJSP = "/WEB-INF/jspLivraison.jsp";
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+
             
+
         }
         pageJSP = response.encodeURL(pageJSP);
         getServletContext().getRequestDispatcher(pageJSP).include(request, response);
