@@ -37,7 +37,7 @@
             Non:<input type="radio" name="adrFacturation" value="non" /><br>
             <br>
             <input type="submit" value="Continuer" name="doIt" />
-        
+            
         
         </form>
     
