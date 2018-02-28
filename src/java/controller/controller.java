@@ -198,7 +198,7 @@ public class controller extends HttpServlet {
             }
 
         }
-if ("jspPanier".equals(section)) {
+        if ("jspPanier".equals(section)) {
                 try {
                     HashMap<String, List<LigneCommande>> mlc = beanPa.findCommande();
                     List<String> clefs = beanPa.getLC();
