@@ -16,6 +16,7 @@ public class Ouvrage {
     private String statut;
     private String theme;
     private String sousTheme;
+    private int qteSelection;
 
     public Ouvrage() {
     }
@@ -144,4 +145,7 @@ public class Ouvrage {
         return "ID : " + idOuvrage + ", titre : " + titre;
     }
     
+    public void changeQty( int qty) {
+        this.qteSelection+= qty;
+    }
 }
