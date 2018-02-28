@@ -20,6 +20,6 @@
                 </c:forEach>
             </ul>
         </c:forEach>
-       
+       <div class="vr_catalogue">PANIER EN CONSTRUCTION....</div>
     </body>
 </html>
