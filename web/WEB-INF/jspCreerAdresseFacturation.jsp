@@ -9,7 +9,7 @@
     <body>
         <h1>Entrez une adresse de facturation</h1>
     
-        <form action="controller" method="POST">
+        <form action="controller?section=....." method="POST">
             Nom:<input type="text" name="nom" value="" /><br>
             <br>
             Prenom:<input type="text" name="prenom" value="" /><br>
