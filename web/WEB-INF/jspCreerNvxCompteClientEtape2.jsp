@@ -15,17 +15,17 @@
             <br>
             Prenom:<input type="text" name="prenom" value="" /><br>
             <br>
-            Adresse ligne 1:<input type="text" name="adresseLigne1" value="" /><br>
+            Numero de voie:<input type="text" name="numVoie" value="" /><br>
             <br>
-            Adresse ligne 2:<input type="text" name="adresseLigne1" value="" /><br>
+            Type de voie:<input type="text" name="typeVoie" value="" /><br>
+            <br>
+            Nom de la voie:<input type="text" name="nomVoie" value="" /><br>
             <br>
             ville: <input type="text" name="ville" value="" /><br>
-            <br>
-            Etat/Region/Canton (si approprié):<input type="text" name="etatRegionCanton" value="" /><br>
-            <br>
+            <br>           
             Code postal:<input type="text" name="codePostal" value="" /><br>
             <br>
-            Pays ou DOM-TOM:<input type="text" name="paysDomTom" value="" /><br>
+            Pays:<input type="text" name="pays" value="" /><br>
             <br>
             Numero de téléphone:<input type="text" name="numTel" value="" /><br>
             <br>

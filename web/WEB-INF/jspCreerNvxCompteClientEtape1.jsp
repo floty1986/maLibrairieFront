@@ -14,6 +14,8 @@
             <br>
             Votre prenom: <input type="text" name="prenom" value="" /><br>
             <br>
+            date de naissance:<input type="text" name="dateNaissance" value="" /><br>
+            <br>
             E-mail: <input type="text" name="email" value="" /><br>
             <br>
             Mot de Passe: <input type="text" name="motDePasse" value="" /><br>
