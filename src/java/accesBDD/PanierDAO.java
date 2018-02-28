@@ -12,7 +12,7 @@ public class PanierDAO implements Serializable {
 
     private MaConnexion mc;
 
-    public PanierDAO(MaConnexion mc) throws NamingException {
+    public PanierDAO() throws NamingException {
         mc = new MaConnexion();
     }
 

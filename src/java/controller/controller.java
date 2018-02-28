@@ -1,9 +1,8 @@
-
 package controller;
-
 
 import accesBDD.ClientDAO;
 import beans.beanLogin;
+import beans.beanPanier;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -20,7 +19,7 @@ import obj.Client;
 
 @WebServlet(name = "controller", urlPatterns = {"/controller"})
 public class controller extends HttpServlet {
-    
+
     private Cookie getCookie(Cookie[] cookies, String name) {
         if (cookies != null) {
             for (Cookie c : cookies) {
@@ -32,36 +31,36 @@ public class controller extends HttpServlet {
         return null;
     }
 
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
-        
+
 //         String pageJSP = "/WEB-INF/jspLogin.jsp";
-        String pageJSP = "/WEB-INF/jspMain.jsp";
+        String pageJSP = "/WEB-INF/jspPanier.jsp";
+//        String pageJSP = "/WEB-INF/jspMain.jsp";
         String section = request.getParameter("section");
 
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
 
             if (request.getParameter("doIt") != null) {
-                
-                    beanLogin bLogin = (beanLogin) session.getAttribute("beanLogin");
-                    if (bLogin == null) {
-                        try {
-                            bLogin = new beanLogin();
-                        } catch (NamingException ex) {
-                            ex.printStackTrace();
-                        }
-                        session.setAttribute("beanLogin", bLogin);
+
+                beanLogin bLogin = (beanLogin) session.getAttribute("beanLogin");
+                if (bLogin == null) {
+                    try {
+                        bLogin = new beanLogin();
+                    } catch (NamingException ex) {
+                        ex.printStackTrace();
                     }
+                    session.setAttribute("beanLogin", bLogin);
+                }
                 try {
-                    
+
                     if (bLogin.check(request.getParameter("login"),
                             request.getParameter("password"))) {
-                        
+
                         pageJSP = "/WEB-INF/jspWelcome.jsp";
                         request.setAttribute("welcome", request.getParameter("login"));
                         Cookie c = new Cookie("login", request.getParameter("login"));
@@ -72,7 +71,7 @@ public class controller extends HttpServlet {
                     } else {
                         pageJSP = "/WEB-INF/jspLoginError.jsp";
                         request.setAttribute("login", request.getParameter("login"));
-                        request.setAttribute("msg", "Erreur login/Mot de passe !!!");                       
+                        request.setAttribute("msg", "Erreur login/Mot de passe !!!");
                         Cookie c = getCookie(request.getCookies(), "try");
                         if (c == null) {
                             c = new Cookie("try", "*");
@@ -90,9 +89,42 @@ public class controller extends HttpServlet {
                     ex.printStackTrace();
                 }
 
-                
             }
 
+            ////////////////////////////////////////////////////////////////////////////////////
+            if ("panier".equals(request.getParameter("section"))) {
+                beanPanier monPanier
+                        = (beanPanier) session.getAttribute("monPanier");
+                if (monPanier == null) {
+                    monPanier = new beanPanier();
+                    session.setAttribute("monPanier", monPanier);
+                }
+                if (request.getParameter("add") != null) {
+                    monPanier.add(request.getParameter("add"));
+                }
+                if (request.getParameter("dec") != null) {
+                    monPanier.dec(request.getParameter("dec"));
+                }
+                if (request.getParameter("del") != null) {
+                    monPanier.del(request.getParameter("del"));
+                }
+                if (request.getParameter("clear") != null) {
+                    monPanier.clear();
+                }
+            }
+            if ("affichePanier".equals(request.getParameter("section"))) {
+                pageJSP = "/WEB-INF/jspPanier.jsp";
+                beanPanier monPanier
+                        = (beanPanier) session.getAttribute("monPanier");
+                if (monPanier == null) {
+                    monPanier = new beanPanier();
+                    session.setAttribute("monPanier", monPanier);
+                }
+                request.setAttribute("panierVide", monPanier.isEmpty());
+                request.setAttribute("list", monPanier.list());
+            }
+
+            ////////////////////////////////////////////////////////////////////////////////////
             Cookie c = getCookie(request.getCookies(), "login");
             if (c != null) {
                 pageJSP = "/WEB-INF/jspWelcome.jsp";
