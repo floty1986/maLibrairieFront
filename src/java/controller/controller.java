@@ -6,6 +6,8 @@ import accesBDD.ClientDAO;
 import beans.beanLogin;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -17,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import obj.Client;
+import obj.Ouvrage;
+import traitements.GestionOuvrages;
 
 @WebServlet(name = "controller", urlPatterns = {"/controller"})
 public class controller extends HttpServlet {
@@ -38,25 +42,32 @@ public class controller extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
-        
-//         String pageJSP = "/WEB-INF/jspLogin.jsp";
-        String pageJSP = "/WEB-INF/jspMain.jsp";
+        String pageJSP = "/WEB-INF/jspLogin.jsp";
         String section = request.getParameter("section");
-
+          if(getServletContext().getAttribute("gestionOuvrages") == null){
+                try {
+                    getServletContext().setAttribute("gestionOuvrages", new GestionOuvrages());
+                } catch (NamingException ex) {
+                    ex.printStackTrace();
+                    
+                }
+            }
+            GestionOuvrages gestionOuvrages = (GestionOuvrages) getServletContext().getAttribute("gestionOuvrages");
+           
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
 
             if (request.getParameter("doIt") != null) {
                 
-                    beanLogin bLogin = (beanLogin) session.getAttribute("beanLogin");
-                    if (bLogin == null) {
-                        try {
-                            bLogin = new beanLogin();
-                        } catch (NamingException ex) {
-                            ex.printStackTrace();
-                        }
-                        session.setAttribute("beanLogin", bLogin);
+                beanLogin bLogin = (beanLogin) session.getAttribute("beanLogin");
+                if (bLogin == null) {
+                    try {
+                        bLogin = new beanLogin();
+                    } catch (NamingException ex) {
+                        ex.printStackTrace();
                     }
+                    session.setAttribute("beanLogin", bLogin);
+                }
                 try {
                     
                     if (bLogin.check(request.getParameter("login"),
@@ -89,7 +100,7 @@ public class controller extends HttpServlet {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-
+                
                 
             }
 
@@ -115,7 +126,21 @@ public class controller extends HttpServlet {
                 }
             }
         }
-
+        if ("catalogue".equals(section)) {
+            
+           try {
+                HashMap<String, List<Ouvrage>> mo = gestionOuvrages.findOuvrages();
+                List<String> clefs = gestionOuvrages.getCleDefaut();
+                request.setAttribute("mapOuvrages", mo);
+                request.setAttribute("clefs", clefs);
+                pageJSP = "/WEB-INF/catalogue.jsp";
+            } 
+            catch (SQLException ex) {
+                ex.printStackTrace();
+                
+            }          
+            
+        }
         pageJSP = response.encodeURL(pageJSP);
         getServletContext().getRequestDispatcher(pageJSP).include(request, response);
 
