@@ -34,62 +34,62 @@ public class controller extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
 
-//         String pageJSP = "/WEB-INF/jspLogin.jsp";
-        String pageJSP = "/WEB-INF/jspMain.jsp";
+        String pageJSP = "/WEB-INF/jspHome.jsp";
         String section = request.getParameter("section");
+
+        if (getServletContext().getAttribute("beanLogin") == null) {
+            try {
+                getServletContext().setAttribute("beanLogin", new beanLogin());
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+
+            }
+        }
+        beanLogin bLogin = (beanLogin) getServletContext().getAttribute("beanLogin");
+        
 
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
 
             if (request.getParameter("doIt") != null) {
                 try {
-                    beanLogin bLogin = (beanLogin) session.getAttribute("beanLogin");
-                    if (bLogin == null) {
-
-                        bLogin = new beanLogin();
-
-                        session.setAttribute("beanLogin", bLogin);
-                        System.out.println("testAvantCo");
-                    }
-
                     if (bLogin.check(request.getParameter("login"), request.getParameter("password"))) {
-                        System.out.println("testCO");
                         pageJSP = "/WEB-INF/jspWelcome.jsp";
-                        request.setAttribute("welcome", request.getParameter("login"));
-                        Cookie c = new Cookie("login", request.getParameter("login"));
+                        String login = request.getParameter("login");
+                        request.setAttribute("welcome", login);
+                        Cookie c = new Cookie("login", login);                    
                         response.addCookie(c);
-                        System.out.println("testcookie");
                         c = new Cookie("try", "");
                         c.setMaxAge(0);
                         response.addCookie(c);
-                        
+
                     } else {
-                        
+
                         pageJSP = "/WEB-INF/jspLogin.jsp";
                         request.setAttribute("login", request.getParameter("login"));
                         request.setAttribute("msg", "Erreur login/Mot de passe !!!");
                         Cookie c = getCookie(request.getCookies(), "try");
-                        
                         if (c == null) {
                             c = new Cookie("try", "*");
-                            System.out.println("test");
                         } else {
                             c.setValue(c.getValue() + "*");
                         }
                         c.setMaxAge(90);
                         response.addCookie(c);
+                        
                         if (c.getValue().length() >= 3) {
                             pageJSP = "/WEB-INF/jspFatalError.jsp";
                             request.setAttribute("fatalError", "Trop de tentatives !!!");
                         }
                     }
-                    
-                    Cookie c = getCookie(request.getCookies(), "login");
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                Cookie c = getCookie(request.getCookies(), "login");
                 if (c != null) {
                     pageJSP = "/WEB-INF/jspWelcome.jsp";
                     request.setAttribute("welcome", c.getValue());
                 }
-
                 if (request.getParameter("deconnect") != null) {
                     pageJSP = "/WEB-INF/jspLogin.jsp";
                     request.setAttribute("login", c.getValue());
@@ -97,7 +97,6 @@ public class controller extends HttpServlet {
                     cc.setMaxAge(0);
                     response.addCookie(cc);
                 }
-
                 c = getCookie(request.getCookies(), "try");
                 if (c != null) {
                     if (c.getValue().length() >= 3) {
@@ -106,17 +105,11 @@ public class controller extends HttpServlet {
                     }
                 }
 
-                } catch (NamingException | SQLException ex) {
-                    ex.printStackTrace();
-                }
-
             }
         }
 
         pageJSP = response.encodeURL(pageJSP);
         getServletContext().getRequestDispatcher(pageJSP).include(request, response);
-        
-//        request.getRequestDispatcher(pageJSP).include(request, response);
 
     }
 
