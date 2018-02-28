@@ -1,6 +1,4 @@
-
 package controller;
-
 
 import accesBDD.ClientDAO;
 import beans.beanLogin;
@@ -20,7 +18,7 @@ import obj.Client;
 
 @WebServlet(name = "controller", urlPatterns = {"/controller"})
 public class controller extends HttpServlet {
-    
+
     private Cookie getCookie(Cookie[] cookies, String name) {
         if (cookies != null) {
             for (Cookie c : cookies) {
@@ -32,13 +30,12 @@ public class controller extends HttpServlet {
         return null;
     }
 
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
-        
+
 //         String pageJSP = "/WEB-INF/jspLogin.jsp";
         String pageJSP = "/WEB-INF/jspMain.jsp";
         String section = request.getParameter("section");
@@ -47,21 +44,21 @@ public class controller extends HttpServlet {
             pageJSP = "/WEB-INF/jspLogin.jsp";
 
             if (request.getParameter("doIt") != null) {
-                
-                    beanLogin bLogin = (beanLogin) session.getAttribute("beanLogin");
-                    if (bLogin == null) {
-                        try {
-                            bLogin = new beanLogin();
-                        } catch (NamingException ex) {
-                            ex.printStackTrace();
-                        }
-                        session.setAttribute("beanLogin", bLogin);
+
+                beanLogin bLogin = (beanLogin) session.getAttribute("beanLogin");
+                if (bLogin == null) {
+                    try {
+                        bLogin = new beanLogin();
+                    } catch (NamingException ex) {
+                        ex.printStackTrace();
                     }
+                    session.setAttribute("beanLogin", bLogin);
+                }
                 try {
-                    
+
                     if (bLogin.check(request.getParameter("login"),
                             request.getParameter("password"))) {
-                        
+
                         pageJSP = "/WEB-INF/jspWelcome.jsp";
                         request.setAttribute("welcome", request.getParameter("login"));
                         Cookie c = new Cookie("login", request.getParameter("login"));
@@ -72,7 +69,7 @@ public class controller extends HttpServlet {
                     } else {
                         pageJSP = "/WEB-INF/jspLoginError.jsp";
                         request.setAttribute("login", request.getParameter("login"));
-                        request.setAttribute("msg", "Erreur login/Mot de passe !!!");                       
+                        request.setAttribute("msg", "Erreur login/Mot de passe !!!");
                         Cookie c = getCookie(request.getCookies(), "try");
                         if (c == null) {
                             c = new Cookie("try", "*");
@@ -90,7 +87,6 @@ public class controller extends HttpServlet {
                     ex.printStackTrace();
                 }
 
-                
             }
 
             Cookie c = getCookie(request.getCookies(), "login");
@@ -115,6 +111,22 @@ public class controller extends HttpServlet {
                 }
             }
         }
+//  //en attente de lien avec page login Flo
+//        if ("pasdecompte".equals(section)) {
+//            pageJSP = "WEB-INF/jspCreerNvxCompteClientEtape1.jsp";
+//
+//        }
+//
+//        if ("jspCreerUnNvxCompteEtape2".equals(section)) {
+//            pageJSP = "WEB-INF/jspCreerUnNvxCompteEtape2.jsp";
+//
+//        }
+//       
+//        
+//  // en attente de lien avec la page facturation de Momo      
+//        if("payer".equals(section)){
+//            pageJSP = "WEB-INF/jspCreerAdresseFacturation";
+//        }
 
         pageJSP = response.encodeURL(pageJSP);
         getServletContext().getRequestDispatcher(pageJSP).include(request, response);

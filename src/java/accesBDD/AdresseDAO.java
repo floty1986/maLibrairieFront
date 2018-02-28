@@ -16,7 +16,7 @@ public class AdresseDAO implements Serializable {
     }
 
     public void InsertAdresse() throws SQLException {
-        String req = "INSERT INTO Adresse(typeAdresse, numVoie, typeVoie, nomVoie, complement, codePostal, ville, pays, nom, prenom, email, telephone ) VALUES(????????????)";
+        String req = "INSERT INTO Adresse(typeAdresse, numVoie, typeVoie, nomVoie, complement, codePostal, ville, pays, nom, prenom, email, telephone ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
         Adresse ad = null;
 
         try (Connection cnt = mc.getConnection();
