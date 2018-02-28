@@ -5,6 +5,7 @@ import accesBDD.ClientDAO;
 import java.io.Serializable;
 import java.sql.SQLException;
 import javax.naming.NamingException;
+
 import obj.Client;
 
 public class beanLogin implements Serializable {
