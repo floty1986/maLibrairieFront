@@ -14,6 +14,8 @@
             <br>
             Votre prenom: <input type="text" name="prenom" value="" /><br>
             <br>
+            Genre: H<input type="radio" name="genre" value="H" />F<input type="radio" name="genre" value="F" />N<input type="radio" name="genre" value="N" /><br>
+            <br>            
             date de naissance:<input type="text" name="dateNaissance" value="" /><br>
             <br>
             E-mail: <input type="text" name="email" value="" /><br>

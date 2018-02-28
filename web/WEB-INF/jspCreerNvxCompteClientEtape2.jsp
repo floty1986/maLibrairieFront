@@ -33,8 +33,8 @@
             <br>
             Cette adresse est-elle également votre adresse de facturation?<br>
             <br>
-            <input type="radio" name="adrFacturation" value="Oui" /><br>
-            <input type="radio" name="adrFacturation" value="Non" /><br>
+            Oui:<input type="radio" name="adrFacturation" value="oui" /><br>
+            Non:<input type="radio" name="adrFacturation" value="non" /><br>
             <br>
             <input type="submit" value="Continuer" name="doIt" />
         
