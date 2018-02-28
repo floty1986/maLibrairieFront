@@ -33,6 +33,10 @@ public class ClientDAO implements Serializable{
         }
         return c;
     }
+    
+    public Client insertClient(){
+        
+    }
 
     
 }
