@@ -138,5 +138,10 @@ public class Ouvrage {
         v.add(this.titre);
         return v;
     }
+
+    @Override
+    public String toString() {
+        return "ID : " + idOuvrage + ", titre : " + titre;
+    }
     
 }

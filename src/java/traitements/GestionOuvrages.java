@@ -36,13 +36,13 @@ public class GestionOuvrages implements Serializable {
             mo.put(cle, lo);
         }
         List<Ouvrage> lOuvrage = oDAO.selectAllOuvrages();
-        for(Ouvrage p : lOuvrage){
-            String lettre = p.getTitre().toUpperCase().charAt(0)+"";
+        for(Ouvrage o : lOuvrage){
+            String lettre = o.getTitre().toUpperCase().charAt(0)+"";
             for(String cle : clefs){
                 String regex = "["+cle+"]";
                 if(lettre.matches(regex)){
                     List<Ouvrage> lo = mo.get(cle);
-                    lo.add(p);
+                    lo.add(o);
                 }
             }
         }        
