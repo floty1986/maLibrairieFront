@@ -1,5 +1,6 @@
 package controller;
 
+
 import beans.beanLogin;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -50,11 +51,8 @@ public class controller extends HttpServlet {
             pageJSP = "/WEB-INF/jspLogin.jsp";
 
             if (request.getParameter("doIt") != null) {
-                
                 try {
-
                     if (bLogin.check(request.getParameter("login"), request.getParameter("password"))) {
-
                         pageJSP = "/WEB-INF/jspWelcome.jsp";
                         String login = request.getParameter("login");
                         request.setAttribute("welcome", login);
@@ -86,31 +84,26 @@ public class controller extends HttpServlet {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-
-
-            }
-
-            Cookie c = getCookie(request.getCookies(), "login");
-            if (c != null) {
-                pageJSP = "/WEB-INF/jspWelcome.jsp";
-                request.setAttribute("welcome", c.getValue());
-            }
-
-            if (request.getParameter("deconnect") != null) {
-                pageJSP = "/WEB-INF/jspLogin.jsp";
-                request.setAttribute("login", c.getValue());
-                Cookie cc = new Cookie("login", "");
-                cc.setMaxAge(0);
-                response.addCookie(cc);
-            }
-
-            c = getCookie(request.getCookies(), "try");
-            if (c != null) {
-                if (c.getValue().length() >= 3) {
-                    pageJSP = "/WEB-INF/jspFatalError.jsp";
-                    request.setAttribute("fatalError", "Trop de tentatives !!!!!");
+                Cookie c = getCookie(request.getCookies(), "login");
+                if (c != null) {
+                    pageJSP = "/WEB-INF/jspWelcome.jsp";
+                    request.setAttribute("welcome", c.getValue());
                 }
-                
+                if (request.getParameter("deconnect") != null) {
+                    pageJSP = "/WEB-INF/jspLogin.jsp";
+                    request.setAttribute("login", c.getValue());
+                    Cookie cc = new Cookie("login", "");
+                    cc.setMaxAge(0);
+                    response.addCookie(cc);
+                }
+                c = getCookie(request.getCookies(), "try");
+                if (c != null) {
+                    if (c.getValue().length() >= 3) {
+                        pageJSP = "/WEB-INF/jspFatalError.jsp";
+                        request.setAttribute("fatalError", "Trop de tentatives !!!!!");
+                    }
+                }
+
             }
         }
 //  //en attente de lien avec page login Flo
