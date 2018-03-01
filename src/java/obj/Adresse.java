@@ -5,9 +5,9 @@ import java.io.Serializable;
 
 public class Adresse implements Serializable {
    
-   private String idAdresse;
-   private String idClientCreer;
-   private String idClientUtiliser;
+   private int idAdresse;
+   private int idClientCreer;
+   private int idClientUtiliser;
    private String typeAdresse;
    private String numVoie;
    private String typeVoie;
@@ -25,7 +25,7 @@ public class Adresse implements Serializable {
     public Adresse() {
     }
 
-    public Adresse(String idAdresse, String idClientCreer, String idClientUtiliser, String typeAdresse, String numVoie, String typeVoie, String nomVoie, String complement, String codePostal, String ville, String pays, String nom, String prenom, String email, String telephone, String nomStatut) {
+    public Adresse(int idAdresse, int idClientCreer, int idClientUtiliser, String typeAdresse, String numVoie, String typeVoie, String nomVoie, String complement, String codePostal, String ville, String pays, String nom, String prenom, String email, String telephone, String nomStatut) {
         this.idAdresse = idAdresse;
         this.idClientCreer = idClientCreer;
         this.idClientUtiliser = idClientUtiliser;

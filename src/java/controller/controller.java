@@ -1,9 +1,14 @@
-
 package controller;
 
-
+import beans.beanExpediteur;
 import beans.beanLogin;
+import beans.beanPaiement;
+import beans.beanPanier;
+//import beans.beanPanier;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +17,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import obj.Expediteur;
+import obj.LigneCommande;
+import obj.OrganismePaiement;
+import obj.Ouvrage;
+import traitements.GestionOuvrages;
 
 @WebServlet(name = "controller", urlPatterns = {"/controller"})
 public class controller extends HttpServlet {
@@ -33,9 +43,43 @@ public class controller extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
 
+//         String pageJSP = "/WEB-INF/jspLogin.jsp";
+//        String pageJSP = "/WEB-INF/jspPanier.jsp";
+//        String pageJSP = "/WEB-INF/jspPaiement.jsp";
         String pageJSP = "/WEB-INF/jspHome.jsp";
         String section = request.getParameter("section");
-        
+
+        if (getServletContext().getAttribute("gestionOuvrages") == null) {
+            try {
+                getServletContext().setAttribute("gestionOuvrages", new GestionOuvrages());
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+
+            }
+        }
+        GestionOuvrages gestionOuvrages = (GestionOuvrages) getServletContext().getAttribute("gestionOuvrages");
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if (getServletContext().getAttribute("beanExpediteur") == null) {
+            try {
+                getServletContext().setAttribute("beanExpediteur", new beanExpediteur());
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+
+                //to do
+            }
+        }
+        beanExpediteur beanEx = (beanExpediteur) getServletContext().getAttribute("beanExpediteur");
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if (getServletContext().getAttribute("beanPanier") == null) {
+            try {
+                getServletContext().setAttribute("beanPanier", new beanPanier());
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+
+            }
+        }
+        beanPanier beanPa = (beanPanier) getServletContext().getAttribute("beanPanier");
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         if (getServletContext().getAttribute("beanLogin") == null) {
             try {
@@ -46,7 +90,17 @@ public class controller extends HttpServlet {
             }
         }
         beanLogin bLogin = (beanLogin) getServletContext().getAttribute("beanLogin");
-        
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if (getServletContext().getAttribute("beanPaiement") == null) {
+            try {
+                getServletContext().setAttribute("beanPaiement", new beanPaiement());
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+
+            }
+        }
+        beanPaiement beanPaie = (beanPaiement) getServletContext().getAttribute("beanPaiement");
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
@@ -77,7 +131,7 @@ public class controller extends HttpServlet {
                         c.setMaxAge(90);
                         System.out.println(c.getValue());
                         response.addCookie(c);
-                        
+
                         if (c.getValue().length() >= 3) {
                             pageJSP = "/WEB-INF/jspFatalError.jsp";
                             request.setAttribute("fatalError", "Trop de tentatives !!!");
@@ -106,6 +160,76 @@ public class controller extends HttpServlet {
                                 
             }
         }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if ("catalogue".equals(section)) {
+            try {
+                HashMap<String, List<Ouvrage>> mo = gestionOuvrages.findOuvrages();
+                List<String> clefs = gestionOuvrages.getCleDefaut();
+                request.setAttribute("mapOuvrages", mo);
+                request.setAttribute("clefs", clefs);
+                pageJSP = "/WEB-INF/catalogue.jsp";
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if ("jspPanier".equals(section)) {
+            try {
+                HashMap<String, List<LigneCommande>> mlc = beanPa.findCommande();
+                List<String> clefs = beanPa.getLC();
+                request.setAttribute("mapPanier", mlc);
+                request.setAttribute("clefs", clefs);
+                pageJSP = "/WEB-INF/jspPanier.jsp";
+                System.out.println("------------------------------------------    "+pageJSP);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if ("jspLivraison".equals(section)) {
+
+            try {
+                HashMap<String, List<Expediteur>> me = beanEx.findExpediteur();
+                List<String> tables = beanEx.getDefaultTable();
+                request.setAttribute("mapExpediteur", me);
+                request.setAttribute("tables", tables);
+                pageJSP = "/WEB-INF/jspLivraison.jsp";
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if ("jspPaiement".equals(section)) {
+
+            try {
+                HashMap<String, List<OrganismePaiement>> mOp = beanPaie.findOrg();
+                List<String> tables = beanPaie.getDefaultOrg();
+                request.setAttribute("mapOrganisme", mOp);
+                request.setAttribute("tables", tables);
+                pageJSP = "/WEB-INF/jspPaiement.jsp";
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        
+//  //en attente de lien avec page login Flo
+//        if ("pasdecompte".equals(section)) {
+//            pageJSP = "WEB-INF/jspCreerNvxCompteClientEtape1.jsp";
+//
+//        }
+//
+//        if ("jspCreerUnNvxCompteEtape2".equals(section)) {
+//            pageJSP = "WEB-INF/jspCreerUnNvxCompteEtape2.jsp";
+//
+//        }
+//       
+//        
+//  // en attente de lien avec la page facturation de Momo      
+//        if("payer".equals(section)){
+//            pageJSP = "WEB-INF/jspCreerAdresseFacturation";
+//        }
 
         pageJSP = response.encodeURL(pageJSP);
        

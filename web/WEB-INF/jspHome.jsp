@@ -7,12 +7,14 @@
         <title>home</title>        
     </head>
     <body>
-       
         <nav>
             <c:url value="controller?section=login" var="url01" />
             <c:import url="${url01}" />
+            
+            <c:url value="controller?section=catalogue" var="url02" />
+            <a href="${url02}">Catalogue</a>
+            
         </nav>
-        
         
     </body>
 </html>
