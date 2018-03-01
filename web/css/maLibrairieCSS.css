@@ -1,5 +1,5 @@
 .vr_catalogue {
-     border-right: 1px solid #38546d;
+    border-right: 1px solid #38546d;
     background: #16222c;
     width: 1px;
     height: 80px;
@@ -7,3 +7,20 @@
     right: 250px;
     top: 10px;
 } 
+
+.btn_ajout {
+    margin-left: 200px;
+    left: 50%;
+    color: blue;
+    background-color: #38546d;
+    border-radius: 10px;
+    width: auto;
+    height: auto;
+}
+.btn{
+    color: blue;
+    background-color: #38546d;
+    border-radius: 50px;
+    width: auto;
+    height: auto;
+}
