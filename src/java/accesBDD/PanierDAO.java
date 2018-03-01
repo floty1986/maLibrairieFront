@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javax.naming.NamingException;
 import obj.LigneCommande;
 
@@ -12,8 +15,33 @@ public class PanierDAO implements Serializable {
 
     private MaConnexion mc;
 
-    public PanierDAO(MaConnexion mc) throws NamingException {
+    public PanierDAO() throws NamingException {
         mc = new MaConnexion();
+    }
+
+    public List<LigneCommande> selectPanier() throws SQLException {
+        String req = "select lc.idLC, lc.numCommande, lc.idOuvrage, "
+                + "lc.prix, lc.qteCommandee, lc.remise, "
+                + "lc.tvaLC, ouv.titre from LigneCommande lc join Ouvrage ouv "
+                + "on lc.idOuvrage = ouv.idOuvrage";
+        List<LigneCommande> lc = new ArrayList<>();
+        try (Connection cnt = mc.getConnection();
+                Statement stm = cnt.createStatement()) {
+            ResultSet rs = stm.executeQuery(req);
+            while (rs.next()) {
+                int idLC = rs.getInt("idLC");
+                int numCommande = rs.getInt("numCommande");
+                int idOuvrage = rs.getInt("idOuvrage");
+                float prix = rs.getFloat("prix");
+                int qteCommande = rs.getInt("qteCommandee");
+                float remise = rs.getFloat("remise");
+                float tvaLC = rs.getFloat("tvaLC");
+                String titre = rs.getString("titre");
+                LigneCommande lcc = new LigneCommande(idLC, numCommande, idOuvrage, prix, qteCommande, remise, tvaLC, titre);
+                lc.add(lcc);
+            }
+        }
+        return lc;
     }
 
     public LigneCommande selectPanierById(int commande) throws SQLException {
