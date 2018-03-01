@@ -111,7 +111,9 @@ public class controller extends HttpServlet {
                         pageJSP = "/WEB-INF/jspWelcome.jsp";
                         String login = request.getParameter("login");
                         request.setAttribute("welcome", login);
-                        Cookie c = new Cookie("login", login);                        
+                        Cookie c = new Cookie("login", login);
+                        c.setMaxAge(60);
+                        c.setPath("/");
                         response.addCookie(c);                        
                         Cookie c2 = new Cookie("try", "");
                         c2.setMaxAge(0);                        
@@ -232,8 +234,11 @@ public class controller extends HttpServlet {
 //        }
 
         pageJSP = response.encodeURL(pageJSP);
+        
+        
        
         getServletContext().getRequestDispatcher(pageJSP).include(request, response);
+//        getServletContext().getRequestDispatcher(pageJSP).forward(request, response);
 
     }
 
