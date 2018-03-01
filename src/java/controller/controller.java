@@ -4,6 +4,7 @@ package controller;
 
 import accesBDD.ClientDAO;
 import beans.beanLogin;
+import beans.beanPanier;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -141,6 +142,41 @@ public class controller extends HttpServlet {
             }          
             
         }
+        
+        if ("panier".equals(request.getParameter("section"))) {
+            beanPanier monPanier
+                    = (beanPanier) session.getAttribute("monPanier");
+            if (monPanier == null) {
+                monPanier = new beanPanier();
+                session.setAttribute("monPanier", monPanier);
+            }
+           if (request.getParameter("add") != null) {
+                monPanier.addO(Integer.valueOf(request.getParameter("add")), request.getParameter("add2"));
+            }
+            if (request.getParameter("dec") != null) {
+                monPanier.decO(Integer.valueOf(request.getParameter("dec")));
+            }
+            if (request.getParameter("del") != null) {
+                monPanier.delO(Integer.valueOf(request.getParameter("del")));
+            }
+            if (request.getParameter("clear") != null) {
+                monPanier.clearO();
+            }
+            pageJSP = "/WEB-INF/catPan.jsp";
+        }
+        if ("affichePanier".equals(request.getParameter("section"))) {
+            pageJSP = "/WEB-INF/panierCat.jsp";
+            beanPanier monPanier
+                    = (beanPanier) session.getAttribute("monPanier");
+            if (monPanier == null) {
+                monPanier = new beanPanier();
+                session.setAttribute("monPanier", monPanier);
+            }
+            request.setAttribute("panierVide", monPanier.isEmptyO());
+            request.setAttribute("list", monPanier.listO());
+        }
+
+        
         pageJSP = response.encodeURL(pageJSP);
         getServletContext().getRequestDispatcher(pageJSP).include(request, response);
 

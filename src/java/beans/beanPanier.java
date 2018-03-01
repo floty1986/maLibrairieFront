@@ -9,10 +9,11 @@ import obj.Ouvrage;
 public class beanPanier implements Serializable {
 
     HashMap<String, LigneCommande> map;
-    HashMap<String, Ouvrage> mapO;
+    HashMap<Integer, Ouvrage> mapO;
     
     public beanPanier() {
         this.map= new HashMap();
+        this.mapO = new HashMap();
     }
     
     public void add(String ref) {
@@ -28,11 +29,10 @@ public class beanPanier implements Serializable {
      public void addO(int idOuvrage, String titre) {
         if( this.mapO.containsKey(idOuvrage)) {
             Ouvrage o= this.mapO.get(idOuvrage);
-//            i.setQty( i.getQty()+1);
-            o.changeQty( +1);
+            o.changeQty(+1);
         } else {
-            Ouvrage o = new Ouvrage(idOuvrage, titre);
-            this.mapO.put(String.valueOf(idOuvrage), o);
+            Ouvrage o = new Ouvrage(idOuvrage, titre, 1);
+            this.mapO.put(idOuvrage, o);
         }
     }
     public void dec( String ref) {
@@ -44,21 +44,50 @@ public class beanPanier implements Serializable {
            }
        } 
     }
+    
+    public void decO(int idOuvrage) {
+        if (this.mapO.containsKey(idOuvrage)) {
+            Ouvrage o = this.mapO.get(idOuvrage);
+            o.changeQty(-1);
+            if (o.getQtePanier()<1) {
+                delO(idOuvrage);
+            }
+            
+        }
+    }
+    
     public void del( String ref) {
         this.map.remove(ref);
     }
+    
+    public void delO(int idOuvrage) {
+        this.mapO.remove(idOuvrage);
+    }
+    
     public float getTotalHT() {
         return -1;
     } 
+    
     public void clear() {
         this.map.clear();
     }
+    
+    public void clearO() {
+        this.mapO.clear();
+    }
+    
     public int size() {
         return this.map.size();
     }
+    
     public boolean isEmpty() {
         return this.map.isEmpty();
     }
+    
+    public boolean isEmptyO() {
+       return this.mapO.isEmpty();
+    }
+    
     public Collection<LigneCommande> list() {
         return this.map.values();
     }
