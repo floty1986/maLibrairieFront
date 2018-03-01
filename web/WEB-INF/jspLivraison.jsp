@@ -20,6 +20,7 @@
         </c:forEach>
         <a href="jspPanier.jsp">Précédent</a>
         <br>
-        <a href="jspPaiement.jsp">Confirmer la livraison</a>
+        <c:url value="controller?section=jspPaiement" var="url04" />
+        <a href="${url04}">Confirmer la livraison</a>
     </body>
 </html>

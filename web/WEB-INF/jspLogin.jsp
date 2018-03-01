@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -10,14 +9,12 @@
         <h1>Hello Login!</h1>
         
         <form action='controller' method='post'>
-            Utilisateur : <input type='text' name='login' /><br>
+            Utilisateur : <input type='text' name='login' value='${login}' /><br>
             <br>            
             Mot de passe : <input type='password' name='password' /><br>
             <input type='submit' name='doIt' value='Ok' />
         </form>
         
-        <c:url value="controller?section=catalogue" var="url02" />
-        <a href="${url02}">Catalogue</a>
         
     </body>
 </html>

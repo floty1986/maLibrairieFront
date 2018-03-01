@@ -20,9 +20,9 @@ public class PanierDAO implements Serializable {
     }
 
     public List<LigneCommande> selectPanier() throws SQLException {
-        String req = "select LigneCommande.idLC, LigneCommande.numCommande, LigneCommande.idOuvrage, "
-                + "LigneCommande.prix, LigneCommande.qteCommandee, LigneCommande.remise, "
-                + "LigneCommande.tvaLC, LigneCommande.titre from LigneCommande join LigneCommande "
+        String req = "select lc.idLC, lc.numCommande, lc.idOuvrage, "
+                + "lc.prix, lc.qteCommandee, lc.remise, "
+                + "lc.tvaLC, ouv.titre from LigneCommande lc join Ouvrage ouv "
                 + "on lc.idOuvrage = ouv.idOuvrage";
         List<LigneCommande> lc = new ArrayList<>();
         try (Connection cnt = mc.getConnection();

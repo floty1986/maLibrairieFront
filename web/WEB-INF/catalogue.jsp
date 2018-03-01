@@ -20,9 +20,11 @@
                 </c:forEach>
             </ul>
         </c:forEach>
-       <div class="vr_catalogue">PANIER EN CONSTRUCTION....</div>
-       <c:url value="controller?section=jspPanier" var="url02" />
-        <a href="${url02}">Voir panier</a>
+      <!-- <div class="vr_catalogue">PANIER EN CONSTRUCTION....</div> -->
+       <nav> 
+       <c:url value="controller?section=jspPanier" var="url55" />
+       <a href="${url55}">Voir panier</a>
+       </nav>
        
        
     </body>

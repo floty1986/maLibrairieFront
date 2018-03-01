@@ -8,7 +8,6 @@
     </head>
     <body>
         <h1>Hello Panier!</h1>
-        <jsp:include page="controller?section=panier" flush="true" />
         <c:forEach items="${clefs}" var="c" >
             <h1>${c}</h1>
             <ul>
@@ -19,7 +18,7 @@
                 </c:forEach>
             </ul>
         </c:forEach>
-            
+         
         <c:if test="${panierVide}">
             Panier vide !    
         </c:if>
@@ -30,6 +29,7 @@
             <a href="controller?section=panier&del=${i.ref}">x</a>
             <br>        
         </c:forEach>
+        
         <a href='controller?section=panier&clear'>Vider le panier !</a>         
         <c:url value="controller?section=jspLivraison" var="url03" />
         <a href="${url03}">Valider panier</a>

@@ -1,5 +1,3 @@
-
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -8,6 +6,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>FATAL ERROR!</h1>
+        <h1>Fatal Error!</h1>
+        <font color='red'>${fatalError}</font>
     </body>
 </html>
