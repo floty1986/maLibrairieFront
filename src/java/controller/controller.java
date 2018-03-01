@@ -5,6 +5,8 @@ package controller;
 import beans.beanLogin;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -51,7 +53,8 @@ public class controller extends HttpServlet {
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
 
-            if (request.getParameter("doIt") != null) {
+            if (request.getParameter("doIt") != null ) {
+                
                 try {
                     if (bLogin.check(request.getParameter("login"), request.getParameter("password"))) {
                         pageJSP = "/WEB-INF/jspWelcome.jsp";
@@ -60,7 +63,7 @@ public class controller extends HttpServlet {
                         Cookie c = new Cookie("login", login);                    
                         response.addCookie(c);
                         c = new Cookie("try", "");
-                        c.setMaxAge(0);
+                        c.setMaxAge(0);                        
                         response.addCookie(c);
 
                     } else {
@@ -70,11 +73,12 @@ public class controller extends HttpServlet {
                         request.setAttribute("msg", "Erreur login/Mot de passe !!!");
                         Cookie c = getCookie(request.getCookies(), "try");
                         if (c == null) {
-                            c = new Cookie("try", "*");
+                            c = new Cookie("try", "*");                            
                         } else {
                             c.setValue(c.getValue() + "*");
                         }
                         c.setMaxAge(90);
+                        System.out.println(c.getValue());
                         response.addCookie(c);
                         
                         if (c.getValue().length() >= 3) {
@@ -82,33 +86,35 @@ public class controller extends HttpServlet {
                             request.setAttribute("fatalError", "Trop de tentatives !!!");
                         }
                     }
+                    
+                    Cookie c = getCookie(request.getCookies(), "login");
+                    if (c != null) {
+                        pageJSP = "/WEB-INF/jspWelcome.jsp";
+                        request.setAttribute("welcome", c.getValue());
+                    }
+                    if (request.getParameter("deconnect") != null) {
+                        pageJSP = "/WEB-INF/jspLogin.jsp";
+                        request.setAttribute("login", c.getValue());
+                        Cookie cc = new Cookie("login", "");
+                        cc.setMaxAge(0);
+                        response.addCookie(cc);
+                    }
+                    c = getCookie(request.getCookies(), "try");
+                    if (c != null) {
+                        if (c.getValue().length() >= 3) {
+                            pageJSP = "/WEB-INF/jspFatalError.jsp";
+                            request.setAttribute("fatalError", "Trop de tentatives !!!!!");
+                        }
+                    }
                 } catch (SQLException ex) {
                     ex.printStackTrace();
-                }
-                Cookie c = getCookie(request.getCookies(), "login");
-                if (c != null) {
-                    pageJSP = "/WEB-INF/jspWelcome.jsp";
-                    request.setAttribute("welcome", c.getValue());
-                }
-                if (request.getParameter("deconnect") != null) {
-                    pageJSP = "/WEB-INF/jspLogin.jsp";
-                    request.setAttribute("login", c.getValue());
-                    Cookie cc = new Cookie("login", "");
-                    cc.setMaxAge(0);
-                    response.addCookie(cc);
-                }
-                c = getCookie(request.getCookies(), "try");
-                if (c != null) {
-                    if (c.getValue().length() >= 3) {
-                        pageJSP = "/WEB-INF/jspFatalError.jsp";
-                        request.setAttribute("fatalError", "Trop de tentatives !!!!!");
-                    }
                 }
 
             }
         }
 
         pageJSP = response.encodeURL(pageJSP);
+       
         getServletContext().getRequestDispatcher(pageJSP).include(request, response);
 
     }
