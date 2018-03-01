@@ -4,9 +4,6 @@ package controller;
 
 import beans.beanLogin;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,6 +35,7 @@ public class controller extends HttpServlet {
 
         String pageJSP = "/WEB-INF/jspHome.jsp";
         String section = request.getParameter("section");
+        
 
         if (getServletContext().getAttribute("beanLogin") == null) {
             try {
@@ -54,17 +52,16 @@ public class controller extends HttpServlet {
             pageJSP = "/WEB-INF/jspLogin.jsp";
 
             if (request.getParameter("doIt") != null ) {
-                
-                try {
+                                                
                     if (bLogin.check(request.getParameter("login"), request.getParameter("password"))) {
                         pageJSP = "/WEB-INF/jspWelcome.jsp";
                         String login = request.getParameter("login");
                         request.setAttribute("welcome", login);
-                        Cookie c = new Cookie("login", login);                    
-                        response.addCookie(c);
-                        c = new Cookie("try", "");
-                        c.setMaxAge(0);                        
-                        response.addCookie(c);
+                        Cookie c = new Cookie("login", login);                        
+                        response.addCookie(c);                        
+                        Cookie c2 = new Cookie("try", "");
+                        c2.setMaxAge(0);                        
+                        response.addCookie(c2);
 
                     } else {
 
@@ -106,10 +103,7 @@ public class controller extends HttpServlet {
                             request.setAttribute("fatalError", "Trop de tentatives !!!!!");
                         }
                     }
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-
+                                
             }
         }
 

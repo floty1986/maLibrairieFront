@@ -7,6 +7,7 @@
         <title>home</title>        
     </head>
     <body>
+       
         <nav>
             <c:url value="controller?section=login" var="url01" />
             <c:import url="${url01}" />
