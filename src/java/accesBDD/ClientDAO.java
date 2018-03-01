@@ -24,11 +24,12 @@ public class ClientDAO implements Serializable {
                 PreparedStatement stm = cnt.prepareStatement(req);) {
             stm.setString(1, email);
             ResultSet rs = stm.executeQuery();
-            rs.next();
-            c = new Client();
-            c.setMotDePasse(rs.getString("motDePasse"));
-            c.setNom(rs.getString("nom"));
-            c.setEmail(email);
+            if (rs.next()) {
+                c = new Client();
+                c.setMotDePasse(rs.getString("motDePasse"));
+                c.setNom(rs.getString("nom"));
+                c.setEmail(email);
+            }
 
         }
         return c;

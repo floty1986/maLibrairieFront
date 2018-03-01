@@ -1,11 +1,8 @@
 package controller;
 
-import accesBDD.ClientDAO;
 import beans.beanLogin;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import obj.Client;
 
 @WebServlet(name = "controller", urlPatterns = {"/controller"})
 public class controller extends HttpServlet {
@@ -36,38 +32,41 @@ public class controller extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
 
-//         String pageJSP = "/WEB-INF/jspLogin.jsp";
-        String pageJSP = "/WEB-INF/jspMain.jsp";
+        String pageJSP = "/WEB-INF/jspHome.jsp";
         String section = request.getParameter("section");
+
+        if (getServletContext().getAttribute("beanLogin") == null) {
+            try {
+                getServletContext().setAttribute("beanLogin", new beanLogin());
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+
+            }
+        }
+        beanLogin bLogin = (beanLogin) getServletContext().getAttribute("beanLogin");
+        
 
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
 
             if (request.getParameter("doIt") != null) {
-
-                beanLogin bLogin = (beanLogin) session.getAttribute("beanLogin");
-                if (bLogin == null) {
-                    try {
-                        bLogin = new beanLogin();
-                    } catch (NamingException ex) {
-                        ex.printStackTrace();
-                    }
-                    session.setAttribute("beanLogin", bLogin);
-                }
+                
                 try {
 
-                    if (bLogin.check(request.getParameter("login"),
-                            request.getParameter("password"))) {
+                    if (bLogin.check(request.getParameter("login"), request.getParameter("password"))) {
 
                         pageJSP = "/WEB-INF/jspWelcome.jsp";
-                        request.setAttribute("welcome", request.getParameter("login"));
-                        Cookie c = new Cookie("login", request.getParameter("login"));
+                        String login = request.getParameter("login");
+                        request.setAttribute("welcome", login);
+                        Cookie c = new Cookie("login", login);                    
                         response.addCookie(c);
                         c = new Cookie("try", "");
                         c.setMaxAge(0);
                         response.addCookie(c);
+
                     } else {
-                        pageJSP = "/WEB-INF/jspLoginError.jsp";
+
+                        pageJSP = "/WEB-INF/jspLogin.jsp";
                         request.setAttribute("login", request.getParameter("login"));
                         request.setAttribute("msg", "Erreur login/Mot de passe !!!");
                         Cookie c = getCookie(request.getCookies(), "try");
@@ -78,6 +77,7 @@ public class controller extends HttpServlet {
                         }
                         c.setMaxAge(90);
                         response.addCookie(c);
+                        
                         if (c.getValue().length() >= 3) {
                             pageJSP = "/WEB-INF/jspFatalError.jsp";
                             request.setAttribute("fatalError", "Trop de tentatives !!!");
@@ -86,6 +86,7 @@ public class controller extends HttpServlet {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
+
 
             }
 
@@ -109,6 +110,7 @@ public class controller extends HttpServlet {
                     pageJSP = "/WEB-INF/jspFatalError.jsp";
                     request.setAttribute("fatalError", "Trop de tentatives !!!!!");
                 }
+                
             }
         }
 //  //en attente de lien avec page login Flo
