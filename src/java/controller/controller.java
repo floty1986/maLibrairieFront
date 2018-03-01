@@ -218,6 +218,23 @@ public class controller extends HttpServlet {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         
+//  //en attente de lien avec page login Flo
+//        if ("pasdecompte".equals(section)) {
+//            pageJSP = "WEB-INF/jspCreerNvxCompteClientEtape1.jsp";
+//
+//        }
+//
+//        if ("jspCreerUnNvxCompteEtape2".equals(section)) {
+//            pageJSP = "WEB-INF/jspCreerUnNvxCompteEtape2.jsp";
+//
+//        }
+//       
+//        
+//  // en attente de lien avec la page facturation de Momo      
+//        if("payer".equals(section)){
+//            pageJSP = "WEB-INF/jspCreerAdresseFacturation";
+//        }
+
         pageJSP = response.encodeURL(pageJSP);
         getServletContext().getRequestDispatcher(pageJSP).include(request, response);
 

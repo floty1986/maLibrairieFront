@@ -14,7 +14,7 @@
             Mot de passe : <input type='password' name='password' /><br>
             <input type='submit' name='doIt' value='Ok' />
         </form>
-        
+        <font color='red'>${msg}</font>  
         
     </body>
 </html>
