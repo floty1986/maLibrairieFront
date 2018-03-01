@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -75,8 +77,7 @@ public class controller extends HttpServlet {
             try {
                 getServletContext().setAttribute("beanPanier", new beanPanier());
             } catch (NamingException ex) {
-                ex.printStackTrace();
-
+                Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         beanPanier beanPa = (beanPanier) getServletContext().getAttribute("beanPanier");
@@ -180,8 +181,12 @@ public class controller extends HttpServlet {
             beanPanier monPanier
                     = (beanPanier) session.getAttribute("monPanier");
             if (monPanier == null) {
-                monPanier = new beanPanier();
-                session.setAttribute("monPanier", monPanier);
+                try {
+                    monPanier = new beanPanier();
+                    session.setAttribute("monPanier", monPanier);
+                } catch (NamingException ex) {
+                    Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
            if (request.getParameter("add") != null) {
                 monPanier.addO(Integer.valueOf(request.getParameter("add")), request.getParameter("add2"));
@@ -202,8 +207,12 @@ public class controller extends HttpServlet {
             beanPanier monPanier
                     = (beanPanier) session.getAttribute("monPanier");
             if (monPanier == null) {
-                monPanier = new beanPanier();
-                session.setAttribute("monPanier", monPanier);
+                try {
+                    monPanier = new beanPanier();
+                    session.setAttribute("monPanier", monPanier);
+                } catch (NamingException ex) {
+                    Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             request.setAttribute("panierVide", monPanier.isEmptyO());
             request.setAttribute("list", monPanier.listO());
