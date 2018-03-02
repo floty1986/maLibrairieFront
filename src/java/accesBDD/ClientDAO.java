@@ -58,6 +58,7 @@ public class ClientDAO implements Serializable {
                     stm.setString(6, telephone);
                     stm.setString(7, motDePasse);
             
+                    int nb = stm.executeUpdate();
         }
         
         

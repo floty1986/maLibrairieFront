@@ -11,31 +11,28 @@ public class AdresseDAO implements Serializable {
 
     private MaConnexion mc;
 
-    public AdresseDAO(MaConnexion mc) throws NamingException {
+    public AdresseDAO() throws NamingException {
         mc = new MaConnexion();
     }
 
-    public void insertAdresse() throws SQLException {
-        String req = "INSERT INTO Adresse(idClientCreer, idClientUtiliser, typeAdresse, numVoie, typeVoie, nomVoie, complement, codePostal, ville, pays, nom, prenom, email, telephone ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        Adresse ad = null;
-        int idClientCreer=0;
-        int idClientUtiliser=0;
-        String typeAdresse=null;
-        String numVoie=null;
-        String typeVoie=null;
-        String nomVoie=null;
-        String complement=null;
-        String codePostal=null;
-        String ville=null;
-        String pays=null;
-        String nom=null;
-        String prenom=null;
-        String email=null;
-        String telephone=null;
+ //String paramNom = request.getParameter( "nom" );
+ //String paramPrenom = request.getParameter( "prenom" );
+ //String paramGenre = request.getParameter( "" );
+ //String paramDateNaissance = request.getParameter( "email" );
+ //String paramEmail = request.getParameter( "email" );
+ //String paramMotDePasse = request.getParameter( "email" );
+ //String paramMotDePasseConf = request.getParameter( "email" );
+ 
+ // int NvxClientEtape1 = statement.executeUpdate( "INSERT INTO Client (email, mot_de_passe, nom, date_inscription) "
+ //      + "VALUES ('" + paramEmail + "', MD5('" + paramMotDePasse + "'), '" + paramNom + "', NOW());" );
 
+    public void insertAdresse(int idClientCreer,int idClientUtiliser,String typeAdresse,String numVoie,String typeVoie,String nomVoie,String complement,String codePostal,String ville,String pays,String nom,String prenom, String email,String telephone) throws SQLException {
+        String req = "INSERT INTO Adresse(idClientCreer, idClientUtiliser, typeAdresse, numVoie, typeVoie, nomVoie, complement, codePostal, ville, pays, nom, prenom, email, telephone ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    
         try (Connection cnt = mc.getConnection();
             PreparedStatement stm = cnt.prepareStatement(req);
             ) {
+                      
                 stm.setInt(1,idClientCreer );
                 stm.setInt(2, idClientUtiliser);
                 stm.setString(3, typeAdresse);
@@ -51,7 +48,7 @@ public class AdresseDAO implements Serializable {
                 stm.setString(13, email);
                 stm.setString(14, telephone);
                 
-                
+                int nb = stm.executeUpdate();
                 
         }
     }

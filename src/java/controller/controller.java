@@ -1,6 +1,7 @@
 package controller;
 
 
+import beans.beanAdresse;
 import beans.beanLogin;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -45,6 +46,17 @@ public class controller extends HttpServlet {
             }
         }
         beanLogin bLogin = (beanLogin) getServletContext().getAttribute("beanLogin");
+        
+ 
+        if (getServletContext().getAttribute("beanAdresse") == null) {
+            try {
+                getServletContext().setAttribute("beanAdresse", new beanAdresse());
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+
+            }
+        }
+        beanAdresse bAdresse = (beanAdresse) getServletContext().getAttribute("beanAdresse");
         
 
         if ("login".equals(section)) {
@@ -105,6 +117,14 @@ public class controller extends HttpServlet {
                 }
 
             }
+        }
+        
+        if ("nouvelleAdresse".equals(section)) {
+            bAdresse.insertAdresseBA(idClientCreer, idClientUtiliser, request.getParameter("typeAdresse"),request.getParameter("numVoie"),request.getParameter("typeVoie"),request.getParameter("nomVoie"),request.getParameter("complement"),request.getParameter("codePostal"),request.getParameter("ville"),request.getParameter("pays"),request.getParameter("nom"),request.getParameter("prenom"));
+            
+
+            
+        
         }
 //  //en attente de lien avec page login Flo
 //        if ("pasdecompte".equals(section)) {
