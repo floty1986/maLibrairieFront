@@ -120,7 +120,7 @@ public class controller extends HttpServlet {
         }
         
         if ("nouvelleAdresse".equals(section)) {
-            bAdresse.insertAdresseBA(idClientCreer, idClientUtiliser, request.getParameter("typeAdresse"),request.getParameter("numVoie"),request.getParameter("typeVoie"),request.getParameter("nomVoie"),request.getParameter("complement"),request.getParameter("codePostal"),request.getParameter("ville"),request.getParameter("pays"),request.getParameter("nom"),request.getParameter("prenom"));
+            bAdresse.insertAdresseBA(request.getParameter("typeAdresse"),request.getParameter("numVoie"),request.getParameter("typeVoie"),request.getParameter("nomVoie"),request.getParameter("complement"),request.getParameter("codePostal"),request.getParameter("ville"),request.getParameter("pays"),request.getParameter("nom"),request.getParameter("prenom"));
             
 
             
