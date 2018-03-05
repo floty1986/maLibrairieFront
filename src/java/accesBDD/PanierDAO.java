@@ -56,14 +56,14 @@ public class PanierDAO implements Serializable {
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 int idLC = rs.getInt("idLC");
-                int numCommande = rs.getInt("numCommande");
+                commande = rs.getInt("numCommande");
                 int idOuvrage = rs.getInt("idOuvrage");
                 float prix = rs.getFloat("prix");
                 int qteCommande = rs.getInt("qteCommandee");
                 float remise = rs.getFloat("remise");
                 float tvaLC = rs.getFloat("tvaLC");
                 String titre = rs.getString("titre");
-                lc = new LigneCommande(idLC, numCommande, idOuvrage, prix, qteCommande, remise, tvaLC, titre);
+                lc = new LigneCommande(idLC, commande, idOuvrage, prix, qteCommande, remise, tvaLC, titre);
             }
         }
         return lc;

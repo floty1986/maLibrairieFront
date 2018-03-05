@@ -7,12 +7,15 @@
         <title>home</title>        
     </head>
     <body>
-        <nav>
-            <c:url value="controller?section=login" var="url01" />
-            <c:import url="${url01}" />
+        
             
-            <c:url value="controller?section=catalogueAccueil" var="url02" />
-            <a href="${url02}">Accueil Catalogue</a>
+        <nav>
+            <c:url value="controller?section=catalogue" var="url02" />
+            <c:import url="${url02}" />
+           
+            
+            <c:url value="controller?section=login" var="url01" />                                    
+            <a href="${url01}"><input type="submit" value="LOGIN" name="Connexion" /></a>
             
         </nav>
         

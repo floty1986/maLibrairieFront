@@ -18,7 +18,7 @@ public class ClientDAO implements Serializable {
     }
 
     public Client selectLogin(String email) throws SQLException {
-        String req = "select motDePasse, nom, email from client where email=?";
+        String req = "select motDePasse, nom, prenom, email from client where email=?";
         Client c = null;
         try (Connection cnt = mc.getConnection();
                 PreparedStatement stm = cnt.prepareStatement(req);) {
@@ -28,24 +28,18 @@ public class ClientDAO implements Serializable {
                 c = new Client();
                 c.setMotDePasse(rs.getString("motDePasse"));
                 c.setNom(rs.getString("nom"));
+                c.setPrenom(rs.getString("prenom"));
                 c.setEmail(email);
             }
 
         }
         return c;
     }
-
-    public void insertClient() throws SQLException {
+  ////////////////////////////////////////////
+    public void insertClient(String nom, String prenom, String genre, Date dateNaissance, String email, String telephone, String motDePasse ) throws SQLException {
         String req = "INSERT INTO Client(nom, prenom, genre, dateNaissance, email, telephone, motDePasse)VALUES (?,?,?,?,?,?,?)";
-        Client c = null;
         
-        String nom = null;
-        String prenom = null;
-        String genre = null;
-        Date dateNaissance = null;
-        String email = null;
-        String telephone = null;
-        String motDePasse = null;
+
         
         try (Connection cnt = mc.getConnection();
                 PreparedStatement stm = cnt.prepareStatement(req);
@@ -58,6 +52,7 @@ public class ClientDAO implements Serializable {
                     stm.setString(6, telephone);
                     stm.setString(7, motDePasse);
             
+                    int nb = stm.executeUpdate();
         }
         
         

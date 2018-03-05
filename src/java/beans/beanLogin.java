@@ -18,6 +18,19 @@ public class beanLogin implements Serializable {
         cDAO= new ClientDAO();
     }
     
+    public String nomPrenomClient(String email){
+        try {
+            String nomPrenomClient;
+            Client c =cDAO.selectLogin(email);
+            nomPrenomClient = c.getNom()+" "+c.getPrenom();
+            return nomPrenomClient;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+        
+    }
+    
     public boolean check( String email, String password) {
         try {
             Client c;

@@ -23,7 +23,7 @@ public class beanPanier implements Serializable {
         this.mapO = new HashMap();
         pDAO = new PanierDAO();
     }
-    
+   
     public beanPanier(ArrayList<LigneCommande> LC) {
        this.LC = LC;
     }
