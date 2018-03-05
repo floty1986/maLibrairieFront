@@ -20,7 +20,7 @@ public class OrganismePaiementDAO {
     }
     
     public List<OrganismePaiement> selectAllOrg() throws SQLException {
-        String req = "select idOrganismePaiement, nom "
+        String req = "select idOrganismePaiement, nom, typeOrganismePaiement "
                 + "from OrganismePaiement";
         Connection cnt = mc.getConnection();
         Statement stm = cnt.createStatement();
@@ -31,7 +31,8 @@ public class OrganismePaiementDAO {
             while (rs.next()) {
                 int id = rs.getInt("idOrganismePaiement");
                 String nom = rs.getString("nom");
-                OrganismePaiement ex = new OrganismePaiement(id, nom);
+                String type = rs.getString("typeOrganismePaiement");
+                OrganismePaiement ex = new OrganismePaiement(id, nom, type);
                 lop.add(ex);
             }
             rs.close();

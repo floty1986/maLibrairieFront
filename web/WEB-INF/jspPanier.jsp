@@ -15,7 +15,7 @@
         <c:forEach items="${clefs}" var="c" >
             <h1>${c}</h1>
                 <c:forEach items="${voirPanier}" var="p">
-                    <table border="1">
+                    <table border="2">
                         <tbody>
                             <tr>
                                 <td>${p}</td>
@@ -24,17 +24,9 @@
                     </table>
                 </c:forEach>
         </c:forEach>
-        <c:url value="controller?section=jspPanier" var="url03" />
+        <c:url value="controller?section=jspLivraison" var="url03" />
         <a href="${url03}">Valider panier</a>
         
-        <p>
-        
-            
-            
-            
-            
-            
-        </p>
         
         
         

@@ -345,7 +345,12 @@ public class controller extends HttpServlet {
         }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        if ("jspPanier".equals(section)) {
+        
+        
+            if ("jspPanier".equals(section)){     
+                
+            pageJSP = "/WEB-INF/jspLogin.jsp";
+            
             try {
                 HashMap<String, List<LigneCommande>> mlc = beanPa.findCommande();
                 List<String> clefs = beanPa.getLC();
@@ -389,7 +394,6 @@ public class controller extends HttpServlet {
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if ("jspPaiement".equals(section)) {
-
             try {
                 HashMap<String, List<OrganismePaiement>> mOp = beanPaie.findOrg();
                 List<String> tables = beanPaie.getDefaultOrg();

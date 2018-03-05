@@ -35,8 +35,6 @@ public class beanPanier implements Serializable {
     public List<String> getLC(){
         List<String> ligneCmd = new ArrayList();
         ligneCmd.add("Article");
-        ligneCmd.add("Quantité");
-        ligneCmd.add("Prix");
         return ligneCmd;
     }
     
