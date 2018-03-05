@@ -20,7 +20,8 @@
         </c:forEach>
          
         <c:if test="${panierVide}">
-            Panier vide !    
+            Panier vide !
+           
         </c:if>
         <c:forEach var="i" items="${list}">
             ${i.ref}/${i.qty}
@@ -30,8 +31,10 @@
             <br>        
         </c:forEach>
         
-        <a href='controller?section=panier&clear'>Vider le panier !</a>         
+        <a href="controller?section=panier&clear">Vider le panier !</a><br>          
         <c:url value="controller?section=jspLivraison" var="url03" />
         <a href="${url03}">Valider panier</a>
+        <br>
+        
     </body>
 </html>
