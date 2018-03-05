@@ -166,7 +166,7 @@ public class Ouvrage {
    
     @Override
     public String toString() {
-        return idOuvrage + "*" + titre + "*" + qtePanier;
+        return "[" + idOuvrage + "*" + titre + "*" + qtePanier + "]";
     }
     
     public String affichageLivre(){

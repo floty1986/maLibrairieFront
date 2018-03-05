@@ -136,5 +136,12 @@ public class beanPanier implements Serializable {
     public Collection<Ouvrage> listO() {
         return this.mapO.values();
     }
+
+    @Override
+    public String toString() {
+        return "";
+    }
+    
+    
     
 }
