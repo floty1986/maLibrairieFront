@@ -291,8 +291,7 @@ public class controller extends HttpServlet {
                     monPanier = new beanPanier();
                     session.setAttribute("monPanier", monPanier);
                 } catch (NamingException ex) {
-                    Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                    ex.printStackTrace();                }
             }
             if (request.getParameter("add") != null) {
                 monPanier.addO(Integer.valueOf(request.getParameter("add")), request.getParameter("add2"));
@@ -352,8 +351,22 @@ public class controller extends HttpServlet {
                 List<String> clefs = beanPa.getLC();
                 request.setAttribute("mapPanier", mlc);
                 request.setAttribute("clefs", clefs);
-                pageJSP = "/WEB-INF/jspPanier.jsp";
-                System.out.println("------------------------------------------    " + pageJSP);
+                
+                beanPanier livres = (beanPanier) session.getAttribute("monPanier");
+                String pan = livres.listO().toString();
+                session.setAttribute("livres", livres);
+                session.setAttribute("voirPanier", pan);
+                
+//                request.setAttribute("livres", livres);
+//                request.setAttribute("voirPanier", pan);
+                
+                System.out.println(session.getAttribute("voirPanier"));
+                System.out.println(session.getAttribute("livres"));
+                pageJSP = "/WEB-INF/jspPanier.jsp";     
+                
+                    
+                    
+                    
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
