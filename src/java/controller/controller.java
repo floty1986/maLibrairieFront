@@ -1,5 +1,6 @@
 package controller;
 
+import beans.GestionClient;
 import beans.beanAdresse;
 import beans.beanExpediteur;
 import beans.beanLogin;
@@ -8,7 +9,7 @@ import beans.beanPanier;
 //import beans.beanPanier;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Enumeration;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import obj.Client;
 import obj.Expediteur;
 import obj.LigneCommande;
 import obj.OrganismePaiement;
@@ -46,12 +48,13 @@ public class controller extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
+        String section = request.getParameter("section");
 
 //         String pageJSP = "/WEB-INF/jspLogin.jsp";
 //        String pageJSP = "/WEB-INF/jspPanier.jsp";
 //        String pageJSP = "/WEB-INF/jspPaiement.jsp";
         String pageJSP;
-        if (request.getParameter("doIt") == null) {
+        if (request.getParameter("doIt") == null ) {
             pageJSP = "/WEB-INF/jspHome.jsp";
         } else {
             if (getServletContext().getAttribute("beanLogin") == null) {
@@ -116,7 +119,7 @@ public class controller extends HttpServlet {
                 }
             }
         }
-        String section = request.getParameter("section");
+        
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
         if (getServletContext().getAttribute("gestionOuvrages") == null) {
@@ -169,9 +172,9 @@ public class controller extends HttpServlet {
             }
         }
         beanPaiement beanPaie = (beanPaiement) getServletContext().getAttribute("beanPaiement");
-        
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- if (getServletContext().getAttribute("beanAdresse") == null) {
+        if (getServletContext().getAttribute("beanAdresse") == null) {
             try {
                 getServletContext().setAttribute("beanAdresse", new beanAdresse());
             } catch (NamingException ex) {
@@ -179,10 +182,19 @@ public class controller extends HttpServlet {
 
             }
         }
-        beanAdresse bAdresse = (beanAdresse) getServletContext().getAttribute("beanAdresse");     
-        
-    
-//////////////////////////////////////////////////////////////////////////////////////////////////       
+        beanAdresse bAdresse = (beanAdresse) getServletContext().getAttribute("beanAdresse");
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+        if (getServletContext().getAttribute("gestionClient") == null) {
+            try {
+                getServletContext().setAttribute("gestionClient", new GestionClient());
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+            }
+        }
+        GestionClient gestionClient = (GestionClient) getServletContext().getAttribute("gestionClient");
+
+////////////////////////////////////////////////////////////////////////////////////////////////////            
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
             Cookie c = getCookie(request.getCookies(), "login");
@@ -244,10 +256,20 @@ public class controller extends HttpServlet {
             }
         }
 
-        
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if ("catalogueAccueil".equals(section)) {
+            pageJSP = "/WEB-INF/catalogueAccueil.jsp";
+        }
+        if ("catalogueTitre".equals(section)) {
+            try {
+                List<Ouvrage> lo = gestionOuvrages.findOuvragebyTitre(request.getParameter("titreRecherche"));
+                request.setAttribute("titres", lo);
+                pageJSP = "/WEB-INF/catalogueParTitre.jsp";
+            } catch (SQLException ex) {
+                Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
         if ("catalogue".equals(section)) {
             try {
                 HashMap<String, List<Ouvrage>> mo = gestionOuvrages.findOuvrages();
@@ -272,6 +294,11 @@ public class controller extends HttpServlet {
             }
             if (request.getParameter("add") != null) {
                 monPanier.addO(Integer.valueOf(request.getParameter("add")), request.getParameter("add2"));
+//                System.out.println("panier : "+monPanier.listO().toString());
+//                beanPanier liste =  (beanPanier) session.getAttribute("monPanier");
+//                String pan = liste.listO().toString();
+//                System.out.println("liste : " +pan);
+
             }
             if (request.getParameter("dec") != null) {
                 monPanier.decO(Integer.valueOf(request.getParameter("dec")));
@@ -296,9 +323,23 @@ public class controller extends HttpServlet {
                     ex.printStackTrace();
                 }
             }
-            
+
             request.setAttribute("panierVide", monPanier.isEmptyO());
             request.setAttribute("list", monPanier.listO());
+        }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if ("afficher-client".equals(section)) {
+            try {
+                List<Client> lc = gestionClient.findClient();
+
+                request.setAttribute("listeClient", lc);
+                pageJSP = "/WEB-INF/profilClient.jsp";
+                
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                
+            }
         }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

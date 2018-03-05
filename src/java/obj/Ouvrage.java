@@ -161,9 +161,12 @@ public class Ouvrage {
         return v;
     }
 
+    
+
+   
     @Override
     public String toString() {
-        return "ID : " + idOuvrage + ", titre : " + titre;
+        return idOuvrage + "*" + titre + "*" + qtePanier;
     }
     
     public String affichageLivre(){

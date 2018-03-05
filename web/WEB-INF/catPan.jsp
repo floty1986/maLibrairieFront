@@ -8,12 +8,13 @@
     </head>
     <body>
         <h1>CATALOGUE</h1>
-        <jsp:include page="/controller?section=catalogue" flush="true"/>
+        <jsp:include page="/controller?section=catalogueAccueil" flush="true"/>
         <hr>       
         <h2>PANIER</h2>
         <jsp:include page="/controller?section=affichePanier" flush="true" />
         <hr>
         <c:url value="controller?section=login" var="url01" />                                    
         <a href="${url01}"><input type="submit" value="LOGIN" name="Connexion" /></a>
+        <a href = 'controller?section=jspPanier'><input type="submit" value="Voir Panier !" name="voirPanier" /></a>
     </body>
 </html>
