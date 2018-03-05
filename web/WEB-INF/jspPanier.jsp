@@ -14,14 +14,18 @@
         
         <c:forEach items="${clefs}" var="c" >
             <h1>${c}</h1>
-            <ul>
                 <c:forEach items="${voirPanier}" var="p">
-                    <li>
-                        <a href="#">${p}</a>
-                    </li>
+                    <table border="1">
+                        <tbody>
+                            <tr>
+                                <td>${p}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </c:forEach>
-            </ul>
         </c:forEach>
+        <c:url value="controller?section=jspPanier" var="url03" />
+        <a href="${url03}">Valider panier</a>
 
     </body>
 </html>

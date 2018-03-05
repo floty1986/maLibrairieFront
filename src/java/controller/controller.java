@@ -355,6 +355,7 @@ public class controller extends HttpServlet {
                 session.setAttribute("livres", livres);
                 session.setAttribute("voirPanier", pan);
                 
+                
 //                request.setAttribute("livres", livres);
 //                request.setAttribute("voirPanier", pan);
                 
