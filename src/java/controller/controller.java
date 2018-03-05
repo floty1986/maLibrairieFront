@@ -51,7 +51,7 @@ public class controller extends HttpServlet {
 //        String pageJSP = "/WEB-INF/jspPaiement.jsp";
         String pageJSP = "/WEB-INF/jspHome.jsp";
         String section = request.getParameter("section");
-
+        
         if (getServletContext().getAttribute("gestionOuvrages") == null) {
             try {
                 getServletContext().setAttribute("gestionOuvrages", new GestionOuvrages());
@@ -82,7 +82,6 @@ public class controller extends HttpServlet {
         }
         beanPanier beanPa = (beanPanier) getServletContext().getAttribute("beanPanier");
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         if (getServletContext().getAttribute("beanLogin") == null) {
             try {
                 getServletContext().setAttribute("beanLogin", new beanLogin());
@@ -103,10 +102,9 @@ public class controller extends HttpServlet {
         }
         beanPaiement beanPaie = (beanPaiement) getServletContext().getAttribute("beanPaiement");
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
-
+            
             if (request.getParameter("doIt") != null ) {
                                                 
                     if (bLogin.check(request.getParameter("login"), request.getParameter("password"))) {
@@ -227,7 +225,6 @@ public class controller extends HttpServlet {
                 request.setAttribute("mapPanier", mlc);
                 request.setAttribute("clefs", clefs);
                 pageJSP = "/WEB-INF/jspPanier.jsp";
-                System.out.println("------------------------------------------    "+pageJSP);
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }

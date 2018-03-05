@@ -12,4 +12,6 @@
                 </c:forEach>
             </ul>
         </c:forEach>
+            <c:url value="controller?section=jspPanier" var="url03" />
+        <a href="${url03}">Voir panier</a>
    
