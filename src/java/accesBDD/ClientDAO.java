@@ -35,17 +35,10 @@ public class ClientDAO implements Serializable {
         return c;
     }
   ////////////////////////////////////////////
-    public void insertClient(String nom, String prenom,) throws SQLException {
+    public void insertClient(String nom, String prenom, String genre, Date dateNaissance, String email, String telephone, String motDePasse ) throws SQLException {
         String req = "INSERT INTO Client(nom, prenom, genre, dateNaissance, email, telephone, motDePasse)VALUES (?,?,?,?,?,?,?)";
-        Client c = null;
         
-        String nom = null;
-        String prenom = null;
-        String genre = null;
-        Date dateNaissance = null;
-        String email = null;
-        String telephone = null;
-        String motDePasse = null;
+
         
         try (Connection cnt = mc.getConnection();
                 PreparedStatement stm = cnt.prepareStatement(req);

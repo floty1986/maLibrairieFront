@@ -15,18 +15,7 @@ public class AdresseDAO implements Serializable {
         mc = new MaConnexion();
     }
 
- //String paramNom = request.getParameter( "nom" );
- //String paramPrenom = request.getParameter( "prenom" );
- //String paramGenre = request.getParameter( "" );
- //String paramDateNaissance = request.getParameter( "email" );
- //String paramEmail = request.getParameter( "email" );
- //String paramMotDePasse = request.getParameter( "email" );
- //String paramMotDePasseConf = request.getParameter( "email" );
- 
- // int NvxClientEtape1 = statement.executeUpdate( "INSERT INTO Client (email, mot_de_passe, nom, date_inscription) "
- //      + "VALUES ('" + paramEmail + "', MD5('" + paramMotDePasse + "'), '" + paramNom + "', NOW());" );
-
-    public void insertAdresse(int idClientCreer,int idClientUtiliser,String typeAdresse,String numVoie,String typeVoie,String nomVoie,String complement,String codePostal,String ville,String pays,String nom,String prenom, String email,String telephone) throws SQLException {
+    public void insertAdresse(int idClientCreer, int idClientUtiliser, String typeAdresse, String numVoie, String typeVoie, String nomVoie, String complement, String codePostal, String ville, String pays, String nom, String prenom, String email, String telephone) throws SQLException {
         String req = "INSERT INTO Adresse(idClientCreer, idClientUtiliser, typeAdresse, numVoie, typeVoie, nomVoie, complement, codePostal, ville, pays, nom, prenom, email, telephone ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     
         try (Connection cnt = mc.getConnection();
