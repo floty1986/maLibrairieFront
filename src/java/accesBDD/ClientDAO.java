@@ -21,7 +21,7 @@ public class ClientDAO implements Serializable {
     }
 
     public Client selectLogin(String email) throws SQLException {
-        String req = "select motDePasse, nom, prenom, email from client where email=?";
+        String req = "select  nom, prenom, genre, dateNaissance, email, telephone, motDePasse from client where email=?";
         Client c = null;
         try (Connection cnt = mc.getConnection();
                 PreparedStatement stm = cnt.prepareStatement(req);) {
@@ -29,39 +29,40 @@ public class ClientDAO implements Serializable {
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 c = new Client();
-                c.setMotDePasse(rs.getString("motDePasse"));
                 c.setNom(rs.getString("nom"));
                 c.setPrenom(rs.getString("prenom"));
+                c.setGenre(rs.getString("genre"));
+                c.setDateNaissance(rs.getDate("dateNaissance"));
                 c.setEmail(email);
-            }
+                c.setTelephone(rs.getString("telephone"));
+                c.setMotDePasse(rs.getString("motDePasse"));
 
+            }            
         }
         return c;
-    }
-  ////////////////////////////////////////////
-    public void insertClient(String nom, String prenom, String genre, Date dateNaissance, String email, String telephone, String motDePasse ) throws SQLException {
-        String req = "INSERT INTO Client(nom, prenom, genre, dateNaissance, email, telephone, motDePasse)VALUES (?,?,?,?,?,?,?)";
-        
 
-        
-        try (Connection cnt = mc.getConnection();
-                PreparedStatement stm = cnt.prepareStatement(req);
-                ){
-                    stm.setString(1, nom);
-                    stm.setString(2, prenom);
-                    stm.setString(3, genre);
-                    stm.setDate(4, (java.sql.Date) dateNaissance);
-                    stm.setString(5, email);
-                    stm.setString(6, telephone);
-                    stm.setString(7, motDePasse);
-            
-                    int nb = stm.executeUpdate();
-        }
-        
-        
-        
     }
-    
+
+    ////////////////////////////////////////////
+
+    public void insertClient(String nom, String prenom, String genre, Date dateNaissance, String email, String telephone, String motDePasse) throws SQLException {
+        String req = "INSERT INTO Client(nom, prenom, genre, dateNaissance, email, telephone, motDePasse)VALUES (?,?,?,?,?,?,?)";
+
+        try (Connection cnt = mc.getConnection();
+                PreparedStatement stm = cnt.prepareStatement(req);) {
+            stm.setString(1, nom);
+            stm.setString(2, prenom);
+            stm.setString(3, genre);
+            stm.setDate(4, (java.sql.Date) dateNaissance);
+            stm.setString(5, email);
+            stm.setString(6, telephone);
+            stm.setString(7, motDePasse);
+
+            int nb = stm.executeUpdate();
+        }
+
+    }
+
     public List<Client> selectClient() throws SQLException {
         String req = "select nom, prenom, email, motDePasse "
                 + "from Client";
@@ -70,7 +71,7 @@ public class ClientDAO implements Serializable {
         List<Client> lc = new ArrayList<>();
         try {
             ResultSet rs = stm.executeQuery(req);
-            
+
             while (rs.next()) {
                 String nom = rs.getString("nom");
                 String prenom = rs.getString("prenom");
@@ -84,11 +85,11 @@ public class ClientDAO implements Serializable {
                 lc.add(c);
             }
             rs.close();
-        }finally{
-            
-                cnt.close();
-            
-        }        
+        } finally {
+
+            cnt.close();
+
+        }
         return lc;
     }
 

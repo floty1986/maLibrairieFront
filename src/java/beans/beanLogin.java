@@ -46,5 +46,18 @@ public class beanLogin implements Serializable {
             ex.printStackTrace();
         }
         return false;
-    }    
+    }
+    
+    public Client profilClient(String email){
+        try {
+            
+            Client c =cDAO.selectLogin(email);
+            
+            return c;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+        
+    }
 }
