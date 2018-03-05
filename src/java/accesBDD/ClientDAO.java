@@ -5,7 +5,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.naming.NamingException;
 import obj.Client;
 
@@ -57,6 +60,36 @@ public class ClientDAO implements Serializable {
         
         
         
+    }
+    
+    public List<Client> selectClient() throws SQLException {
+        String req = "select nom, prenom, email, motDePasse "
+                + "from Client";
+        Connection cnt = mc.getConnection();
+        Statement stm = cnt.createStatement();
+        List<Client> lc = new ArrayList<>();
+        try {
+            ResultSet rs = stm.executeQuery(req);
+            
+            while (rs.next()) {
+                String nom = rs.getString("nom");
+                String prenom = rs.getString("prenom");
+                String email = rs.getString("email");
+                String motDePasse = rs.getString("motDePasse");
+                Client c = new Client();
+                c.setNom(nom);
+                c.setPrenom(prenom);
+                c.setEmail(email);
+                c.setMotDePasse(motDePasse);
+                lc.add(c);
+            }
+            rs.close();
+        }finally{
+            
+                cnt.close();
+            
+        }        
+        return lc;
     }
 
 }
