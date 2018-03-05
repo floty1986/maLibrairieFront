@@ -137,11 +137,7 @@ public class beanPanier implements Serializable {
         return this.mapO.values();
     }
 
-    @Override
-    public String toString() {
-        return "";
-    }
-    
+  
     
     
 }
