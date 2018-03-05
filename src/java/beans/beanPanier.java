@@ -18,12 +18,12 @@ public class beanPanier implements Serializable {
     private PanierDAO pDAO;
     ArrayList<LigneCommande> LC;
     
-    public beanPanier() {
+    public beanPanier() throws NamingException {
         this.map= new HashMap();
         this.mapO = new HashMap();
-    public beanPanier() throws NamingException {
         pDAO = new PanierDAO();
     }
+    
     public beanPanier(ArrayList<LigneCommande> LC) {
        this.LC = LC;
     }

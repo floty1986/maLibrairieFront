@@ -7,9 +7,11 @@
                 <c:forEach items="${mapOuvrages.get(c)}" var="p">
                     <li>
                         
-                        <a href='controller?section=panier&add=${p.idOuvrage}&add2=${p.titre}'>${p}</a>
+                        <a href='controller?section=panier&add=${p.idOuvrage}&add2=${p.titre}'>ID : ${p.idOuvrage}, Titre : ${p.titre}</a>
                     </li>
                 </c:forEach>
             </ul>
         </c:forEach>
+             <c:url value="controller?section=jspPanier" var="url03" />
+        <a href="${url03}">Valider panier</a>
    

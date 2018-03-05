@@ -38,21 +38,24 @@ public class OuvrageDAO implements Serializable {
         return lo;
     }
 
-    public Ouvrage selectOuvrageById(int idOuvrage) throws SQLException {
-        String req = "SELECT idOuvrage, titre FROM Ouvrage where idOuvrage = ? ORDER BY titre";
+    public List<Ouvrage> selectOuvrageByTitre(String titre) throws SQLException {
+        String req = "SELECT idOuvrage, titre FROM Ouvrage where titre LIKE ? ORDER BY titre";
 
         Ouvrage o = null;
         try (Connection cnt = mc.getConnection();
                 PreparedStatement stm = cnt.prepareStatement(req);) {
-            stm.setInt(1, idOuvrage);
+            String titrePattern = "%" + titre + "%";
+            stm.setString(1, titrePattern);
             ResultSet rs = stm.executeQuery();
-            if (rs.next()) {
-                idOuvrage = rs.getInt("idOuvrage");
-                String titre = rs.getString("titre");
+            List<Ouvrage> lo = new ArrayList<>();
+            while (rs.next()) {
+                titre = rs.getString("titre");
+                int idOuvrage = rs.getInt("idOuvrage");
                 o = new Ouvrage(idOuvrage, titre);
+                lo.add(o);
             }
+            return lo;
         }
-        return o;
     }
 
 }

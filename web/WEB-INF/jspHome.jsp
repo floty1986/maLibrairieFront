@@ -11,8 +11,8 @@
             <c:url value="controller?section=login" var="url01" />
             <c:import url="${url01}" />
             
-            <c:url value="controller?section=catalogue" var="url02" />
-            <a href="${url02}">Catalogue</a>
+            <c:url value="controller?section=catalogueAccueil" var="url02" />
+            <a href="${url02}">Accueil Catalogue</a>
             
         </nav>
         

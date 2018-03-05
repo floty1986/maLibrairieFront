@@ -49,6 +49,11 @@ public class GestionOuvrages implements Serializable {
         return mo;
     }
     
+    public List<Ouvrage> findOuvragebyTitre (String titre) throws SQLException {
+        List<Ouvrage> lo = oDAO.selectOuvrageByTitre(titre);
+        return lo;
+    }
+    
     
     
 }
