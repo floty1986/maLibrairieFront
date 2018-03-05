@@ -16,6 +16,7 @@ public class Ouvrage {
     private String statut;
     private String theme;
     private String sousTheme;
+    private int qtePanier;
 
     public Ouvrage() {
     }
@@ -23,6 +24,17 @@ public class Ouvrage {
     public Ouvrage(int idOuvrage, String titre) {
         this.idOuvrage = idOuvrage;
         this.titre = titre;
+    }
+
+    public Ouvrage(int idOuvrage, int qtePanier) {
+        this.idOuvrage = idOuvrage;
+        this.qtePanier = qtePanier;
+    }
+
+    public Ouvrage(int idOuvrage, String titre, int qtePanier) {
+        this.idOuvrage = idOuvrage;
+        this.titre = titre;
+        this.qtePanier = qtePanier;
     }
     
     
@@ -132,6 +144,16 @@ public class Ouvrage {
         this.sousTheme = sousTheme;
     }
 
+    public int getQtePanier() {
+        return qtePanier;
+    }
+
+    public void setQtePanier(int qtePanier) {
+        this.qtePanier = qtePanier;
+    }
+
+    
+    
     public Vector<Ouvrage> getVector() {
         Vector v = new Vector();
         v.add(this.idOuvrage);
@@ -144,4 +166,7 @@ public class Ouvrage {
         return "ID : " + idOuvrage + ", titre : " + titre;
     }
     
+    public void changeQty( int qty) {
+        this.qtePanier+= qty;
+    }
 }
