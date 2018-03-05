@@ -9,7 +9,6 @@ import beans.beanPanier;
 //import beans.beanPanier;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -71,9 +70,11 @@ public class controller extends HttpServlet {
                 String login = bLogin.nomPrenomClient(request.getParameter("login"));
                 request.setAttribute("welcome", login);
                 Cookie c = new Cookie("login", login);
+                Cookie cEmail = new Cookie("email", request.getParameter("login"));
 //                c.setMaxAge(0);
 //                c.setPath("/");
                 response.addCookie(c);
+                response.addCookie(cEmail);
                 Cookie c2 = new Cookie("try", "");
                 c2.setMaxAge(0);
                 response.addCookie(c2);
@@ -228,7 +229,7 @@ public class controller extends HttpServlet {
                     } else {
                         cTry.setValue(cTry.getValue() + "*");
                     }
-                    c.setMaxAge(90);
+                    c.setMaxAge(5);
                     System.out.println(c.getValue());
                     response.addCookie(c);
 
@@ -330,17 +331,18 @@ public class controller extends HttpServlet {
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if ("afficher-client".equals(section)) {
-            try {
-                List<Client> lc = gestionClient.findClient();
-
-                request.setAttribute("listeClient", lc);
-                pageJSP = "/WEB-INF/profilClient.jsp";
-                
-
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-                
-            }
+            Cookie cl = getCookie(request.getCookies(), "email");
+            Client c = bLogin.profilClient(cl.getValue());
+            request.setAttribute("infoClientNom", c.getNom());
+            request.setAttribute("infoClientPrenom", c.getPrenom());
+            request.setAttribute("infoClientGenre", c.getGenre());
+            request.setAttribute("infoClientDateNaissance", c.getDateNaissance());
+            request.setAttribute("infoClientEmail", c.getEmail());
+            request.setAttribute("infoClientTelephone", c.getTelephone());
+            request.setAttribute("infoClientMotDePasse", c.getMotDePasse());
+            request.setAttribute("infoClientNomStatut", c.getNomStatut());
+            
+            pageJSP = "/WEB-INF/profilClient.jsp";
         }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
