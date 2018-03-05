@@ -31,9 +31,9 @@
             <br>        
         </c:forEach>
         
-        <a href="controller?section=panier&clear">Vider le panier !</a><br>          
+        <a href="controller?section=panier&clear"><input type="submit" value="Vider le panier !" name="vider" /></a><br>          
         <c:url value="controller?section=jspLivraison" var="url03" />
-        <a href="${url03}">Valider panier</a>
+        <a href="${url03}"><input type="submit" value="Valider le panier !" name="valider" /></a>
         <br>
         
     </body>

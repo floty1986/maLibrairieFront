@@ -277,9 +277,10 @@ public class controller extends HttpServlet {
                     monPanier = new beanPanier();
                     session.setAttribute("monPanier", monPanier);
                 } catch (NamingException ex) {
-                    Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
+                    ex.printStackTrace();
                 }
             }
+            
             request.setAttribute("panierVide", monPanier.isEmptyO());
             request.setAttribute("list", monPanier.listO());
         }
