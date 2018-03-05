@@ -351,6 +351,8 @@ public class controller extends HttpServlet {
                 request.setAttribute("clefs", clefs);
                 
                 beanPanier livres = (beanPanier) session.getAttribute("monPanier");
+                
+                
                 String pan = livres.listO().toString();
                 session.setAttribute("livres", livres);
                 session.setAttribute("voirPanier", pan);
