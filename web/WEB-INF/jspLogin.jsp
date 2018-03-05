@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,6 +16,13 @@
             <input type='submit' name='doIt' value='Ok' />
         </form>
         <font color='red'>${msg}</font>  
+        
+        <c:url value="controller?section=jspCreerNvxCompteClientEtape1" var="url01"/>
+        <a href="${url01}"><input type="submit" value="Créer un nouveau compte client" name="NvxCompte1" /></a>
+        
+        
+        
+
         
     </body>
 </html>

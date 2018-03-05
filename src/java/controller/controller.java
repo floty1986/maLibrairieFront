@@ -1,6 +1,7 @@
 package controller;
 
 import beans.beanAdresse;
+import beans.beanClient;
 import beans.beanExpediteur;
 import beans.beanLogin;
 import beans.beanPaiement;
@@ -8,6 +9,8 @@ import beans.beanPanier;
 //import beans.beanPanier;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -169,9 +172,9 @@ public class controller extends HttpServlet {
             }
         }
         beanPaiement beanPaie = (beanPaiement) getServletContext().getAttribute("beanPaiement");
-        
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- if (getServletContext().getAttribute("beanAdresse") == null) {
+        if (getServletContext().getAttribute("beanAdresse") == null) {
             try {
                 getServletContext().setAttribute("beanAdresse", new beanAdresse());
             } catch (NamingException ex) {
@@ -179,9 +182,8 @@ public class controller extends HttpServlet {
 
             }
         }
-        beanAdresse bAdresse = (beanAdresse) getServletContext().getAttribute("beanAdresse");     
-        
-    
+        beanAdresse bAdresse = (beanAdresse) getServletContext().getAttribute("beanAdresse");
+
 //////////////////////////////////////////////////////////////////////////////////////////////////       
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
@@ -243,9 +245,6 @@ public class controller extends HttpServlet {
 
             }
         }
-
-        
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if ("catalogue".equals(section)) {
@@ -333,7 +332,7 @@ public class controller extends HttpServlet {
             try {
                 HashMap<String, List<OrganismePaiement>> mOp = beanPaie.findOrg();
                 List<String> tables = beanPaie.getDefaultOrg();
-                request.setAttribute("mapOrganisme", mOp);
+                request.setAttribute("mapOrganisme", mOp);                
                 request.setAttribute("tables", tables);
                 pageJSP = "/WEB-INF/jspPaiement.jsp";
             } catch (SQLException ex) {
@@ -342,16 +341,36 @@ public class controller extends HttpServlet {
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//  //en attente de lien avec page login Flo
         if ("jspCreerNvxCompteClientEtape1".equals(section)) {
-            pageJSP = "WEB-INF/jspCreerNvxCompteClientEtape1.jsp";
+            
+            try {
+                
+                String nom = request.getParameter("nom");
+                String prenom = request.getParameter("prenom");
+                String genre = request.getParameter("genre");
+                String dateNaissance = request.getParameter("dateNaissance");
+                String email = request.getParameter("email");
+                String telephone = request.getParameter("telephone");
+                beanClient c = new beanClient();
+                try {
+                    c.insertClient(nom, prenom, genre, dateNaissance, email, telephone, telephone);
+                } catch (SQLException | ParseException ex) {
+                    ex.printStackTrace();
+                }
+                pageJSP = "/WEB-INF/jspCreerNvxCompteClientEtape1.jsp";
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+            }
+        }    
+                
+            
+//        }
+//////////////////////////////////////////////////////           
+
+        if ("jspCreerNvxCompteEtape2".equals(section)) {
+            pageJSP = "/WEB-INF/jspCreerNvxCompteEtape2.jsp";
 
         }
-//
-//        if ("jspCreerUnNvxCompteEtape2".equals(section)) {
-//            pageJSP = "WEB-INF/jspCreerUnNvxCompteEtape2.jsp";
-//
-//        }
 //       
 //        
 //  // en attente de lien avec la page facturation de Momo      
