@@ -91,6 +91,11 @@ public class Client implements Serializable {
     public void setNomStatut(String nomStatut) {
         this.nomStatut = nomStatut;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" + "idClient=" + idClient + ", nom=" + nom + ", prenom=" + prenom + ", genre=" + genre + ", dateNaissance=" + dateNaissance + ", email=" + email + ", telephone=" + telephone + ", motDePasse=" + motDePasse + ", nomStatut=" + nomStatut + '}';
+    }
     
     
     

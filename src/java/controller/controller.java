@@ -1,5 +1,6 @@
 package controller;
 
+import beans.beanAdresse;
 import beans.beanExpediteur;
 import beans.beanLogin;
 import beans.beanPaiement;
@@ -168,8 +169,20 @@ public class controller extends HttpServlet {
             }
         }
         beanPaiement beanPaie = (beanPaiement) getServletContext().getAttribute("beanPaiement");
+        
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ if (getServletContext().getAttribute("beanAdresse") == null) {
+            try {
+                getServletContext().setAttribute("beanAdresse", new beanAdresse());
+            } catch (NamingException ex) {
+                ex.printStackTrace();
 
+            }
+        }
+        beanAdresse bAdresse = (beanAdresse) getServletContext().getAttribute("beanAdresse");     
+        
+    
+//////////////////////////////////////////////////////////////////////////////////////////////////       
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
             Cookie c = getCookie(request.getCookies(), "login");
@@ -230,6 +243,10 @@ public class controller extends HttpServlet {
 
             }
         }
+
+        
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if ("catalogue".equals(section)) {
             try {
@@ -327,10 +344,10 @@ public class controller extends HttpServlet {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //  //en attente de lien avec page login Flo
-//        if ("pasdecompte".equals(section)) {
-//            pageJSP = "WEB-INF/jspCreerNvxCompteClientEtape1.jsp";
-//
-//        }
+        if ("jspCreerNvxCompteClientEtape1".equals(section)) {
+            pageJSP = "WEB-INF/jspCreerNvxCompteClientEtape1.jsp";
+
+        }
 //
 //        if ("jspCreerUnNvxCompteEtape2".equals(section)) {
 //            pageJSP = "WEB-INF/jspCreerUnNvxCompteEtape2.jsp";

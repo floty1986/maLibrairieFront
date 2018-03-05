@@ -35,18 +35,11 @@ public class ClientDAO implements Serializable {
         }
         return c;
     }
-
-    public void insertClient() throws SQLException {
+  ////////////////////////////////////////////
+    public void insertClient(String nom, String prenom, String genre, Date dateNaissance, String email, String telephone, String motDePasse ) throws SQLException {
         String req = "INSERT INTO Client(nom, prenom, genre, dateNaissance, email, telephone, motDePasse)VALUES (?,?,?,?,?,?,?)";
-        Client c = null;
         
-        String nom = null;
-        String prenom = null;
-        String genre = null;
-        Date dateNaissance = null;
-        String email = null;
-        String telephone = null;
-        String motDePasse = null;
+
         
         try (Connection cnt = mc.getConnection();
                 PreparedStatement stm = cnt.prepareStatement(req);
@@ -59,6 +52,7 @@ public class ClientDAO implements Serializable {
                     stm.setString(6, telephone);
                     stm.setString(7, motDePasse);
             
+                    int nb = stm.executeUpdate();
         }
         
         
