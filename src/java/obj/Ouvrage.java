@@ -166,6 +166,10 @@ public class Ouvrage {
         return "ID : " + idOuvrage + ", titre : " + titre;
     }
     
+    public String affichageLivre(){
+        return "idOuvrage : "+ idOuvrage + " + Titre : "+ titre +" prix : "+ prix;
+    }
+    
     public void changeQty( int qty) {
         this.qtePanier+= qty;
     }
