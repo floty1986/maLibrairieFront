@@ -1,8 +1,4 @@
-<%-- 
-    Document   : newjsp01
-    Created on : 27 févr. 2018, 14:16:50
-    Author     : cdi202
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,8 +13,7 @@
         
       
         
-        <p>Madame <input type="radio" name="genre" value="" disabled=""/> 
-           Monsieur <input type="radio" name="genre" value="" disabled="" />    </p>
+        
         <p>Nom <input type="text" name="nom" value="" />  </p>
         <p>Prénom <input type="text" name="prenom" value="" /> </p>
         <p>E-mail <input type="text" name="email" value="" /> </p>

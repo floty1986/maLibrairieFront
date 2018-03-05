@@ -1,5 +1,6 @@
 package controller;
 
+import beans.GestionClient;
 import beans.beanAdresse;
 import beans.beanExpediteur;
 import beans.beanLogin;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import obj.Client;
 import obj.Expediteur;
 import obj.LigneCommande;
 import obj.OrganismePaiement;
@@ -45,12 +47,13 @@ public class controller extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
+        String section = request.getParameter("section");
 
 //         String pageJSP = "/WEB-INF/jspLogin.jsp";
 //        String pageJSP = "/WEB-INF/jspPanier.jsp";
 //        String pageJSP = "/WEB-INF/jspPaiement.jsp";
         String pageJSP;
-        if (request.getParameter("doIt") == null) {
+        if (request.getParameter("doIt") == null ) {
             pageJSP = "/WEB-INF/jspHome.jsp";
         } else {
             if (getServletContext().getAttribute("beanLogin") == null) {
@@ -115,7 +118,7 @@ public class controller extends HttpServlet {
                 }
             }
         }
-        String section = request.getParameter("section");
+        
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
         if (getServletContext().getAttribute("gestionOuvrages") == null) {
@@ -168,9 +171,9 @@ public class controller extends HttpServlet {
             }
         }
         beanPaiement beanPaie = (beanPaiement) getServletContext().getAttribute("beanPaiement");
-        
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- if (getServletContext().getAttribute("beanAdresse") == null) {
+        if (getServletContext().getAttribute("beanAdresse") == null) {
             try {
                 getServletContext().setAttribute("beanAdresse", new beanAdresse());
             } catch (NamingException ex) {
@@ -178,10 +181,19 @@ public class controller extends HttpServlet {
 
             }
         }
-        beanAdresse bAdresse = (beanAdresse) getServletContext().getAttribute("beanAdresse");     
-        
-    
-//////////////////////////////////////////////////////////////////////////////////////////////////       
+        beanAdresse bAdresse = (beanAdresse) getServletContext().getAttribute("beanAdresse");
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+        if (getServletContext().getAttribute("gestionClient") == null) {
+            try {
+                getServletContext().setAttribute("gestionClient", new GestionClient());
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+            }
+        }
+        GestionClient gestionClient = (GestionClient) getServletContext().getAttribute("gestionClient");
+
+////////////////////////////////////////////////////////////////////////////////////////////////////            
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
             Cookie c = getCookie(request.getCookies(), "login");
@@ -243,9 +255,6 @@ public class controller extends HttpServlet {
             }
         }
 
-        
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if ("catalogue".equals(section)) {
             try {
@@ -296,9 +305,23 @@ public class controller extends HttpServlet {
                     ex.printStackTrace();
                 }
             }
-            
+
             request.setAttribute("panierVide", monPanier.isEmptyO());
             request.setAttribute("list", monPanier.listO());
+        }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if ("afficher-client".equals(section)) {
+            try {
+                List<Client> lc = gestionClient.findClient();
+
+                request.setAttribute("listeClient", lc);
+                pageJSP = "/WEB-INF/profilClient.jsp";
+                
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                
+            }
         }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
