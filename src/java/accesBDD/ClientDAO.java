@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +23,7 @@ public class ClientDAO implements Serializable {
     }
 
     public Client selectLogin(String email) throws SQLException {
-        String req = "select  nom, prenom, genre, dateNaissance, email, telephone, motDePasse from client where email=?";
+        String req = "select idClient, nom, prenom, genre, dateNaissance, email, telephone, motDePasse from client where email=?";
         Client c = null;
         try (Connection cnt = mc.getConnection();
                 PreparedStatement stm = cnt.prepareStatement(req);) {
@@ -29,6 +31,7 @@ public class ClientDAO implements Serializable {
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 c = new Client();
+                c.setIdClient(Integer.valueOf(rs.getString("idClient")));
                 c.setNom(rs.getString("nom"));
                 c.setPrenom(rs.getString("prenom"));
                 c.setGenre(rs.getString("genre"));
@@ -63,34 +66,34 @@ public class ClientDAO implements Serializable {
 
     }
 
-    public List<Client> selectClient() throws SQLException {
-        String req = "select nom, prenom, email, motDePasse "
-                + "from Client";
-        Connection cnt = mc.getConnection();
-        Statement stm = cnt.createStatement();
-        List<Client> lc = new ArrayList<>();
-        try {
-            ResultSet rs = stm.executeQuery(req);
-
-            while (rs.next()) {
-                String nom = rs.getString("nom");
-                String prenom = rs.getString("prenom");
-                String email = rs.getString("email");
-                String motDePasse = rs.getString("motDePasse");
-                Client c = new Client();
-                c.setNom(nom);
-                c.setPrenom(prenom);
-                c.setEmail(email);
-                c.setMotDePasse(motDePasse);
-                lc.add(c);
+    public void modifierClient(int idClient, String nom, String prenom, String genre, String dateNaissance, String email, String telephone, String motDePasse) throws SQLException, ParseException{
+        String req ="UPDATE Client SET nom=?, prenom=?, genre=?, dateNaissance=?, email=?, telephone=?, motDePasse=? where idClient like ?";
+        
+        try (Connection cnt = mc.getConnection();
+                PreparedStatement stm = cnt.prepareStatement(req);) {
+            
+            stm.setString(1, nom);
+            stm.setString(2, prenom);
+            stm.setString(3, genre);
+            if (dateNaissance == null || "".equals(dateNaissance)) {
+                stm.setNull(4, java.sql.Types.DATE);
+            } else {
+                SimpleDateFormat dateModel = new SimpleDateFormat("dd-MM-yyyy");
+                java.util.Date dateFormatDate = dateModel.parse(dateNaissance);
+                java.sql.Date sqlDate = new java.sql.Date(dateFormatDate.getTime());                 
+                stm.setDate(4, sqlDate);
             }
-            rs.close();
-        } finally {
+            stm.setString(5, email);
+            stm.setString(6, telephone);
+            stm.setString(7, motDePasse);
+            stm.setInt(8, idClient);
 
-            cnt.close();
-
+            int nb = stm.executeUpdate();
+            System.out.println("nombre de ligne affectée : "+nb);
+            
+            
+            
         }
-        return lc;
     }
 
 }

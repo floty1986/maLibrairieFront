@@ -3,7 +3,9 @@ package beans;
 import accesBDD.AdresseDAO;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.List;
 import javax.naming.NamingException;
+import obj.Adresse;
 
 
 public class beanAdresse implements Serializable {
@@ -20,6 +22,11 @@ public class beanAdresse implements Serializable {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+    
+    public List<Adresse> adresseClient(int idClient,String typeAdresse) throws SQLException{
+        List<Adresse> mesAdresses = aDAO.adresseClient(idClient, typeAdresse);
+        return mesAdresses;
     }
     
     

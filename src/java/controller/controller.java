@@ -2,6 +2,7 @@ package controller;
 
 import beans.GestionClient;
 import beans.beanAdresse;
+import beans.beanClient;
 import beans.beanExpediteur;
 import beans.beanLogin;
 import beans.beanPaiement;
@@ -9,6 +10,7 @@ import beans.beanPanier;
 //import beans.beanPanier;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,6 +23,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import obj.Adresse;
 import obj.Client;
 import obj.Expediteur;
 import obj.LigneCommande;
@@ -53,7 +56,7 @@ public class controller extends HttpServlet {
 //        String pageJSP = "/WEB-INF/jspPanier.jsp";
 //        String pageJSP = "/WEB-INF/jspPaiement.jsp";
         String pageJSP;
-        if (request.getParameter("doIt") == null ) {
+        if (request.getParameter("doIt") == null) {
             pageJSP = "/WEB-INF/jspHome.jsp";
         } else {
             if (getServletContext().getAttribute("beanLogin") == null) {
@@ -71,8 +74,6 @@ public class controller extends HttpServlet {
                 request.setAttribute("welcome", login);
                 Cookie c = new Cookie("login", login);
                 Cookie cEmail = new Cookie("email", request.getParameter("login"));
-//                c.setMaxAge(0);
-//                c.setPath("/");
                 response.addCookie(c);
                 response.addCookie(cEmail);
                 Cookie c2 = new Cookie("try", "");
@@ -91,7 +92,6 @@ public class controller extends HttpServlet {
                     c.setValue(c.getValue() + "*");
                 }
                 c.setMaxAge(90);
-                System.out.println(c.getValue());
                 response.addCookie(c);
 
                 if (c.getValue().length() >= 3) {
@@ -120,7 +120,6 @@ public class controller extends HttpServlet {
                 }
             }
         }
-        
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
         if (getServletContext().getAttribute("gestionOuvrages") == null) {
@@ -195,6 +194,15 @@ public class controller extends HttpServlet {
         }
         GestionClient gestionClient = (GestionClient) getServletContext().getAttribute("gestionClient");
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+        if (getServletContext().getAttribute("beanClient") == null) {
+            try {
+                getServletContext().setAttribute("beanClient", new beanClient());
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+            }
+        }
+        beanClient bClient = (beanClient) getServletContext().getAttribute("beanClient");
 ////////////////////////////////////////////////////////////////////////////////////////////////////            
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
@@ -211,8 +219,6 @@ public class controller extends HttpServlet {
                     String login = request.getParameter("login");
                     request.setAttribute("welcome", login);
                     c = new Cookie("login", login);
-//                    c.setMaxAge(60);
-//                    c.setPath("/");
                     response.addCookie(c);
                     Cookie c2 = new Cookie("try", "");
                     c2.setMaxAge(0);
@@ -257,6 +263,18 @@ public class controller extends HttpServlet {
             }
         }
 
+        
+            if (request.getParameter("modifierCl") != null) {
+                Cookie cl = getCookie(request.getCookies(), "email");
+                Client c = bLogin.profilClient(cl.getValue());
+                bClient.modifierClient(c.getIdClient(), request.getParameter("nom"),
+                        request.getParameter("prenom"), request.getParameter("genre"),
+                        request.getParameter("dateNaissance"), request.getParameter("email"),
+                        request.getParameter("telephone"), request.getParameter("motDePasse"));
+                pageJSP = "/WEB-INF/profilClient.jsp";
+            }
+        
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if ("catalogueAccueil".equals(section)) {
             pageJSP = "/WEB-INF/catalogueAccueil.jsp";
@@ -291,7 +309,8 @@ public class controller extends HttpServlet {
                     monPanier = new beanPanier();
                     session.setAttribute("monPanier", monPanier);
                 } catch (NamingException ex) {
-                    ex.printStackTrace();                }
+                    ex.printStackTrace();
+                }
             }
             if (request.getParameter("add") != null) {
                 monPanier.addO(Integer.valueOf(request.getParameter("add")), request.getParameter("add2"));
@@ -330,6 +349,7 @@ public class controller extends HttpServlet {
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if ("afficher-client".equals(section)) {
+            pageJSP = "/WEB-INF/profilClient.jsp";
             Cookie cl = getCookie(request.getCookies(), "email");
             Client c = bLogin.profilClient(cl.getValue());
             request.setAttribute("infoClientNom", c.getNom());
@@ -341,7 +361,28 @@ public class controller extends HttpServlet {
             request.setAttribute("infoClientMotDePasse", c.getMotDePasse());
             request.setAttribute("infoClientNomStatut", c.getNomStatut());
             
-            pageJSP = "/WEB-INF/profilClient.jsp";
+             try {
+                
+                List<Adresse> mesAdresseF =  bAdresse.adresseClient(c.getIdClient(), "FACTURATION");
+                request.setAttribute("listeAdresseF", mesAdresseF);
+                
+                List<Adresse> mesAdresseL =  bAdresse.adresseClient(c.getIdClient(), "LIVRAISON");
+                request.setAttribute("listeAdresseL", mesAdresseL);
+                
+                
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+//            if (request.getParameter("modifier") != null) {
+//
+//                bClient.modifierClient(c.getIdClient(), request.getParameter("nom"),
+//                        request.getParameter("prenom"), request.getParameter("genre"),
+//                        request.getParameter("dateNaissance"), request.getParameter("email"),
+//                        request.getParameter("telephone"), request.getParameter("motDePasse"));
+//                
+//            }
+            
+            
         }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -351,25 +392,19 @@ public class controller extends HttpServlet {
                 List<String> clefs = beanPa.getLC();
                 request.setAttribute("mapPanier", mlc);
                 request.setAttribute("clefs", clefs);
-                
+
                 beanPanier livres = (beanPanier) session.getAttribute("monPanier");
-                
-                
+
                 String pan = livres.listO().toString();
                 session.setAttribute("livres", livres);
                 session.setAttribute("voirPanier", pan);
-                
-                
+
 //                request.setAttribute("livres", livres);
 //                request.setAttribute("voirPanier", pan);
-                
                 System.out.println(session.getAttribute("voirPanier"));
                 System.out.println(session.getAttribute("livres"));
-                pageJSP = "/WEB-INF/jspPanier.jsp";     
-                
-                    
-                    
-                    
+                pageJSP = "/WEB-INF/jspPanier.jsp";
+
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
