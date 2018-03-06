@@ -47,9 +47,10 @@ public class beanPanier implements Serializable {
         }
         List<LigneCommande> lLC = pDAO.selectPanier();
         for(LigneCommande LC : lLC){
-//            String lettre = p.getNom().toUpperCase().charAt(0)+"";
+//            String colonne = ""+LC.getIdLC();
             for(String cle : clefs){
 //                String regex = "["+cle+"]";
+                
                     List<LigneCommande> lp = mlc.get(cle);
                     lp.add(LC);
             }

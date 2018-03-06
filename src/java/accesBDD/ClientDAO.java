@@ -5,14 +5,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import javax.naming.NamingException;
 import obj.Client;
 
@@ -24,7 +22,7 @@ public class ClientDAO implements Serializable {
         mc = new MaConnexion();
     }
 
-    public Client selectLogin(String email) throws SQLException {
+    public Client selectLogin(String email) throws SQLException, ParseException {
         String req = "select idClient, nom, prenom, genre, dateNaissance, email, telephone, motDePasse from client where email=?";
         Client c = null;
         try (Connection cnt = mc.getConnection();
@@ -37,7 +35,15 @@ public class ClientDAO implements Serializable {
                 c.setNom(rs.getString("nom"));
                 c.setPrenom(rs.getString("prenom"));
                 c.setGenre(rs.getString("genre"));
-                c.setDateNaissance(rs.getString("dateNaissance"));
+                      
+                SimpleDateFormat dateModelEntree = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat dateModelSortie = new SimpleDateFormat("dd-MM-yyyy");
+                Date dateFormatDate = null;
+                dateFormatDate = dateModelEntree.parse(rs.getString("dateNaissance"));
+
+                String sortie = dateModelSortie.format(dateFormatDate.getTime());
+                                
+                c.setDateNaissance(sortie);                
                 c.setEmail(email);
                 c.setTelephone(rs.getString("telephone"));
                 c.setMotDePasse(rs.getString("motDePasse"));
@@ -49,6 +55,10 @@ public class ClientDAO implements Serializable {
     }
 
     ////////////////////////////////////////////
+    public void insertClient(String nom, String prenom, String genre, Date dateNaissance, String email, String telephone, String motDePasse) throws SQLException {
+
+    public void insertClient(String nom, String prenom, String genre, String dateNaissance, String email, String telephone, String motDePasse) throws SQLException {
+        String req = "INSERT INTO Client(nom, prenom, genre, dateNaissance, email, telephone, motDePasse)VALUES (?,?,?,?,?,?,?)";
     public void insertClient(String nom, String prenom, String genre, String dateNaissance, String email, String telephone, String motDePasse, String nomStatut) throws SQLException {
         String req = "INSERT INTO Client(nom, prenom, genre, dateNaissance, email, telephone, motDePasse, nomStatut)VALUES (?,?,?,?,?,?,?,?)";
 

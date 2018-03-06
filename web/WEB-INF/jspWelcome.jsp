@@ -19,7 +19,9 @@
         <a href='controller?deconnect'><input type='submit' name='deconnecter' value='Deconnexion' /></a>
         <br>
         <hr>
-        <a href='controller?section=afficher-client'><input type='submit' name='profilClient' value='profil de ${welcome}' /></a>
+        <a href='controller?section=afficher-client'><input type='submit' name='profilClient' value='profil de ${welcome}' /></a><br/>
+        <br>
+        <a href='controller?section=historiqueCommande'><input type='submit' name='historiqueCommande' value='Histirique de commande de ${welcome}' /></a><br/>
         
     </body>
 </html>
