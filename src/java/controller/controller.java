@@ -477,7 +477,7 @@ public class controller extends HttpServlet {
                 }
                     
                 
-                pageJSP = "/WEB-INF/jspCreerNvxCompteClientEtape2.jsp";
+                pageJSP = "/WEB-INF/jspCreerNvxCompteClientEtape1.jsp";
             } catch (NamingException ex) {
                 ex.printStackTrace();
             }
