@@ -183,6 +183,16 @@ public class controller extends HttpServlet {
             }
         }
         beanAdresse bAdresse = (beanAdresse) getServletContext().getAttribute("beanAdresse");
+        
+///////////////////////////////////////////////////////////////////////////////////////
+        if (getServletContext().getAttribute("beanClient") == null){
+           try {
+               getServletContext().setAttribute("beanClient", new beanClient());
+           } catch (NamingException ex) {
+                ex.printStackTrace();
+
+            }
+        }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////       
         if ("login".equals(section)) {
@@ -358,14 +368,17 @@ public class controller extends HttpServlet {
                 
                 beanClient c = new beanClient();
                 try {
+                    
+                    request.setAttribute("nom",nom);
+                    request.setAttribute("prenom",prenom);
+                    request.setAttribute("genre",genre);
+                    request.setAttribute("dateNaissance",dateNaissance);
+                    request.setAttribute("email",email);
+                    request.setAttribute("telephone",telephone);
+                    request.setAttribute("motDePasse",motDePasse);
+                    
                     c.insertClient(nom, prenom, genre, dateNaissance, email, telephone, motDePasse);
-                    request.getAttribute("nom");
-                    request.getAttribute("prenom");
-                    request.getAttribute("genre");
-                    request.getAttribute("dateNaissance");
-                    request.getAttribute("email");
-                    request.getAttribute("telephone");
-                    request.getAttribute("motDePasse");
+                    
                 } catch (SQLException | ParseException ex) {
                     ex.printStackTrace();
                 }
