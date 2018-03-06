@@ -61,7 +61,7 @@
                         ${p.codePostal}, ${p.ville}, ${p.pays}
                     </li>
                 </c:forEach>
-
+ 
 
             <input type='submit' name='modifierAdr' value='Modifier' />
         </form>

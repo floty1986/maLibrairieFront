@@ -16,6 +16,7 @@
         <hr>
         <c:url value="controller?section=login" var="url01" />                                    
         <a href="${url01}"><input type="submit" value="LOGIN" name="Connexion" /></a>
-        <a href = 'controller?section=jspPanier'><input type="submit" value="Voir Panier !" name="voirPanier" /></a>
+        <c:url value="controller?section=jspPanier" var="url02" />
+        <a href ="${url02}"><input type="submit" value="Voir Panier !" name="voirPanier" /></a>
     </body>
 </html>
