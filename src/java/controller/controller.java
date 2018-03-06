@@ -7,10 +7,8 @@ import beans.beanExpediteur;
 import beans.beanLogin;
 import beans.beanPaiement;
 import beans.beanPanier;
-//import beans.beanPanier;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -25,10 +23,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import obj.Adresse;
 import obj.Client;
+import obj.Evenement;
 import obj.Expediteur;
 import obj.LigneCommande;
 import obj.OrganismePaiement;
 import obj.Ouvrage;
+import traitements.GestionEvenements;
 import traitements.GestionOuvrages;
 
 @WebServlet(name = "controller", urlPatterns = {"/controller"})
@@ -132,6 +132,17 @@ public class controller extends HttpServlet {
         }
         GestionOuvrages gestionOuvrages = (GestionOuvrages) getServletContext().getAttribute("gestionOuvrages");
 
+        if (getServletContext().getAttribute("gestionEvenements") == null) {
+            try {
+                getServletContext().setAttribute("gestionEvenements", new GestionEvenements());
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+
+            }
+        }
+        
+        GestionEvenements gestionEvenements = (GestionEvenements) getServletContext().getAttribute("gestionEvenements");
+        
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if (getServletContext().getAttribute("beanExpediteur") == null) {
             try {
@@ -287,17 +298,37 @@ public class controller extends HttpServlet {
             }
         }
 
+//        if ("catalogue".equals(section)) {
+//            try {
+//                HashMap<String, List<Ouvrage>> mo = gestionOuvrages.findOuvrages();
+//                List<String> clefs = gestionOuvrages.getCleDefaut();
+//                request.setAttribute("mapOuvrages", mo);
+//                request.setAttribute("clefs", clefs);
+//                pageJSP = "/WEB-INF/catalogue.jsp";
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
         if ("catalogue".equals(section)) {
             try {
-                HashMap<String, List<Ouvrage>> mo = gestionOuvrages.findOuvrages();
-                List<String> clefs = gestionOuvrages.getCleDefaut();
-                request.setAttribute("mapOuvrages", mo);
-                request.setAttribute("clefs", clefs);
-                pageJSP = "/WEB-INF/catalogue.jsp";
+                List<Ouvrage> lo = gestionOuvrages.findOuvrages2();
+            request.setAttribute("liste", lo);
+            pageJSP = "/WEB-INF/catalogueFull.jsp";
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+//        if ("catalogue".equals(request.getParameter("section"))) {
+//            try {
+//                List<List<Integer>> OuvPagi = gestionOuvrages.getPagination(3);
+//                HashMap<String, List<Ouvrage>> mo = gestionOuvrages.findOuvrages();
+//                request.setAttribute("pages", OuvPagi);
+//                request.setAttribute("mapOuv", mo);
+//                pageJSP = "/WEB-INF/cataloguePagination.jsp";
+//            } catch (SQLException ex) {
+//                Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
 
         if ("panier".equals(request.getParameter("section"))) {
             beanPanier monPanier
@@ -311,7 +342,7 @@ public class controller extends HttpServlet {
                 }
             }
             if (request.getParameter("add") != null) {
-                monPanier.addO(Integer.valueOf(request.getParameter("add")), request.getParameter("add2"));
+                monPanier.addO(Integer.valueOf(request.getParameter("add")), request.getParameter("add2"), request.getParameter("add3"));
 //                System.out.println("panier : "+monPanier.listO().toString());
 //                beanPanier liste =  (beanPanier) session.getAttribute("monPanier");
 //                String pan = liste.listO().toString();
@@ -344,6 +375,19 @@ public class controller extends HttpServlet {
 
             request.setAttribute("panierVide", monPanier.isEmptyO());
             request.setAttribute("list", monPanier.listO());
+        }
+        
+        if ("evenement".equals(request.getParameter("section"))) {
+            pageJSP = "/WEB-INF/evenement.jsp";
+        }
+        if ("evenementDate".equals(request.getParameter("section"))) {
+             try {
+                List<Evenement> le = gestionEvenements.findEvByDate();
+                request.setAttribute("evenements", le);
+                pageJSP = "/WEB-INF/evenementDate.jsp";
+            } catch (SQLException ex) {
+                Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if ("afficher-client".equals(section)) {

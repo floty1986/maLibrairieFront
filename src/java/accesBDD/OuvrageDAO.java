@@ -19,14 +19,14 @@ public class OuvrageDAO implements Serializable {
     }
 
     public List<Ouvrage> selectAllOuvrages() throws SQLException {
-        String req = "SELECT idOuvrage, titre FROM ouvrage  ORDER BY titre";
+        String req = "SELECT idOuvrage, titre, imageOuvrage FROM ouvrage  ORDER BY titre";
         Connection cnt = mc.getConnection();
         java.sql.Statement stm = cnt.createStatement();
         List<Ouvrage> lo = new ArrayList<>();
 
         try (ResultSet rs = stm.executeQuery(req)) {
             while (rs.next()) {
-                Ouvrage o = new Ouvrage(rs.getInt("idOuvrage"), rs.getString("titre"));
+                Ouvrage o = new Ouvrage(rs.getInt("idOuvrage"), rs.getString("titre"), rs.getString("imageOuvrage"));
                 lo.add(o);
             }
         }
@@ -39,7 +39,7 @@ public class OuvrageDAO implements Serializable {
     }
 
     public List<Ouvrage> selectOuvrageByTitre(String titre) throws SQLException {
-        String req = "SELECT idOuvrage, titre FROM Ouvrage where titre LIKE ? ORDER BY titre";
+        String req = "SELECT idOuvrage, titre, imageOuvrage FROM Ouvrage where titre LIKE ? ORDER BY titre";
 
         Ouvrage o = null;
         try (Connection cnt = mc.getConnection();
@@ -51,7 +51,8 @@ public class OuvrageDAO implements Serializable {
             while (rs.next()) {
                 titre = rs.getString("titre");
                 int idOuvrage = rs.getInt("idOuvrage");
-                o = new Ouvrage(idOuvrage, titre);
+                String image = rs.getString("imageOuvrage");
+                o = new Ouvrage(idOuvrage, titre, image);
                 lo.add(o);
             }
             return lo;
