@@ -49,7 +49,7 @@ public class OrganismePaiement {
 
     @Override
     public String toString() {
-        return "OrganismePaiement{" + "idOrganismePaiement=" + idOrganismePaiement + ", nom=" + nom + '}';
+        return nom + " - [" + typeOrganismePaiement + "]";
     }
     
     

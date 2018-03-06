@@ -174,8 +174,6 @@ public class Ouvrage {
         return v;
     }
 
-    
-
    
     @Override
     public String toString() {

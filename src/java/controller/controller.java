@@ -2,6 +2,7 @@ package controller;
 
 import beans.GestionClient;
 import beans.beanAdresse;
+import beans.beanClient;
 import beans.beanExpediteur;
 import beans.beanLogin;
 import beans.beanPaiement;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import obj.Adresse;
 import obj.Client;
 import obj.Evenement;
 import obj.Expediteur;
@@ -54,7 +56,7 @@ public class controller extends HttpServlet {
 //        String pageJSP = "/WEB-INF/jspPanier.jsp";
 //        String pageJSP = "/WEB-INF/jspPaiement.jsp";
         String pageJSP;
-        if (request.getParameter("doIt") == null ) {
+        if (request.getParameter("doIt") == null) {
             pageJSP = "/WEB-INF/jspHome.jsp";
         } else {
             if (getServletContext().getAttribute("beanLogin") == null) {
@@ -71,9 +73,9 @@ public class controller extends HttpServlet {
                 String login = bLogin.nomPrenomClient(request.getParameter("login"));
                 request.setAttribute("welcome", login);
                 Cookie c = new Cookie("login", login);
-//                c.setMaxAge(0);
-//                c.setPath("/");
+                Cookie cEmail = new Cookie("email", request.getParameter("login"));
                 response.addCookie(c);
+                response.addCookie(cEmail);
                 Cookie c2 = new Cookie("try", "");
                 c2.setMaxAge(0);
                 response.addCookie(c2);
@@ -90,7 +92,6 @@ public class controller extends HttpServlet {
                     c.setValue(c.getValue() + "*");
                 }
                 c.setMaxAge(90);
-                System.out.println(c.getValue());
                 response.addCookie(c);
 
                 if (c.getValue().length() >= 3) {
@@ -119,7 +120,6 @@ public class controller extends HttpServlet {
                 }
             }
         }
-        
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
         if (getServletContext().getAttribute("gestionOuvrages") == null) {
@@ -205,6 +205,15 @@ public class controller extends HttpServlet {
         }
         GestionClient gestionClient = (GestionClient) getServletContext().getAttribute("gestionClient");
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+        if (getServletContext().getAttribute("beanClient") == null) {
+            try {
+                getServletContext().setAttribute("beanClient", new beanClient());
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+            }
+        }
+        beanClient bClient = (beanClient) getServletContext().getAttribute("beanClient");
 ////////////////////////////////////////////////////////////////////////////////////////////////////            
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
@@ -221,8 +230,6 @@ public class controller extends HttpServlet {
                     String login = request.getParameter("login");
                     request.setAttribute("welcome", login);
                     c = new Cookie("login", login);
-//                    c.setMaxAge(60);
-//                    c.setPath("/");
                     response.addCookie(c);
                     Cookie c2 = new Cookie("try", "");
                     c2.setMaxAge(0);
@@ -239,7 +246,7 @@ public class controller extends HttpServlet {
                     } else {
                         cTry.setValue(cTry.getValue() + "*");
                     }
-                    c.setMaxAge(90);
+                    c.setMaxAge(5);
                     System.out.println(c.getValue());
                     response.addCookie(c);
 
@@ -266,6 +273,18 @@ public class controller extends HttpServlet {
 
             }
         }
+
+        
+            if (request.getParameter("modifierCl") != null) {
+                Cookie cl = getCookie(request.getCookies(), "email");
+                Client c = bLogin.profilClient(cl.getValue());
+                bClient.modifierClient(c.getIdClient(), request.getParameter("nom"),
+                        request.getParameter("prenom"), request.getParameter("genre"),
+                        request.getParameter("dateNaissance"), request.getParameter("email"),
+                        request.getParameter("telephone"), request.getParameter("motDePasse"));
+                pageJSP = "/WEB-INF/profilClient.jsp";
+            }
+        
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if ("catalogueAccueil".equals(section)) {
@@ -321,7 +340,8 @@ public class controller extends HttpServlet {
                     monPanier = new beanPanier();
                     session.setAttribute("monPanier", monPanier);
                 } catch (NamingException ex) {
-                    ex.printStackTrace();                }
+                    ex.printStackTrace();
+                }
             }
             if (request.getParameter("add") != null) {
                 monPanier.addO(Integer.valueOf(request.getParameter("add")), request.getParameter("add2"), request.getParameter("add3"));
@@ -373,42 +393,67 @@ public class controller extends HttpServlet {
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if ("afficher-client".equals(section)) {
-            try {
-                List<Client> lc = gestionClient.findClient();
-
-                request.setAttribute("listeClient", lc);
-                pageJSP = "/WEB-INF/profilClient.jsp";
+            pageJSP = "/WEB-INF/profilClient.jsp";
+            Cookie cl = getCookie(request.getCookies(), "email");
+            Client c = bLogin.profilClient(cl.getValue());
+            request.setAttribute("infoClientNom", c.getNom());
+            request.setAttribute("infoClientPrenom", c.getPrenom());
+            request.setAttribute("infoClientGenre", c.getGenre());
+            request.setAttribute("infoClientDateNaissance", c.getDateNaissance());
+            request.setAttribute("infoClientEmail", c.getEmail());
+            request.setAttribute("infoClientTelephone", c.getTelephone());
+            request.setAttribute("infoClientMotDePasse", c.getMotDePasse());
+            request.setAttribute("infoClientNomStatut", c.getNomStatut());
+            
+             try {
                 
-
+                List<Adresse> mesAdresseF =  bAdresse.adresseClient(c.getIdClient(), "FACTURATION");
+                request.setAttribute("listeAdresseF", mesAdresseF);
+                
+                List<Adresse> mesAdresseL =  bAdresse.adresseClient(c.getIdClient(), "LIVRAISON");
+                request.setAttribute("listeAdresseL", mesAdresseL);
+                
+                
             } catch (SQLException ex) {
                 ex.printStackTrace();
-                
             }
+//            if (request.getParameter("modifier") != null) {
+//
+//                bClient.modifierClient(c.getIdClient(), request.getParameter("nom"),
+//                        request.getParameter("prenom"), request.getParameter("genre"),
+//                        request.getParameter("dateNaissance"), request.getParameter("email"),
+//                        request.getParameter("telephone"), request.getParameter("motDePasse"));
+//                
+//            }
+            
+            
         }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        if ("jspPanier".equals(section)) {
+        
+        
+            if ("jspPanier".equals(section)){     
+                
+            pageJSP = "/WEB-INF/jspLogin.jsp";
+            
             try {
                 HashMap<String, List<LigneCommande>> mlc = beanPa.findCommande();
                 List<String> clefs = beanPa.getLC();
                 request.setAttribute("mapPanier", mlc);
                 request.setAttribute("clefs", clefs);
-                
+
                 beanPanier livres = (beanPanier) session.getAttribute("monPanier");
+
                 String pan = livres.listO().toString();
                 session.setAttribute("livres", livres);
                 session.setAttribute("voirPanier", pan);
-                
+
 //                request.setAttribute("livres", livres);
 //                request.setAttribute("voirPanier", pan);
-                
                 System.out.println(session.getAttribute("voirPanier"));
                 System.out.println(session.getAttribute("livres"));
-                pageJSP = "/WEB-INF/jspPanier.jsp";     
-                
-                    
-                    
-                    
+                pageJSP = "/WEB-INF/jspPanier.jsp";
+
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -428,29 +473,67 @@ public class controller extends HttpServlet {
         }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if ("jspPaiement".equals(section)) {
-
             try {
                 HashMap<String, List<OrganismePaiement>> mOp = beanPaie.findOrg();
                 List<String> tables = beanPaie.getDefaultOrg();
-                request.setAttribute("mapOrganisme", mOp);
+                request.setAttribute("mapOrganisme", mOp);                
                 request.setAttribute("tables", tables);
                 pageJSP = "/WEB-INF/jspPaiement.jsp";
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
         }
+        
+        
+        
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//  //en attente de lien avec page login Flo
         if ("jspCreerNvxCompteClientEtape1".equals(section)) {
-            pageJSP = "WEB-INF/jspCreerNvxCompteClientEtape1.jsp";
+            
+            try {
+                
+                String nom = request.getParameter("nom");  //recuperation des infos du formulaire
+                String prenom = request.getParameter("prenom");
+                String genre = request.getParameter("genre");
+                String dateNaissance = request.getParameter("dateNaissance");
+                String email = request.getParameter("email");
+                String telephone = request.getParameter("telephone");
+                String motDePasse = request.getParameter("motDePasse");
+                
+                beanClient c = new beanClient();
+                
+                    
+                try {
+                    //                    request.setAttribute("nom",nom);
+//                    request.setAttribute("prenom",prenom);
+//                    request.setAttribute("genre",genre);
+//                    request.setAttribute("dateNaissance",dateNaissance);
+//                    request.setAttribute("email",email);
+//                    request.setAttribute("telephone",telephone);
+//                    request.setAttribute("motDePasse",motDePasse);
+                    
+                    c.insertClient(nom, prenom, genre, dateNaissance, email, telephone, motDePasse);
+                    //todo: recuperer le nom et prenom pour les mettre dans la 2eme page
+                } catch (SQLException ex) {
+                    Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                    
+                
+                pageJSP = "/WEB-INF/jspCreerNvxCompteClientEtape1.jsp";
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+            }
+        }    
+                
+            
+//////////////////////////////////////////////////////           
+
+        if ("jspCreerNvxCompteEtape2".equals(section)) {
+            pageJSP = "/WEB-INF/jspCreerNvxCompteEtape2.jsp";
 
         }
-//
-//        if ("jspCreerUnNvxCompteEtape2".equals(section)) {
-//            pageJSP = "WEB-INF/jspCreerUnNvxCompteEtape2.jsp";
-//
-//        }
 //       
 //        
 //  // en attente de lien avec la page facturation de Momo      

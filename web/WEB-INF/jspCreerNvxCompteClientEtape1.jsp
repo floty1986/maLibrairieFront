@@ -1,4 +1,4 @@
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -8,8 +8,10 @@
     </head>
     <body>
         <h1>Créer un compte</h1>
-        
-        <form action="controller?section=jspCreerNvxCompteClientEtape2" method="POST">
+
+
+        <!-- <form action="controller?section=jspCreerNvxCompteClientEtape2" method="POST"> -->
+        <form action="controller" method="POST">
             Votre nom: <input type="text" name="nom" value="" /><br>
             <br>
             Votre prenom: <input type="text" name="prenom" value="" /><br>
@@ -24,18 +26,22 @@
             <br>
             Entrer le mot de passe à nouveau: <input type="text" name="motDePasseConf" value="" /><br>
             <br>
-            <input type="submit" value="Créer votre compte" name="doIt1" /><br>
+
+            <!--<input type="submit" value="Créer votre compte" name="doIt1" /><br>
+            -->
             <br>
-            
+
+
             En créant votre compte, vous acceptez bla, bla, bla,....<br>
             <br>
-            
+
             Vous possédez dèjà un compte?
             <input type="submit" value="Identifiez-vous ici" name="doIt" />
         </form>
-        
-        
-        
-        
+
+        <c:url value="controller?section=jspCreerNvxCompteClientEtape2" var="url02"/>
+        <a href="${url02}"><input type="submit" value="Créer votre compte" name="NvxCompte2" /></a>
+
+
     </body>
 </html>
