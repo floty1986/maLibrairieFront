@@ -12,13 +12,12 @@
             <h1>${c}</h1>
             <ul>
                 <c:forEach items="${mapExpediteur.get(c)}" var="p">
-                    <li>
-                        <a href="#">${p}</a>
-                    </li>
+                    <input type="radio" name="${p}" value="${p}" /> ${p}
                 </c:forEach>
             </ul>
         </c:forEach>
-        <a href="jspPanier.jsp">Précédent</a>
+         <c:url value="controller?section=jspLivraison" var="url06" />
+        <a href="${url06}">Précédent</a>
         <br>
         <c:url value="controller?section=jspPaiement" var="url04" />
         <a href="${url04}">Confirmer la livraison</a>

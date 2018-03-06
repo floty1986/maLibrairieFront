@@ -35,8 +35,6 @@ public class beanPanier implements Serializable {
     public List<String> getLC(){
         List<String> ligneCmd = new ArrayList();
         ligneCmd.add("Article");
-        ligneCmd.add("Quantité");
-        ligneCmd.add("Prix");
         return ligneCmd;
     }
     
@@ -49,9 +47,10 @@ public class beanPanier implements Serializable {
         }
         List<LigneCommande> lLC = pDAO.selectPanier();
         for(LigneCommande LC : lLC){
-//            String lettre = p.getNom().toUpperCase().charAt(0)+"";
+//            String colonne = ""+LC.getIdLC();
             for(String cle : clefs){
 //                String regex = "["+cle+"]";
+                
                     List<LigneCommande> lp = mlc.get(cle);
                     lp.add(LC);
             }
@@ -70,12 +69,12 @@ public class beanPanier implements Serializable {
             this.map.put(ref, i);
         }
     }
-     public void addO(int idOuvrage, String titre) {
+     public void addO(int idOuvrage, String titre, String imageOuvrage) {
         if( this.mapO.containsKey(idOuvrage)) {
             Ouvrage o= this.mapO.get(idOuvrage);
             o.changeQty(+1);
         } else {
-            Ouvrage o = new Ouvrage(idOuvrage, titre, 1);
+            Ouvrage o = new Ouvrage(idOuvrage, titre, imageOuvrage, 1);
             this.mapO.put(idOuvrage, o);
         }
     }

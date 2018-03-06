@@ -26,3 +26,50 @@
 p.small{
     font-size: small;
 }
+.vr_catalogue {
+    border-right: 1px solid #38546d;
+    background: #16222c;
+    width: 1px;
+    height: 80px;
+    position: absolute;
+    right: 250px;
+    top: 10px;
+} 
+
+
+.centre{
+    margin: auto;
+    text-align: center;
+    border-bottom: 5px solid #38546d;
+    background-color:silver;
+}
+
+.footer {
+    width: 10px;   
+    color : blue;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: blanchedalmond;
+    color: white;
+    text-align: center;
+}
+/*
+.btn_ajout{
+    position : absolute;
+    left: 1500px;
+    color: blue;
+    border-radius: 10px;
+    width: auto;
+    height: auto;
+}
+.btn{
+    position : absolute;
+    left: 2000px;
+    color: blue;
+    border-radius: 50px;
+    width: auto;
+    height: auto;
+}*/
