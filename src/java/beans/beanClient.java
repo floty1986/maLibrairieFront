@@ -17,9 +17,9 @@ public class beanClient implements Serializable {
         cDAO = new ClientDAO();
     }
     
-    public void insertClient(String nom, String prenom, String genre, String dateNaissance, String email, String telephone, String motDePasse) throws SQLException, ParseException{
+    public void insertClient(String nom, String prenom, String genre, String dateNaissance, String email, String telephone, String motDePasse, String nomStatut) throws SQLException, ParseException{
         
-            cDAO.insertClient(nom, prenom, genre, dateNaissance, email, telephone, motDePasse);
+            cDAO.insertClient(nom, prenom, genre, dateNaissance, email, telephone, motDePasse, nomStatut);
         
     }
     

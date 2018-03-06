@@ -11,16 +11,19 @@
 
 
         <!-- <form action="controller?section=jspCreerNvxCompteClientEtape2" method="POST"> -->
-        <form action="controller" method="POST">
+        <form action="controller" method="get">
+            <input type="hidden" name="section" value="jspCreerNvxCompteClientEtape2" />
             Votre nom: <input type="text" name="nom" value="" /><br>
             <br>
             Votre prenom: <input type="text" name="prenom" value="" /><br>
             <br>
-            Genre: H<input type="radio" name="genre" value="H" />F<input type="radio" name="genre" value="F" />N<input type="radio" name="genre" value="N" /><br>
+            Genre: H<input type="radio" name="genre" value="M" />F<input type="radio" name="genre" value="F" />N<input type="radio" name="genre" value="N" /><br>
             <br>            
             date de naissance:<input type="text" name="dateNaissance" value="" /><br>
             <br>
             E-mail: <input type="text" name="email" value="" /><br>
+            <br>
+            Telephone: <input type="text" name="telephone" value="" /><br>
             <br>
             Mot de Passe: <input type="text" name="motDePasse" value="" /><br>
             <br>
@@ -38,9 +41,13 @@
             Vous possédez dèjà un compte?
             <input type="submit" value="Identifiez-vous ici" name="doIt" />
         </form>
+        <form action="controller?section=jspCreerNvxCompteClientEtape2" method="POST">
+            <input type="submit" value="Créer votre compte" name="NvxCompte2" />
+        </form>
 
-        <c:url value="controller?section=jspCreerNvxCompteClientEtape2" var="url02"/>
-        <a href="${url02}"><input type="submit" value="Créer votre compte" name="NvxCompte2" /></a>
+       
+        
+    
 
 
     </body>

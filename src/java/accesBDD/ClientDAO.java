@@ -42,19 +42,19 @@ public class ClientDAO implements Serializable {
                 c.setTelephone(rs.getString("telephone"));
                 c.setMotDePasse(rs.getString("motDePasse"));
 
-            }            
+            }
         }
         return c;
 
     }
 
     ////////////////////////////////////////////
-
-    public void insertClient(String nom, String prenom, String genre, String dateNaissance, String email, String telephone, String motDePasse) throws SQLException {
-        String req = "INSERT INTO Client(nom, prenom, genre, dateNaissance, email, telephone, motDePasse)VALUES (?,?,?,?,?,?,?)";
+    public void insertClient(String nom, String prenom, String genre, String dateNaissance, String email, String telephone, String motDePasse, String nomStatut) throws SQLException {
+        String req = "INSERT INTO Client(nom, prenom, genre, dateNaissance, email, telephone, motDePasse, nomStatut)VALUES (?,?,?,?,?,?,?,?)";
 
         try (Connection cnt = mc.getConnection();
                 PreparedStatement stm = cnt.prepareStatement(req);) {
+
             stm.setString(1, nom);
             stm.setString(2, prenom);
             stm.setString(3, genre);
@@ -62,18 +62,22 @@ public class ClientDAO implements Serializable {
             stm.setString(5, email);
             stm.setString(6, telephone);
             stm.setString(7, motDePasse);
+            stm.setString(8, nomStatut);
 
             int nb = stm.executeUpdate();
+            System.out.println("nb:"+ nb);
+        } catch ( Exception e) {
+            System.out.println("insertClient:"+ e.getMessage());
         }
 
     }
 
-    public void modifierClient(int idClient, String nom, String prenom, String genre, String dateNaissance, String email, String telephone, String motDePasse) throws SQLException, ParseException{
-        String req ="UPDATE Client SET nom=?, prenom=?, genre=?, dateNaissance=?, email=?, telephone=?, motDePasse=? where idClient like ?";
-        
+    public void modifierClient(int idClient, String nom, String prenom, String genre, String dateNaissance, String email, String telephone, String motDePasse) throws SQLException, ParseException {
+        String req = "UPDATE Client SET nom=?, prenom=?, genre=?, dateNaissance=?, email=?, telephone=?, motDePasse=? where idClient like ?";
+
         try (Connection cnt = mc.getConnection();
                 PreparedStatement stm = cnt.prepareStatement(req);) {
-            
+
             stm.setString(1, nom);
             stm.setString(2, prenom);
             stm.setString(3, genre);
@@ -82,7 +86,7 @@ public class ClientDAO implements Serializable {
             } else {
                 SimpleDateFormat dateModel = new SimpleDateFormat("dd-MM-yyyy");
                 java.util.Date dateFormatDate = dateModel.parse(dateNaissance);
-                java.sql.Date sqlDate = new java.sql.Date(dateFormatDate.getTime());                 
+                java.sql.Date sqlDate = new java.sql.Date(dateFormatDate.getTime());
                 stm.setDate(4, sqlDate);
             }
             stm.setString(5, email);
@@ -91,10 +95,8 @@ public class ClientDAO implements Serializable {
             stm.setInt(8, idClient);
 
             int nb = stm.executeUpdate();
-            System.out.println("nombre de ligne affectée : "+nb);
-            
-            
-            
+            System.out.println("nombre de ligne affectée : " + nb);
+
         }
     }
 }
