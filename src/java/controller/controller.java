@@ -367,22 +367,27 @@ public class controller extends HttpServlet {
                 String motDePasse = request.getParameter("motDePasse");
                 
                 beanClient c = new beanClient();
-                try {
+                
                     
-                    request.setAttribute("nom",nom);
-                    request.setAttribute("prenom",prenom);
-                    request.setAttribute("genre",genre);
-                    request.setAttribute("dateNaissance",dateNaissance);
-                    request.setAttribute("email",email);
-                    request.setAttribute("telephone",telephone);
-                    request.setAttribute("motDePasse",motDePasse);
+                try {
+                    //                    request.setAttribute("nom",nom);
+//                    request.setAttribute("prenom",prenom);
+//                    request.setAttribute("genre",genre);
+//                    request.setAttribute("dateNaissance",dateNaissance);
+//                    request.setAttribute("email",email);
+//                    request.setAttribute("telephone",telephone);
+//                    request.setAttribute("motDePasse",motDePasse);
                     
                     c.insertClient(nom, prenom, genre, dateNaissance, email, telephone, motDePasse);
-                    
-                } catch (SQLException | ParseException ex) {
-                    ex.printStackTrace();
+                    //todo: recuperer le nom et prenom pour les mettre dans la 2eme page
+                } catch (SQLException ex) {
+                    Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                pageJSP = "/WEB-INF/jspCreerNvxCompteClientEtape1.jsp";
+                    
+                
+                pageJSP = "/WEB-INF/jspCreerNvxCompteClientEtape2.jsp";
             } catch (NamingException ex) {
                 ex.printStackTrace();
             }
