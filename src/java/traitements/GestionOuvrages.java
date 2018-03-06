@@ -28,6 +28,28 @@ public class GestionOuvrages implements Serializable {
         return clefs;
     }
     
+    public List<List<Integer>> getPagination(int nbOuv) throws SQLException {
+        List<List<Integer>> idOPage = new ArrayList<>();
+        List<Ouvrage> lo = oDAO.selectAllOuvrages();
+        int i = 0;
+        int nbOPage = nbOuv;
+        while (nbOPage == nbOuv) {
+            List<Integer> idPage = new ArrayList<>();
+            for (int k=1+nbOuv*i;k<=nbOuv+nbOuv*i;k++) {
+                idPage.add(lo.get(k-1).getIdOuvrage());
+            }            
+            idOPage.add(idPage);
+            nbOPage = idPage.size();
+            i += 1;
+        }
+        return idOPage;
+    }
+    public List<Ouvrage> findOuvrages2() throws SQLException {
+        List<Ouvrage> lo = new ArrayList<>();
+        lo = oDAO.selectAllOuvrages();
+        return lo;
+    }
+    
     public HashMap<String, List<Ouvrage>> findOuvrages() throws SQLException{
         List<String> clefs = getCleDefaut();
         HashMap<String, List<Ouvrage>> mo = new HashMap<>();

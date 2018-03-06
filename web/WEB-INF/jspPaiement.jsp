@@ -19,5 +19,9 @@
         <c:url value="controller?section=jspPaiement" var="url05" />
         <a href="${url05}">Précédent</a>
         <a href="http://www.paypal.com">Valider Paiement</a>
+        
+        <c:url value="controller?section=jspCreerAdresseFacturation" var="url01"/>
+        <a href="${url02}"><input type="submit" value="Créer une adresse de facturation" name="AdresseFacturation" /></a>
+        
     </body>
 </html>
