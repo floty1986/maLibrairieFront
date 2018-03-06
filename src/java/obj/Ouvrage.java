@@ -36,6 +36,19 @@ public class Ouvrage {
         this.titre = titre;
         this.qtePanier = qtePanier;
     }
+
+    public Ouvrage(int idOuvrage, String titre, String imageOuvrage) {
+        this.idOuvrage = idOuvrage;
+        this.titre = titre;
+        this.imageOuvrage = imageOuvrage;
+    }
+
+    public Ouvrage(int idOuvrage, String titre, String imageOuvrage, int qtePanier) {
+        this.idOuvrage = idOuvrage;
+        this.titre = titre;
+        this.imageOuvrage = imageOuvrage;
+        this.qtePanier = qtePanier;
+    }
     
     
     
