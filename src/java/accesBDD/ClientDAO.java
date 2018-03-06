@@ -7,9 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.naming.NamingException;
 import obj.Client;
@@ -55,11 +52,7 @@ public class ClientDAO implements Serializable {
     }
 
     ////////////////////////////////////////////
-    public void insertClient(String nom, String prenom, String genre, Date dateNaissance, String email, String telephone, String motDePasse) throws SQLException {
-
-    public void insertClient(String nom, String prenom, String genre, String dateNaissance, String email, String telephone, String motDePasse) throws SQLException {
-        String req = "INSERT INTO Client(nom, prenom, genre, dateNaissance, email, telephone, motDePasse)VALUES (?,?,?,?,?,?,?)";
-    public void insertClient(String nom, String prenom, String genre, String dateNaissance, String email, String telephone, String motDePasse, String nomStatut) throws SQLException {
+       public void insertClient(String nom, String prenom, String genre, String dateNaissance, String email, String telephone, String motDePasse, String nomStatut) throws SQLException {
         String req = "INSERT INTO Client(nom, prenom, genre, dateNaissance, email, telephone, motDePasse, nomStatut)VALUES (?,?,?,?,?,?,?,?)";
 
         try (Connection cnt = mc.getConnection();

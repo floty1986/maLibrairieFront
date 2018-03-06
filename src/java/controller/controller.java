@@ -10,6 +10,7 @@ import beans.beanPaiement;
 import beans.beanPanier;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -57,77 +58,15 @@ public class controller extends HttpServlet {
         String pageJSP;
 
         pageJSP = "/WEB-INF/jspHome.jsp";
-//        } else {
-//            if (getServletContext().getAttribute("beanLogin") == null) {
-//                try {
-//                    getServletContext().setAttribute("beanLogin", new beanLogin());
-//                } catch (NamingException ex) {
-//                    ex.printStackTrace();
-//
-//                }
-//            }
-//            beanLogin bLogin = (beanLogin) getServletContext().getAttribute("beanLogin");
-//            if (bLogin.check(request.getParameter("login"), request.getParameter("password"))) {
-//                pageJSP = "/WEB-INF/jspWelcome.jsp";
-//                String login = bLogin.nomPrenomClient(request.getParameter("login"));
-//                request.setAttribute("welcome", login);
-////                Cookie c = new Cookie("login", login);
-//                Cookie cEmail = new Cookie("email", request.getParameter("login"));
-////                response.addCookie(c);
-//                response.addCookie(cEmail);
-//                Cookie c2 = new Cookie("try", "");
-//                c2.setMaxAge(0);
-//                response.addCookie(c2);
-//
-//            } else {
-//
-//                pageJSP = "/WEB-INF/jspLogin.jsp";
-//                request.setAttribute("login", request.getParameter("login"));
-//                request.setAttribute("msg", "Erreur login/Mot de passe !!!");
-//                Cookie c = getCookie(request.getCookies(), "try");
-//                if (c == null) {
-//                    c = new Cookie("try", "*");
-//                } else {
-//                    c.setValue(c.getValue() + "*");
-//                }
-//                c.setMaxAge(90);
-//                response.addCookie(c);
-//
-//                if (c.getValue().length() >= 3) {
-//                    pageJSP = "/WEB-INF/jspFatalError.jsp";
-//                    request.setAttribute("fatalError", "Trop de tentatives !!!");
-//                }
-//            }
-//
-//            Cookie c = getCookie(request.getCookies(), "login");
-//            if (c != null) {
-//                pageJSP = "/WEB-INF/jspWelcome.jsp";
-//                request.setAttribute("welcome", c.getValue());
-//            }
-//            if (request.getParameter("deconnect") != null) {
-//                pageJSP = "/WEB-INF/jspLogin.jsp";
-//                request.setAttribute("login", c.getValue());
-//                Cookie cc = new Cookie("login", "");
-//                cc.setMaxAge(0);
-//                response.addCookie(cc);
-//            }
-//            c = getCookie(request.getCookies(), "try");
-//            if (c != null) {
-//                if (c.getValue().length() >= 3) {
-//                    pageJSP = "/WEB-INF/jspFatalError.jsp";
-//                    request.setAttribute("fatalError", "Trop de tentatives !!!!!");
-//                }
-//            }
-//        }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
         if (getServletContext().getAttribute("gestionOuvrages") == null) {
-                try {
-                    getServletContext().setAttribute("gestionOuvrages", new GestionOuvrages());
-                } catch (NamingException ex) {
-                    ex.printStackTrace();
-                    
-                }
+            try {
+                getServletContext().setAttribute("gestionOuvrages", new GestionOuvrages());
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+
+            }
         }
         GestionOuvrages gestionOuvrages = (GestionOuvrages) getServletContext().getAttribute("gestionOuvrages");
 
@@ -139,17 +78,16 @@ public class controller extends HttpServlet {
 
             }
         }
-        
+
         GestionEvenements gestionEvenements = (GestionEvenements) getServletContext().getAttribute("gestionEvenements");
-        
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if (getServletContext().getAttribute("beanExpediteur") == null) {
             try {
                 getServletContext().setAttribute("beanExpediteur", new beanExpediteur());
             } catch (NamingException ex) {
                 ex.printStackTrace();
-                
-                //to do
+
             }
         }
         beanExpediteur beanEx = (beanExpediteur) getServletContext().getAttribute("beanExpediteur");
@@ -166,7 +104,7 @@ public class controller extends HttpServlet {
                 getServletContext().setAttribute("beanLogin", new beanLogin());
             } catch (NamingException ex) {
                 ex.printStackTrace();
-                
+
             }
         }
         beanLogin bLogin = (beanLogin) getServletContext().getAttribute("beanLogin");
@@ -175,7 +113,7 @@ public class controller extends HttpServlet {
                 getServletContext().setAttribute("beanPaiement", new beanPaiement());
             } catch (NamingException ex) {
                 ex.printStackTrace();
-                
+
             }
         }
         beanPaiement beanPaie = (beanPaiement) getServletContext().getAttribute("beanPaiement");
@@ -184,18 +122,11 @@ public class controller extends HttpServlet {
                 getServletContext().setAttribute("beanAdresse", new beanAdresse());
             } catch (NamingException ex) {
                 ex.printStackTrace();
-                
+
             }
         }
         beanAdresse bAdresse = (beanAdresse) getServletContext().getAttribute("beanAdresse");
-        if (getServletContext().getAttribute("gestionClient") == null) {
-            try {
-                getServletContext().setAttribute("gestionClient", new GestionClient());
-            } catch (NamingException ex) {
-                ex.printStackTrace();
-            }
-        }
-        GestionClient gestionClient = (GestionClient) getServletContext().getAttribute("gestionClient");
+
         if (getServletContext().getAttribute("beanClient") == null) {
             try {
                 getServletContext().setAttribute("beanClient", new beanClient());
@@ -216,20 +147,15 @@ public class controller extends HttpServlet {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
-            Cookie c = getCookie(request.getCookies(), "login");
-            if (c != null) {
-                pageJSP = "/WEB-INF/jspWelcome.jsp";
-                request.setAttribute("welcome", c.getValue());
-            }
-            
+
             if (request.getParameter("doIt") != null) {
-                
+
                 if (bLogin.check(request.getParameter("login"), request.getParameter("password"))) {
                     pageJSP = "/WEB-INF/jspWelcome.jsp";
                     String login = bLogin.nomPrenomClient(request.getParameter("login"));
                     Cookie cNom = new Cookie("nom", login);
                     request.setAttribute("welcome", login);
-                    c = new Cookie("login", login);
+                    Cookie c = new Cookie("login", login);
                     Cookie cEmail = new Cookie("email", request.getParameter("login"));
                     response.addCookie(c);
                     response.addCookie(cEmail);
@@ -237,7 +163,6 @@ public class controller extends HttpServlet {
                     Cookie c2 = new Cookie("try", "");
                     c2.setMaxAge(0);
                     response.addCookie(c2);
-
 
                 } else {
 
@@ -250,31 +175,37 @@ public class controller extends HttpServlet {
                     } else {
                         cTry.setValue(cTry.getValue() + "*");
                     }
-                    c.setMaxAge(5);
-                    System.out.println(c.getValue());
-                    response.addCookie(c);
-                    
+                    cTry.setMaxAge(5);
+
+                    response.addCookie(cTry);
+
                     if (cTry.getValue().length() >= 3) {
                         pageJSP = "/WEB-INF/jspFatalError.jsp";
                         request.setAttribute("fatalError", "Trop de tentatives !!!");
                     }
                 }
 
+                Cookie c03 = getCookie(request.getCookies(), "login");
+                if (c03 != null) {
+                    pageJSP = "/WEB-INF/jspWelcome.jsp";
+                    request.setAttribute("welcome", c03.getValue());
+                }
+
                 if (request.getParameter("deconnect") != null) {
                     pageJSP = "/WEB-INF/jspLogin.jsp";
-                    request.setAttribute("login", c.getValue());
+                    request.setAttribute("login", c03.getValue());
                     Cookie cc = new Cookie("login", "");
                     cc.setMaxAge(0);
                     response.addCookie(cc);
                 }
-                c = getCookie(request.getCookies(), "try");
-                if (c != null) {
-                    if (c.getValue().length() >= 3) {
+                Cookie c05 = getCookie(request.getCookies(), "try");
+                if (c05 != null) {
+                    if (c05.getValue().length() >= 3) {
                         pageJSP = "/WEB-INF/jspFatalError.jsp";
                         request.setAttribute("fatalError", "Trop de tentatives !!!!!");
                     }
                 }
-                
+
             }
         }
 
@@ -298,7 +229,7 @@ public class controller extends HttpServlet {
                 request.setAttribute("titres", lo);
                 pageJSP = "/WEB-INF/catalogueParTitre.jsp";
             } catch (SQLException ex) {
-                Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             }
         }
 
@@ -316,10 +247,10 @@ public class controller extends HttpServlet {
         if ("catalogue".equals(section)) {
             try {
                 List<Ouvrage> lo = gestionOuvrages.findOuvrages2();
-            request.setAttribute("liste", lo);
-            pageJSP = "/WEB-INF/catalogueFull.jsp";
+                request.setAttribute("liste", lo);
+                pageJSP = "/WEB-INF/catalogueFull.jsp";
             } catch (SQLException ex) {
-                Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             }
         }
 //        if ("catalogue".equals(request.getParameter("section"))) {
@@ -335,9 +266,11 @@ public class controller extends HttpServlet {
 //        }
 
         if ("panier".equals(request.getParameter("section"))) {
+
+            pageJSP = "/WEB-INF/catPan.jsp";
             beanPanier monPanier
                     = (beanPanier) session.getAttribute("monPanier");
-            
+
             if (monPanier == null) {
                 try {
                     monPanier = new beanPanier();
@@ -363,7 +296,7 @@ public class controller extends HttpServlet {
             if (request.getParameter("clear") != null) {
                 monPanier.clearO();
             }
-            pageJSP = "/WEB-INF/catPan.jsp";
+
         }
         if ("affichePanier".equals(request.getParameter("section"))) {
             pageJSP = "/WEB-INF/panierCat.jsp";
@@ -374,24 +307,27 @@ public class controller extends HttpServlet {
                     monPanier = new beanPanier();
                     session.setAttribute("monPanier", monPanier);
                 } catch (NamingException ex) {
-                        ex.printStackTrace();
+                    ex.printStackTrace();
                 }
             }
-            
+            if (getCookie(request.getCookies(), "nom") != null) {
+                Cookie cn = getCookie(request.getCookies(), "nom");
+                request.setAttribute("nom", cn.getValue());
+            }
             request.setAttribute("panierVide", monPanier.isEmptyO());
             request.setAttribute("list", monPanier.listO());
         }
-        
+
         if ("evenement".equals(request.getParameter("section"))) {
             pageJSP = "/WEB-INF/evenement.jsp";
         }
         if ("evenementDate".equals(request.getParameter("section"))) {
-             try {
+            try {
                 List<Evenement> le = gestionEvenements.findEvByDate();
                 request.setAttribute("evenements", le);
                 pageJSP = "/WEB-INF/evenementDate.jsp";
             } catch (SQLException ex) {
-                Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             }
         }
         if ("afficher-client".equals(section)) {
@@ -409,17 +345,12 @@ public class controller extends HttpServlet {
 
             try {
 
-            
-            try {
-                
                 List<Adresse> mesAdresseF = bAdresse.adresseClient(c.getIdClient(), "FACTURATION");
                 request.setAttribute("listeAdresseF", mesAdresseF);
 
-                
                 List<Adresse> mesAdresseL = bAdresse.adresseClient(c.getIdClient(), "LIVRAISON");
                 request.setAttribute("listeAdresseL", mesAdresseL);
 
-                
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -432,28 +363,38 @@ public class controller extends HttpServlet {
 //                
 //            }
 
-            
         }
-        Cookie c01 = getCookie(request.getCookies(), "login");
-        if(request.getParameter("voirPanier")!= null && "jspPanier".equals(section)){
-        if(c01 == null){
-                  pageJSP = "/WEB-INF/jspLogin.jsp";
-        } else {
-            pageJSP = "/WEB-INF/jspPanier.jsp";
-            Cookie cl = getCookie(request.getCookies(), "email");
-            Client c = bLogin.profilClient(cl.getValue());
-            request.setAttribute("infoClientNom", c.getNom());
-            request.setAttribute("infoClientPrenom", c.getPrenom());
-            beanPanier livres = (beanPanier) session.getAttribute("monPanier");
-            String pan = livres.listO().toString();
-            session.setAttribute("livres", livres);
-            session.setAttribute("voirPanier", pan);
-            System.out.println(session.getAttribute("voirPanier"));
-            System.out.println(session.getAttribute("livres"));
-            }    
+
+        if (request.getParameter("voirPanier") != null || "jspPanier".equals(section)) {
+            Cookie c01 = getCookie(request.getCookies(), "login");
+            if (c01 == null) {
+                pageJSP = "/WEB-INF/jspLogin.jsp";
+            } else {
+                try {
+                    pageJSP = "/WEB-INF/jspPanier.jsp";
+                    Cookie cl = getCookie(request.getCookies(), "email");
+                    Client c = bLogin.profilClient(cl.getValue());
+                    request.setAttribute("infoClientNom", c.getNom());
+                    request.setAttribute("infoClientPrenom", c.getPrenom());
+                    beanPanier livres = (beanPanier) session.getAttribute("monPanier");
+                    String pan = livres.listO().toString();
+                    session.setAttribute("livres", livres);
+                    session.setAttribute("voirPanier", pan);
+                    System.out.println(session.getAttribute("voirPanier"));
+                    System.out.println(session.getAttribute("livres"));
+
+                    List<Adresse> mesAdresseF = bAdresse.adresseClient(c.getIdClient(), "FACTURATION");
+                    request.setAttribute("listeAdresseF", mesAdresseF);
+
+                    List<Adresse> mesAdresseL = bAdresse.adresseClient(c.getIdClient(), "LIVRAISON");
+                    request.setAttribute("listeAdresseL", mesAdresseL);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
         }
         if ("jspLivraison".equals(section)) {
-            
+
             try {
                 HashMap<String, List<Expediteur>> me = beanEx.findExpediteur();
                 List<String> tables = beanEx.getDefaultTable();
@@ -480,13 +421,12 @@ public class controller extends HttpServlet {
             pageJSP = "/WEB-INF/historiqueCommande.jsp";
             try {
                 Cookie cl = getCookie(request.getCookies(), "email");
-                Cookie cn  = getCookie(request.getCookies(), "nom");
+                Cookie cn = getCookie(request.getCookies(), "nom");
                 Client c = bLogin.profilClient(cl.getValue());
                 List<Commande> lco = bCommande.findCommande(c.getIdClient());
                 request.setAttribute("listeCommande", lco);
                 request.setAttribute("nom", cn.getValue());
-                
-                
+
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -501,8 +441,7 @@ public class controller extends HttpServlet {
         if ("jspCreerNvxCompteClientEtape2".equals(section)) {
             System.out.println(">>>>" + section + "/" + request.getParameter("nom"));
             pageJSP = "WEB-INF/jspCreerNvxCompteClientEtape1.jsp";
-            
-            
+
             try {
 
                 String nom = request.getParameter("nom");  //recuperation des infos du formulaire
@@ -554,7 +493,7 @@ public class controller extends HttpServlet {
 //        }
         pageJSP = response.encodeURL(pageJSP);
         getServletContext().getRequestDispatcher(pageJSP).include(request, response);
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

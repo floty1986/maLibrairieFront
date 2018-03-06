@@ -28,5 +28,12 @@
     <c:url value="controller?section=login" var="url01" />                                    
     <a href="${url01}"><input type="submit" value="LOGIN" name="Connexion" /></a>
     <a href = 'controller?section=jspPanier'><input type="submit" value="Voir Panier !" name="voirPanier" /></a>
+    <hr>
+    <a href='controller?deconnect'><input type='submit' name='deconnecter' value='Deconnexion' /></a>
+    <br>
+    <hr>
+    <a href='controller?section=afficher-client'><input type='submit' name='profilClient' value='profil ${welcome}' /></a>
+    
+    <a href='controller?section=historiqueCommande'><input type='submit' name='historiqueCommande' value='Historique de commande ${welcome}' /></a><br/>
 
 </div>

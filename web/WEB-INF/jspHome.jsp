@@ -16,6 +16,7 @@
             <c:url value="controller?section=login" var="url01" />                                    
             <a href="${url01}"><input type="submit" value="LOGIN" name="Connexion" /></a>
             <br>
+            <br>
              <c:url value="controller?section=evenement" var="url03" />                                    
             <a href="${url03}"><input type="submit" value="Evenements" name="Connexion" /></a>
             
