@@ -1,6 +1,5 @@
 package controller;
 
-import beans.GestionClient;
 import beans.beanAdresse;
 import beans.beanClient;
 import beans.beanCommande;
@@ -23,13 +22,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.JspPage;
 import obj.Adresse;
 import obj.Client;
 import obj.Commande;
 import obj.Evenement;
 import obj.Expediteur;
-import obj.LigneCommande;
 import obj.OrganismePaiement;
 import obj.Ouvrage;
 import traitements.GestionEvenements;
@@ -153,13 +150,14 @@ public class controller extends HttpServlet {
                 if (bLogin.check(request.getParameter("login"), request.getParameter("password"))) {
                     pageJSP = "/WEB-INF/jspWelcome.jsp";
                     String login = bLogin.nomPrenomClient(request.getParameter("login"));
-                    Cookie cNom = new Cookie("nom", login);
+
+//                    Cookie cNom = new Cookie("nom", login);
                     request.setAttribute("welcome", login);
                     Cookie c = new Cookie("login", login);
                     Cookie cEmail = new Cookie("email", request.getParameter("login"));
                     response.addCookie(c);
                     response.addCookie(cEmail);
-                    response.addCookie(cNom);
+//                    response.addCookie(cNom);
                     Cookie c2 = new Cookie("try", "");
                     c2.setMaxAge(0);
                     response.addCookie(c2);
@@ -249,6 +247,7 @@ public class controller extends HttpServlet {
                 List<Ouvrage> lo = gestionOuvrages.findOuvrages2();
                 request.setAttribute("liste", lo);
                 pageJSP = "/WEB-INF/catalogueFull.jsp";
+                
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -270,6 +269,7 @@ public class controller extends HttpServlet {
             pageJSP = "/WEB-INF/catPan.jsp";
             beanPanier monPanier
                     = (beanPanier) session.getAttribute("monPanier");
+            
 
             if (monPanier == null) {
                 try {
@@ -310,8 +310,8 @@ public class controller extends HttpServlet {
                     ex.printStackTrace();
                 }
             }
-            if (getCookie(request.getCookies(), "nom") != null) {
-                Cookie cn = getCookie(request.getCookies(), "nom");
+            if (getCookie(request.getCookies(), "login") != null) {
+                Cookie cn = getCookie(request.getCookies(), "login");
                 request.setAttribute("nom", cn.getValue());
             }
             request.setAttribute("panierVide", monPanier.isEmptyO());
@@ -421,7 +421,7 @@ public class controller extends HttpServlet {
             pageJSP = "/WEB-INF/historiqueCommande.jsp";
             try {
                 Cookie cl = getCookie(request.getCookies(), "email");
-                Cookie cn = getCookie(request.getCookies(), "nom");
+                Cookie cn = getCookie(request.getCookies(), "login");
                 Client c = bLogin.profilClient(cl.getValue());
                 List<Commande> lco = bCommande.findCommande(c.getIdClient());
                 request.setAttribute("listeCommande", lco);
