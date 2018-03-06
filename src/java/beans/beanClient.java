@@ -19,25 +19,5 @@ public class beanClient implements Serializable {
             cDAO.insertClient(nom, prenom, genre, dateNaissance, email, telephone, motDePasse);
         
     }
-    
-    
-///////////////////////////////////////    
-    
-    
-//
-//    public beanClient() throws NamingException {
-//        cDAO = new ClientDAO();
-//    }
-//
-//    ArrayList<Client> listeC;
-//
-//    public beanClient(ArrayList<Client> listeC) {
-//        this.listeC = listeC;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "beanClient{" + "listeC=" + listeC + '}';
-//    }
-
+  
 }

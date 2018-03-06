@@ -14,15 +14,10 @@
         <jsp:include page="/controller?section=affichePanier" flush="true" />
         <hr>
         <!--<a href='controller?section=jspCreerNvxCompteClientEtape1'>Creer nouveau compte</a> -->
-        <c:url value="controller?section=login" var="url01" />  
-        
+        <c:url value="controller?section=login" var="url01" />          
         <a href="${url01}"><input type="submit" value="LOGIN" name="Connexion" /></a>
 
-        <c:url value="controller?section=jspCreerNvxCompteClientEtape1" var="url01"/>
-        <a href="${url01}"><input type="submit" value="Créer un nouveau compte client" name="NvxCompte1" /></a>
 
-        <c:url value="controller?section=jspCreerNvxCompteClientEtape2" var="url02"/>
-        <a href="${url02}"><input type="submit" value="Poursuivre la création de votre compte" name="NvxCompte2" /></a>
         
 
     </body>

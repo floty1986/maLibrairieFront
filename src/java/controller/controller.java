@@ -339,21 +339,33 @@ public class controller extends HttpServlet {
                 ex.printStackTrace();
             }
         }
+        
+        
+        
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         if ("jspCreerNvxCompteClientEtape1".equals(section)) {
             
             try {
                 
-                String nom = request.getParameter("nom");
+                String nom = request.getParameter("nom");  //recuperation des infos du formulaire
                 String prenom = request.getParameter("prenom");
                 String genre = request.getParameter("genre");
                 String dateNaissance = request.getParameter("dateNaissance");
                 String email = request.getParameter("email");
                 String telephone = request.getParameter("telephone");
+                String motDePasse = request.getParameter("motDePasse");
+                
                 beanClient c = new beanClient();
                 try {
-                    c.insertClient(nom, prenom, genre, dateNaissance, email, telephone, telephone);
+                    c.insertClient(nom, prenom, genre, dateNaissance, email, telephone, motDePasse);
+                    request.getAttribute("nom");
+                    request.getAttribute("prenom");
+                    request.getAttribute("genre");
+                    request.getAttribute("dateNaissance");
+                    request.getAttribute("email");
+                    request.getAttribute("telephone");
+                    request.getAttribute("motDePasse");
                 } catch (SQLException | ParseException ex) {
                     ex.printStackTrace();
                 }
@@ -364,7 +376,6 @@ public class controller extends HttpServlet {
         }    
                 
             
-//        }
 //////////////////////////////////////////////////////           
 
         if ("jspCreerNvxCompteEtape2".equals(section)) {
