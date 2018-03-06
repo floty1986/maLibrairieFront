@@ -17,5 +17,9 @@
         <jsp:include page="/controller?section=affichePanier" flush="true" />
         <hr>
         <a href='controller?deconnect'><input type='submit' name='deconnecter' value='Deconnexion' /></a>
+        <br>
+        <hr>
+        <a href='controller?section=afficher-client'><input type='submit' name='profilClient' value='profil de ${welcome}' /></a>
+        
     </body>
 </html>

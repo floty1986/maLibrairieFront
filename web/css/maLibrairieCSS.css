@@ -8,18 +8,16 @@
     top: 10px;
 } 
 
-.btn_ajout {
-    margin-left: 200px;
-    left: 50%;
-    color: blue;
-    background-color: #38546d;
+.btn_ajout{
+    position : absolute;
+    left: 300px;
+/*    color: blue;
     border-radius: 10px;
     width: auto;
-    height: auto;
+    height: auto;*/
 }
 .btn{
     color: blue;
-    background-color: #38546d;
     border-radius: 50px;
     width: auto;
     height: auto;

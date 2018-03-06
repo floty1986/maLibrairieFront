@@ -4,8 +4,6 @@ package beans;
 import accesBDD.ClientDAO;
 import java.io.Serializable;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.NamingException;
 
 import obj.Client;
@@ -46,5 +44,18 @@ public class beanLogin implements Serializable {
             ex.printStackTrace();
         }
         return false;
-    }    
+    }
+    
+    public Client profilClient(String email){
+        try {
+            
+            Client c =cDAO.selectLogin(email);
+            
+            return c;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+        
+    }
 }
