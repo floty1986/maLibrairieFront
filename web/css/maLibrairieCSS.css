@@ -22,3 +22,7 @@
     width: auto;
     height: auto;
 }
+
+p.small{
+    font-size: small;
+}

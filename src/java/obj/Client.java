@@ -8,7 +8,7 @@ public class Client implements Serializable {
     private String nom;
     private String prenom;
     private String genre;
-    private Date dateNaissance;
+    private String dateNaissance;
     private String email;
     private String telephone;
     private String motDePasse;
@@ -34,7 +34,7 @@ public class Client implements Serializable {
         return genre;
     }
 
-    public Date getDateNaissance() {
+    public String getDateNaissance() {
         return dateNaissance;
     }
     
@@ -72,7 +72,7 @@ public class Client implements Serializable {
         this.genre = genre;
     }
 
-    public void setDateNaissance(Date dateNaissance) {
+    public void setDateNaissance(String dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
     

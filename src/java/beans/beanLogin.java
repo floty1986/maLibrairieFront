@@ -4,6 +4,9 @@ package beans;
 import accesBDD.ClientDAO;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 
 import obj.Client;
@@ -16,7 +19,7 @@ public class beanLogin implements Serializable {
         cDAO= new ClientDAO();
     }
     
-    public String nomPrenomClient(String email){
+    public String nomPrenomClient(String email) {
         try {
             String nomPrenomClient;
             Client c =cDAO.selectLogin(email);
@@ -24,12 +27,14 @@ public class beanLogin implements Serializable {
             return nomPrenomClient;
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } catch (ParseException ex) {
+            Logger.getLogger(beanLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
         
     }
     
-    public boolean check( String email, String password) {
+    public boolean check( String email, String password)  {
         try {
             Client c;
             c = cDAO.selectLogin(email);            
@@ -42,11 +47,13 @@ public class beanLogin implements Serializable {
                     return true;            
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } catch (ParseException ex) {
+            Logger.getLogger(beanLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
     
-    public Client profilClient(String email){
+    public Client profilClient(String email) {
         try {
             
             Client c =cDAO.selectLogin(email);
@@ -54,6 +61,8 @@ public class beanLogin implements Serializable {
             return c;
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } catch (ParseException ex) {
+            Logger.getLogger(beanLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
         

@@ -1,5 +1,6 @@
 <%@page import="obj.Adresse"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link href="/maLibrairieFront/css/maLibrairieCSS.css" rel="stylesheet" type="text/css"/>
 
 
 <!DOCTYPE html>
@@ -22,13 +23,13 @@
             Genre : <input type="text" name="genre" value='${infoClientGenre}' />
             <br>
             <br>
-            Date de Naissance : <input type="text" name="dateNaissance" value='${infoClientDateNaissance}' />
+            Date de Naissance : <input type="text" name="dateNaissance" value='${infoClientDateNaissance}' /> format date jj-mm-aaaa
             <br>
             <br>
             E-mail : <input type="text" name="email" value='${infoClientEmail}' />
             <br>
             <br>
-            telephone : <input type="text" name="telephone" value='${infoClientEmail}' />
+            telephone : <input type="text" name="telephone" value='${infoClientTelephone}' />
             <br>
             <br>
             Mot de passe : <input type="text" name="motDePasse" value='${infoClientMotDePasse}' />
@@ -39,32 +40,34 @@
 
         <h1>Mes Adresses</h1>
 
-        <form action='controller' method='post'>
+        
             <h2>Adresse de facturation<h2/>
 
                 <c:forEach items="${listeAdresseF}" var="p">
-                    <li>
-                        ${p.nom}, ${p.prenom}
-                        ${p.numVoie}, ${p.typeVoie}, ${p.nomVoie}
-                        ${p.complement}
+                    <p class="small">
+                        
+                        ${p.nom}, ${p.prenom}<br/>
+                        ${p.numVoie}, ${p.typeVoie} ${p.nomVoie}<br/>
+                        ${p.complement}<br/>
                         ${p.codePostal}, ${p.ville}, ${p.pays}
-                    </li>
+                    <p/>
+                    <br/>
                 </c:forEach>
 
             <h2>Adresse de Livraison<h2/>
 
                 <c:forEach items="${listeAdresseL}" var="p">
-                    <li>
-                        ${p.nom}, ${p.prenom}
-                        ${p.numVoie}, ${p.typeVoie}, ${p.nomVoie}
-                        ${p.complement}
+                    <p>
+                        
+                        ${p.nom}, ${p.prenom}<br/>
+                        ${p.numVoie}, ${p.typeVoie} ${p.nomVoie}<br/>
+                        ${p.complement}<br/>
                         ${p.codePostal}, ${p.ville}, ${p.pays}
-                    </li>
+                    <p/>
+                    <br/>
                 </c:forEach>
-
-
-            <input type='submit' name='modifierAdr' value='Modifier' />
-        </form>
+           
+      
 
 
 
