@@ -11,6 +11,7 @@ import beans.beanPanier;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -167,6 +168,19 @@ public class controller extends HttpServlet {
             if (request.getParameter("doIt") != null) {
 
                 if (bLogin.check(request.getParameter("login"), request.getParameter("password"))) {
+                    
+                     Cookie z = null;
+                    if (z != null){  
+                            pageJSP = "/WEB-INF/jspLivraison.jsp";
+//                            request.setAttribute("infoClientNom", cPanier.getNom());
+//                            request.setAttribute("infoClientPrenom", cPanier.getPrenom());
+//                            
+                            
+                             session.getAttribute("monPanier");
+                            session.getAttribute("livres");
+                            
+                            }else {
+                    
                     pageJSP = "/WEB-INF/jspWelcome.jsp";
                     String login = bLogin.nomPrenomClient(request.getParameter("login"));
 //                    Cookie cNom = new Cookie("nom", login);
@@ -179,7 +193,7 @@ public class controller extends HttpServlet {
                     Cookie c2 = new Cookie("try", "");
                     c2.setMaxAge(0);
                     response.addCookie(c2);
-
+                    }
                 } else {
 
                     pageJSP = "/WEB-INF/jspLogin.jsp";
@@ -199,6 +213,7 @@ public class controller extends HttpServlet {
                         pageJSP = "/WEB-INF/jspFatalError.jsp";
                         request.setAttribute("fatalError", "Trop de tentatives !!!");
                     }
+//                     Cookie z = new Cookie("validationPanier", request.getParameter("monPanier")); 
                 }
 
                 
@@ -431,44 +446,61 @@ public class controller extends HttpServlet {
 
         }
 
-        if (request.getParameter("voirPanier") != null || "jspPanier".equals(section)) {
+         if ("jspPanier".equals(section)) {
+
+            pageJSP = "/WEB-INF/jspPanier.jsp";
+            beanPanier livres = (beanPanier) session.getAttribute("monPanier");
+            Collection<Ouvrage> pan = livres.listO();
+            List<String> clefs = beanPa.getLC();
+            request.setAttribute("clefPanier", clefs);
+            session.setAttribute("voirPanier", pan);
+        }
+        if (request.getParameter("validPanier") != null || "jspLivraison".equals(section)) {
+            
             Cookie c01 = getCookie(request.getCookies(), "login");
+//            response.addCookie(z);
             if (c01 == null) {
                 pageJSP = "/WEB-INF/jspLogin.jsp";
+                Cookie z = new Cookie("validationPanier", request.getParameter("monPanier"));
+                response.addCookie(z);
             } else {
                 try {
-                    pageJSP = "/WEB-INF/jspPanier.jsp";
+                    pageJSP = "/WEB-INF/jspLivraison.jsp";
                     Cookie cl = getCookie(request.getCookies(), "email");
                     Client c = bLogin.profilClient(cl.getValue());
                     request.setAttribute("infoClientNom", c.getNom());
                     request.setAttribute("infoClientPrenom", c.getPrenom());
-                    beanPanier livres = (beanPanier) session.getAttribute("monPanier");
-                    String pan = livres.listO().toString();
-                    session.setAttribute("livres", livres);
-                    session.setAttribute("voirPanier", pan);
-                    System.out.println(session.getAttribute("voirPanier"));
-                    System.out.println(session.getAttribute("livres"));
+
+                    HashMap<String, List<Expediteur>> me = beanEx.findExpediteur();
+                    List<String> tables = beanEx.getDefaultTable();
+                    request.setAttribute("mapExpediteur", me);
+                    request.setAttribute("tables", tables);
+//                    pageJSP = "/WEB-INF/jspLivraison.jsp";
+
+//                beanPanier add = (beanPanier) session.getAttribute("monPanier");
+//                String panLiv = add.listO().toString();
+                    session.getAttribute("monPanier");
+                    session.getAttribute("livres");
+//                    request.getAttribute("listeAdresseF");
+//                    request.getAttribute("listeAdresseL");
 
                     List<Adresse> mesAdresseF = bAdresse.adresseClient(c.getIdClient(), "FACTURATION");
                     request.setAttribute("listeAdresseF", mesAdresseF);
 
                     List<Adresse> mesAdresseL = bAdresse.adresseClient(c.getIdClient(), "LIVRAISON");
                     request.setAttribute("listeAdresseL", mesAdresseL);
+                    
+                    List<Ouvrage> lo;
+            try {
+                lo = gestionOuvrages.findOuvrages2();
+            request.setAttribute("liste", lo);
+            } catch (SQLException ex) {
+            ex.printStackTrace();
+            }
+
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-            }
-        }
-        if ("jspLivraison".equals(section)) {
-
-            try {
-                HashMap<String, List<Expediteur>> me = beanEx.findExpediteur();
-                List<String> tables = beanEx.getDefaultTable();
-                request.setAttribute("mapExpediteur", me);
-                request.setAttribute("tables", tables);
-                pageJSP = "/WEB-INF/jspLivraison.jsp";
-            } catch (SQLException ex) {
-                ex.printStackTrace();
             }
         }
         if ("jspPaiement".equals(section)) {

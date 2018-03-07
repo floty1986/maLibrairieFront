@@ -35,8 +35,6 @@
 <div class="footer">
     <h3>Panier : </h3>
     <jsp:include page="/controller?section=affichePanier" flush="true"/>
-    <c:url value="controller?section=jspPanier" var="url03" />
-    <a href="${url03}">Valider panier</a>
     <hr>
     <c:url value="controller?section=login" var="url01" />                                    
     
