@@ -9,6 +9,7 @@
     </head>
     <body>
         <h1>Entrer une adresse de livraison</h1>
+        <p>Lorsque vous aurez terminé, cliquez sur le bouton "Continuer" </p>
     
         <form action="controller" method="POST">
                     <input type="hidden" name="section" value="jspCreerNvxCompteClientEtape3" />
@@ -17,7 +18,8 @@
             <br>
             Prenom:<input type="text" name="prenom" value="${prenom}" /><br>
             <br>
-            E-mail:<input type="text" name="email" value="${email}" />
+            E-mail:<input type="text" name="email" value="${email}" /> <br>
+             <br>
             Numero de voie:<input type="text" name="numVoie" value="" /><br>
             <br>
             Type de voie:<input type="text" name="typeVoie" value="" /><br>
