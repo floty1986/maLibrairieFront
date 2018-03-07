@@ -49,6 +49,26 @@ public class Ouvrage {
         this.imageOuvrage = imageOuvrage;
         this.qtePanier = qtePanier;
     }
+
+    public Ouvrage(int idOuvrage, String titre, float prix, int qteStockee, String imageOuvrage, String statut) {
+        this.idOuvrage = idOuvrage;
+        this.titre = titre;
+        this.prix = prix;
+        this.qteStockee = qteStockee;
+        this.imageOuvrage = imageOuvrage;
+        this.statut = statut;
+    }
+
+    public Ouvrage(int idOuvrage, String titre, float prix, int qteStockee, String imageOuvrage, String statut, int qtePanier) {
+        this.idOuvrage = idOuvrage;
+        this.titre = titre;
+        this.prix = prix;
+        this.qteStockee = qteStockee;
+        this.imageOuvrage = imageOuvrage;
+        this.statut = statut;
+        this.qtePanier = qtePanier;
+    }
+
     
     
     
