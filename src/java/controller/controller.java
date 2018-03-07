@@ -4,6 +4,7 @@ import beans.beanAdresse;
 import beans.beanClient;
 import beans.beanCommande;
 import beans.beanExpediteur;
+import beans.beanLigneCommande;
 import beans.beanLogin;
 import beans.beanPaiement;
 import beans.beanPanier;
@@ -27,6 +28,7 @@ import obj.Client;
 import obj.Commande;
 import obj.Evenement;
 import obj.Expediteur;
+import obj.LigneCommande;
 import obj.OrganismePaiement;
 import obj.Ouvrage;
 import traitements.GestionEvenements;
@@ -142,6 +144,16 @@ public class controller extends HttpServlet {
         }
         beanCommande bCommande = (beanCommande) getServletContext().getAttribute("beanCommande");
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        if (getServletContext().getAttribute("beanLigneCommande") == null) {
+            try {
+                getServletContext().setAttribute("beanLigneCommande", new beanLigneCommande());
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+            }
+        }
+        beanLigneCommande bLigneCommande = (beanLigneCommande) getServletContext().getAttribute("beanLigneCommande");
+////////////////////////////////////////////////////////////////////////////////////////////////////
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
 
@@ -254,7 +266,7 @@ public class controller extends HttpServlet {
                 HashMap<Integer, String> ma = gestionOuvrages.findAuteur();
                 request.setAttribute("mapAuteurs", ma);
                 pageJSP = "/WEB-INF/catalogueFull.jsp";
-                
+
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -276,7 +288,6 @@ public class controller extends HttpServlet {
             pageJSP = "/WEB-INF/catPan.jsp";
             beanPanier monPanier
                     = (beanPanier) session.getAttribute("monPanier");
-            
 
             if (monPanier == null) {
                 try {
@@ -418,7 +429,7 @@ public class controller extends HttpServlet {
                 ex.printStackTrace();
             }
         }
-
+        boolean aff = false;
         if ("historiqueCommande".equals(section)) {
             pageJSP = "/WEB-INF/historiqueCommande.jsp";
             try {
@@ -429,10 +440,24 @@ public class controller extends HttpServlet {
                 request.setAttribute("listeCommande", lco);
                 request.setAttribute("nom", cn.getValue());
 
+                String numC = request.getParameter("numCommande");
+
+                if (!"".equals(numC) && numC != null) {
+                    aff = true;
+                    request.setAttribute("affLC", aff);
+                    int numCo = Integer.valueOf(numC);
+                    request.setAttribute("numC", numC);
+
+                    List<LigneCommande> lC = bLigneCommande.findLigneCommandeCl(numCo);
+                    request.setAttribute("listeLigneCommande", lC);
+                    
+                }
+
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
         }
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  //en attente de lien avec page login Flo
@@ -442,7 +467,7 @@ public class controller extends HttpServlet {
         }
         if ("jspCreerNvxCompteClientEtape2".equals(section)) {
             System.out.println(">>>>" + section + "/" + request.getParameter("nom"));
-            pageJSP = "WEB-INF/jspCreerNvxCompteClientEtape1.jsp";
+            pageJSP = "WEB-INF/jspCreerNvxCompteClientEtape2.jsp";
 
             try {
 

@@ -10,7 +10,7 @@
     <body>
         <h1>Entrer une nouvelle adresse de livraison</h1>
     
-        <form action="controller?section=...." method="POST">
+        <form action="controller?section=login" method="POST">
         
             Nom:<input type="text" name="nom" value="" /><br>
             <br>
