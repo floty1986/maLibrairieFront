@@ -41,7 +41,7 @@ public class AdresseDAO implements Serializable {
             
 
             String idClients = this.idClient();
-            int idClient = Integer.valueOf(idClients)
+            int idClient = Integer.valueOf(idClients);
             stm.setInt(1, idClient);
             stm.setInt(2, idClient);
             stm.setString(3, typeAdresse);
