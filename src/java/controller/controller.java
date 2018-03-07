@@ -225,6 +225,11 @@ public class controller extends HttpServlet {
             try {
                 List<Ouvrage> lo = gestionOuvrages.findOuvragebyTitre(request.getParameter("titreRecherche"));
                 request.setAttribute("titres", lo);
+                int nbO = lo.size();
+                request.setAttribute("nbOuv", nbO);
+                HashMap<Integer, String> ma = gestionOuvrages.findAuteur();
+                request.setAttribute("mapAuteurs", ma);
+                request.setAttribute("recherche", request.getParameter("titreRecherche"));
                 pageJSP = "/WEB-INF/catalogueParTitre.jsp";
             } catch (SQLException ex) {
                 ex.printStackTrace();

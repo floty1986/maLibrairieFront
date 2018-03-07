@@ -2,8 +2,18 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link href="/maLibrairieFront/css/maLibrairieCSS.css" rel="stylesheet" type="text/css"/>
-
-<h1>Catalogue</h1>
+<!DOCTYPE html>
+<html class="centre">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Catalogue-Panier</title>
+    </head>
+    <body>
+<h1 class="centre">Catalogue</h1>
+<form action="controller?section=catalogueTitre" method="POST" class="centre">
+    <input type="text" name="titreRecherche" value="Recherche par Titre" />
+    <input type="submit" value="Chercher" name="chercherTitre" />
+</form>
 <hr>
 <table class="tableau">
     <tr>
@@ -31,5 +41,7 @@
     <c:url value="controller?section=login" var="url01" />                                    
     <a href="${url01}"><input type="submit" value="LOGIN" name="Connexion" /></a>
     <a href = 'controller?section=jspPanier'><input type="submit" value="Voir Panier !" name="voirPanier" /></a>
-        
+
 </div>
+    </body>
+</html>

@@ -39,9 +39,9 @@ public class OuvrageDAO implements Serializable {
     }
 
     public List<Ouvrage> selectOuvrageByTitre(String titre) throws SQLException {
-        String req = "SELECT idOuvrage, titre, imageOuvrage FROM Ouvrage where titre LIKE ? ORDER BY titre";
+        String req = "SELECT idOuvrage, titre, prix, qteStockee, imageOuvrage, nomStatut FROM Ouvrage where titre LIKE ? ORDER BY titre";
 
-        Ouvrage o = null;
+        
         try (Connection cnt = mc.getConnection();
                 PreparedStatement stm = cnt.prepareStatement(req);) {
             String titrePattern = "%" + titre + "%";
@@ -49,10 +49,8 @@ public class OuvrageDAO implements Serializable {
             ResultSet rs = stm.executeQuery();
             List<Ouvrage> lo = new ArrayList<>();
             while (rs.next()) {
-                titre = rs.getString("titre");
-                int idOuvrage = rs.getInt("idOuvrage");
-                String image = rs.getString("imageOuvrage");
-                o = new Ouvrage(idOuvrage, titre, image);
+                Ouvrage o = new Ouvrage(rs.getInt("idOuvrage"), rs.getString("titre"), rs.getFloat("prix"), rs.getInt("qteStockee"), rs.getString("imageOuvrage"), rs.getString("nomStatut"));
+                
                 lo.add(o);
             }
             return lo;
