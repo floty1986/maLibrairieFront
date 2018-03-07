@@ -1,14 +1,12 @@
 package traitements;
 
 import accesBDD.OuvrageDAO;
-import java.beans.*;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.naming.NamingException;
-import obj.Auteur;
 import obj.Ouvrage;
 
 public class GestionOuvrages implements Serializable {
@@ -86,5 +84,7 @@ public class GestionOuvrages implements Serializable {
         }
         return ma;
     }
+    
+    
     
 }

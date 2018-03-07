@@ -441,6 +441,7 @@ public class controller extends HttpServlet {
                     aff = true;
                     request.setAttribute("affLC", aff);
                     int numCo = Integer.valueOf(numC);
+                    request.setAttribute("numC", numC);
 
                     List<LigneCommande> lC = bLigneCommande.findLigneCommandeCl(numCo);
                     request.setAttribute("listeLigneCommande", lC);

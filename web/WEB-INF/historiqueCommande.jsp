@@ -21,14 +21,14 @@
 
             <c:if test="${affLC}">
                 <hr>
-                <h3>Historique des lignes de Commande de la commande numero ${p.numCommande}<h3/>
+                <h3>Historique des lignes de Commande de la commande numero ${numC}<h3/>
                     <c:forEach items="${listeLigneCommande}" var="p">
                         <p class="small">
-                            ref ouvrage : ${p.idOuvrage}<br/>
+                            ref ouvrage : ${p.titre}<br/>
                             prix        : ${p.prix}<br/>
-                            Qt commandé : ${qteCommandee}<br/>
+                            Qt commandé : ${p.qteCommandee}<br/>
                             remise      : ${p.remise}<br/>
-                            tva         : ${tvaLC}
+                            tva         : ${p.tvaLC}
                             <br/>
                         <p/>                
                     </c:forEach>
