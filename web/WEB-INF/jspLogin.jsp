@@ -17,7 +17,7 @@
         </form>
         <font color='red'>${msg}</font>  
         
-        
+        <br>
         <c:url value="controller?section=jspCreerNvxCompteClientEtape1" var="url01"/>
         <a href="${url01}"><input type="submit" value="Créer un nouveau compte client" name="NvxCompte1" /></a>
             

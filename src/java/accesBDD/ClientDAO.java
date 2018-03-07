@@ -7,9 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.naming.NamingException;
 import obj.Client;
@@ -55,12 +52,12 @@ public class ClientDAO implements Serializable {
     }
 
     ////////////////////////////////////////////
-   
-    public void insertClient(String nom, String prenom, String genre, String dateNaissance, String email, String telephone, String motDePasse) throws SQLException {
-        String req = "INSERT INTO Client(nom, prenom, genre, dateNaissance, email, telephone, motDePasse)VALUES (?,?,?,?,?,?,?)";
+       public void insertClient(String nom, String prenom, String genre, String dateNaissance, String email, String telephone, String motDePasse, String nomStatut) throws SQLException {
+        String req = "INSERT INTO Client(nom, prenom, genre, dateNaissance, email, telephone, motDePasse, nomStatut)VALUES (?,?,?,?,?,?,?,?)";
 
         try (Connection cnt = mc.getConnection();
                 PreparedStatement stm = cnt.prepareStatement(req);) {
+
             stm.setString(1, nom);
             stm.setString(2, prenom);
             stm.setString(3, genre);
@@ -68,8 +65,12 @@ public class ClientDAO implements Serializable {
             stm.setString(5, email);
             stm.setString(6, telephone);
             stm.setString(7, motDePasse);
+            stm.setString(8, nomStatut);
 
             int nb = stm.executeUpdate();
+            System.out.println("nb:"+ nb);
+        } catch ( Exception e) {
+            System.out.println("insertClient:"+ e.getMessage());
         }
 
     }

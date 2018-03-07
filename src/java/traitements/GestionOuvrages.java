@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.naming.NamingException;
+import obj.Auteur;
 import obj.Ouvrage;
 
 public class GestionOuvrages implements Serializable {
@@ -76,6 +77,14 @@ public class GestionOuvrages implements Serializable {
         return lo;
     }
     
-    
+    public HashMap<Integer, String> findAuteur () throws SQLException {
+        HashMap<Integer, String> ma = new HashMap<>();
+        List<Integer> lid = oDAO.selectAllIdOuvrage();
+        for (Integer l : lid) {
+            String auteur = oDAO.selectAuteur(l);
+            ma.put(l, auteur);
+        }
+        return ma;
+    }
     
 }

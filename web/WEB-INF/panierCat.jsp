@@ -4,21 +4,21 @@
     Panier vide !    
 </c:if>
 <c:if test="${!panierVide}">
-    <table class="centre">
+    <table class="tableau">
         <tr>
-            <th scope="col" class="centre">Titre</th>
-            <th scope="col" class="centre">Quantité Panier</th>
-            <th scope="col" class="centre">Ajouter 1</th>
-            <th scope="col" class="centre">Retirer 1</th>
-            <th scope="col" class="centre">Supprimer Panier</th>
+            <th scope="col" class="tableau">Titre</th>
+            <th scope="col" class="tableau">Quantité Panier</th>
+            <th scope="col" class="tableau">Ajouter 1</th>
+            <th scope="col" class="tableau">Retirer 1</th>
+            <th scope="col" class="tableau">Supprimer Panier</th>
         </tr>
         <c:forEach var="i" items="${list}">
             <tr>
-                <td class="centre">${i.titre}</td>
-                <td class="centre">${i.qtePanier}</td>
-                <td class="centre"><a href='controller?section=panier&add=${i.idOuvrage}&add2=${i.titre}&add3=${i.imageOuvrage}'>(+1)</a></td>
-                <td class="centre"><a href='controller?section=panier&dec=${i.idOuvrage}'>(-1)</a></td>
-                <td class="centre"><a href='controller?section=panier&del=${i.idOuvrage}'>(X)</a></td>
+                <td class="tableau">${i.titre}</td>
+                <td class="tableau">${i.qtePanier}</td>
+                <td class="tableau"><a href='controller?section=panier&add=${i.idOuvrage}&add2=${i.titre}&add3=${i.imageOuvrage}&add4=${i.prix}&add5=${i.qteStockee}&add6=${i.statut}'>(+1)</a></td>
+                <td class="tableau"><a href='controller?section=panier&dec=${i.idOuvrage}'>(-1)</a></td>
+                <td class="tableau"><a href='controller?section=panier&del=${i.idOuvrage}'>(X)</a></td>
             </tr>        
         </c:forEach>
     </table>

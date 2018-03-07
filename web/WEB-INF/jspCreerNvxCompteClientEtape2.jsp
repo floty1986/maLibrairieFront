@@ -1,7 +1,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<link href="/maLibrairieFront/css/maLibrairieCSS.css" rel="stylesheet" type="text/css"/>
 <!DOCTYPE html>
-<html>
+<html class="centre">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>CREER UN NOUVEAU COMPTE CLIENT ETAPE 2</title>
@@ -9,7 +10,7 @@
     <body>
         <h1>Entrer une nouvelle adresse de livraison</h1>
     
-        <form action="controller?section=....." method="POST">
+        <form action="controller?section=...." method="POST">
         
             Nom:<input type="text" name="nom" value="" /><br>
             <br>
