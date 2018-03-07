@@ -7,14 +7,16 @@
         <title>CREER UN NOUVEAU COMPTE CLIENT ETAPE 2</title>
     </head>
     <body>
-        <h1>Entrer une nouvelle adresse de livraison</h1>
+        <h1>Entrer une adresse de livraison</h1>
     
-        <form action="controller?section=...." method="POST">
-        
-            Nom:<input type="text" name="nom" value="" /><br>
+        <form action="controller" method="POST">
+                    <input type="hidden" name="section" value="jspCreerNvxCompteClientEtape3" />
+
+            Nom:<input type="text" name="nom" value="${nom}" /><br>
             <br>
-            Prenom:<input type="text" name="prenom" value="" /><br>
+            Prenom:<input type="text" name="prenom" value="${prenom}" /><br>
             <br>
+            E-mail:<input type="text" name="email" value="${email}" />
             Numero de voie:<input type="text" name="numVoie" value="" /><br>
             <br>
             Type de voie:<input type="text" name="typeVoie" value="" /><br>
@@ -27,21 +29,19 @@
             <br>
             Pays:<input type="text" name="pays" value="" /><br>
             <br>
-            Numero de téléphone:<input type="text" name="numTel" value="" /><br>
+            Telephone:<input type="text" name="telephone" value="${telephone}" /><br>
             <br>
-            Complément d'adresse:<input type="text" name="complAdr" value="" /><br>
-            <br>
-            Cette adresse est-elle également votre adresse de facturation?<br>
+            Complément d'adresse:<input type="text" name="complement" value="" /><br>
+            <br>           
+            <input type="submit" value="Continuer" name="NvxCompte2" />      
+        </form>
+            
+             Cette adresse est-elle également votre adresse de facturation?<br>
             <br>
             Oui:<input type="radio" name="adrFacturation" value="oui" /><br>
             Non:<input type="radio" name="adrFacturation" value="non" /><br>
             <br>
-            <input type="submit" value="Continuer" name="doIt" />
-            
-        
-        </form>
-    
-    
+       
     
     </body>
 </html>

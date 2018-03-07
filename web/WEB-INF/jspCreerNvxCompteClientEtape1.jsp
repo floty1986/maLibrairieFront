@@ -17,7 +17,7 @@
             <br>
             Votre prenom: <input type="text" name="prenom" value="" /><br>
             <br>
-            Genre: H<input type="radio" name="genre" value="M" />F<input type="radio" name="genre" value="F" />N<input type="radio" name="genre" value="N" /><br>
+            Genre: M<input type="radio" name="genre" value="M" />F<input type="radio" name="genre" value="F" />N<input type="radio" name="genre" value="N" /><br>
             <br>            
             date de naissance:<input type="text" name="dateNaissance" value="" /><br>
             <br>
@@ -29,20 +29,15 @@
             <br>
             Entrer le mot de passe à nouveau: <input type="text" name="motDePasseConf" value="" /><br>
             <br>
-
-            <!--<input type="submit" value="Créer votre compte" name="doIt1" /><br>
-            -->
             <br>
-
-
-            En créant votre compte, vous acceptez bla, bla, bla,....<br>
+           En créant votre compte, vous acceptez bla, bla, bla,....<br>
             <br>
-
+            <input type="submit" value="Créer votre compte" name="NvxCompte1" />
+        </form>
+        <br>
+        <form action="controller?section=login" method="POST">
             Vous possédez dèjà un compte?
             <input type="submit" value="Identifiez-vous ici" name="doIt" />
-        </form>
-        <form action="controller?section=jspCreerNvxCompteClientEtape2" method="POST">
-            <input type="submit" value="Créer votre compte" name="NvxCompte2" />
         </form>
 
        
