@@ -1,7 +1,6 @@
 package traitements;
 
 import accesBDD.OuvrageDAO;
-import java.beans.*;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -74,6 +73,16 @@ public class GestionOuvrages implements Serializable {
     public List<Ouvrage> findOuvragebyTitre (String titre) throws SQLException {
         List<Ouvrage> lo = oDAO.selectOuvrageByTitre(titre);
         return lo;
+    }
+    
+    public HashMap<Integer, String> findAuteur () throws SQLException {
+        HashMap<Integer, String> ma = new HashMap<>();
+        List<Integer> lid = oDAO.selectAllIdOuvrage();
+        for (Integer l : lid) {
+            String auteur = oDAO.selectAuteur(l);
+            ma.put(l, auteur);
+        }
+        return ma;
     }
     
     

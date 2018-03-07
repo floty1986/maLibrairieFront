@@ -1,10 +1,10 @@
 package controller;
 
-import beans.GestionClient;
 import beans.beanAdresse;
 import beans.beanClient;
 import beans.beanCommande;
 import beans.beanExpediteur;
+import beans.beanLigneCommande;
 import beans.beanLogin;
 import beans.beanPaiement;
 import beans.beanPanier;
@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.JspPage;
 import obj.Adresse;
 import obj.Client;
 import obj.Commande;
@@ -58,68 +57,6 @@ public class controller extends HttpServlet {
         String pageJSP;
 
         pageJSP = "/WEB-INF/jspHome.jsp";
-//        } else {
-//            if (getServletContext().getAttribute("beanLogin") == null) {
-//                try {
-//                    getServletContext().setAttribute("beanLogin", new beanLogin());
-//                } catch (NamingException ex) {
-//                    ex.printStackTrace();
-//
-//                }
-//            }
-//            beanLogin bLogin = (beanLogin) getServletContext().getAttribute("beanLogin");
-//            if (bLogin.check(request.getParameter("login"), request.getParameter("password"))) {
-//                pageJSP = "/WEB-INF/jspWelcome.jsp";
-//                String login = bLogin.nomPrenomClient(request.getParameter("login"));
-//                request.setAttribute("welcome", login);
-////                Cookie c = new Cookie("login", login);
-//                Cookie cEmail = new Cookie("email", request.getParameter("login"));
-////                response.addCookie(c);
-//                response.addCookie(cEmail);
-//                Cookie c2 = new Cookie("try", "");
-//                c2.setMaxAge(0);
-//                response.addCookie(c2);
-//
-//            } else {
-//
-//                pageJSP = "/WEB-INF/jspLogin.jsp";
-//                request.setAttribute("login", request.getParameter("login"));
-//                request.setAttribute("msg", "Erreur login/Mot de passe !!!");
-//                Cookie c = getCookie(request.getCookies(), "try");
-//                if (c == null) {
-//                    c = new Cookie("try", "*");
-//                } else {
-//                    c.setValue(c.getValue() + "*");
-//                }
-//                c.setMaxAge(90);
-//                response.addCookie(c);
-//
-//                if (c.getValue().length() >= 3) {
-//                    pageJSP = "/WEB-INF/jspFatalError.jsp";
-//                    request.setAttribute("fatalError", "Trop de tentatives !!!");
-//                }
-//            }
-//
-//            Cookie c = getCookie(request.getCookies(), "login");
-//            if (c != null) {
-//                pageJSP = "/WEB-INF/jspWelcome.jsp";
-//                request.setAttribute("welcome", c.getValue());
-//            }
-//            if (request.getParameter("deconnect") != null) {
-//                pageJSP = "/WEB-INF/jspLogin.jsp";
-//                request.setAttribute("login", c.getValue());
-//                Cookie cc = new Cookie("login", "");
-//                cc.setMaxAge(0);
-//                response.addCookie(cc);
-//            }
-//            c = getCookie(request.getCookies(), "try");
-//            if (c != null) {
-//                if (c.getValue().length() >= 3) {
-//                    pageJSP = "/WEB-INF/jspFatalError.jsp";
-//                    request.setAttribute("fatalError", "Trop de tentatives !!!!!");
-//                }
-//            }
-//        }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////       
         if (getServletContext().getAttribute("gestionOuvrages") == null) {
@@ -150,7 +87,6 @@ public class controller extends HttpServlet {
             } catch (NamingException ex) {
                 ex.printStackTrace();
 
-                //to do
             }
         }
         beanExpediteur beanEx = (beanExpediteur) getServletContext().getAttribute("beanExpediteur");
@@ -189,14 +125,7 @@ public class controller extends HttpServlet {
             }
         }
         beanAdresse bAdresse = (beanAdresse) getServletContext().getAttribute("beanAdresse");
-        if (getServletContext().getAttribute("gestionClient") == null) {
-            try {
-                getServletContext().setAttribute("gestionClient", new GestionClient());
-            } catch (NamingException ex) {
-                ex.printStackTrace();
-            }
-        }
-        GestionClient gestionClient = (GestionClient) getServletContext().getAttribute("gestionClient");
+
         if (getServletContext().getAttribute("beanClient") == null) {
             try {
                 getServletContext().setAttribute("beanClient", new beanClient());
@@ -215,26 +144,32 @@ public class controller extends HttpServlet {
         }
         beanCommande bCommande = (beanCommande) getServletContext().getAttribute("beanCommande");
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        if (getServletContext().getAttribute("beanLigneCommande") == null) {
+            try {
+                getServletContext().setAttribute("beanLigneCommande", new beanLigneCommande());
+            } catch (NamingException ex) {
+                ex.printStackTrace();
+            }
+        }
+        beanLigneCommande bLigneCommande = (beanLigneCommande) getServletContext().getAttribute("beanLigneCommande");
+////////////////////////////////////////////////////////////////////////////////////////////////////
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
-            Cookie c = getCookie(request.getCookies(), "login");
-            if (c != null) {
-                pageJSP = "/WEB-INF/jspWelcome.jsp";
-                request.setAttribute("welcome", c.getValue());
-            }
 
             if (request.getParameter("doIt") != null) {
 
                 if (bLogin.check(request.getParameter("login"), request.getParameter("password"))) {
                     pageJSP = "/WEB-INF/jspWelcome.jsp";
                     String login = bLogin.nomPrenomClient(request.getParameter("login"));
-                    Cookie cNom = new Cookie("nom", login);
+
+//                    Cookie cNom = new Cookie("nom", login);
                     request.setAttribute("welcome", login);
-                    c = new Cookie("login", login);
+                    Cookie c = new Cookie("login", login);
                     Cookie cEmail = new Cookie("email", request.getParameter("login"));
                     response.addCookie(c);
                     response.addCookie(cEmail);
-                    response.addCookie(cNom);
+//                    response.addCookie(cNom);
                     Cookie c2 = new Cookie("try", "");
                     c2.setMaxAge(0);
                     response.addCookie(c2);
@@ -250,9 +185,9 @@ public class controller extends HttpServlet {
                     } else {
                         cTry.setValue(cTry.getValue() + "*");
                     }
-                    c.setMaxAge(5);
-                    System.out.println(c.getValue());
-                    response.addCookie(c);
+                    cTry.setMaxAge(5);
+
+                    response.addCookie(cTry);
 
                     if (cTry.getValue().length() >= 3) {
                         pageJSP = "/WEB-INF/jspFatalError.jsp";
@@ -260,16 +195,22 @@ public class controller extends HttpServlet {
                     }
                 }
 
+                Cookie c03 = getCookie(request.getCookies(), "login");
+                if (c03 != null) {
+                    pageJSP = "/WEB-INF/jspWelcome.jsp";
+                    request.setAttribute("welcome", c03.getValue());
+                }
+
                 if (request.getParameter("deconnect") != null) {
                     pageJSP = "/WEB-INF/jspLogin.jsp";
-                    request.setAttribute("login", c.getValue());
+                    request.setAttribute("login", c03.getValue());
                     Cookie cc = new Cookie("login", "");
                     cc.setMaxAge(0);
                     response.addCookie(cc);
                 }
-                c = getCookie(request.getCookies(), "try");
-                if (c != null) {
-                    if (c.getValue().length() >= 3) {
+                Cookie c05 = getCookie(request.getCookies(), "try");
+                if (c05 != null) {
+                    if (c05.getValue().length() >= 3) {
                         pageJSP = "/WEB-INF/jspFatalError.jsp";
                         request.setAttribute("fatalError", "Trop de tentatives !!!!!");
                     }
@@ -296,9 +237,14 @@ public class controller extends HttpServlet {
             try {
                 List<Ouvrage> lo = gestionOuvrages.findOuvragebyTitre(request.getParameter("titreRecherche"));
                 request.setAttribute("titres", lo);
+                int nbO = lo.size();
+                request.setAttribute("nbOuv", nbO);
+                HashMap<Integer, String> ma = gestionOuvrages.findAuteur();
+                request.setAttribute("mapAuteurs", ma);
+                request.setAttribute("recherche", request.getParameter("titreRecherche"));
                 pageJSP = "/WEB-INF/catalogueParTitre.jsp";
             } catch (SQLException ex) {
-                Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             }
         }
 
@@ -317,9 +263,12 @@ public class controller extends HttpServlet {
             try {
                 List<Ouvrage> lo = gestionOuvrages.findOuvrages2();
                 request.setAttribute("liste", lo);
+                HashMap<Integer, String> ma = gestionOuvrages.findAuteur();
+                request.setAttribute("mapAuteurs", ma);
                 pageJSP = "/WEB-INF/catalogueFull.jsp";
+
             } catch (SQLException ex) {
-                Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             }
         }
 //        if ("catalogue".equals(request.getParameter("section"))) {
@@ -335,6 +284,8 @@ public class controller extends HttpServlet {
 //        }
 
         if ("panier".equals(request.getParameter("section"))) {
+
+            pageJSP = "/WEB-INF/catPan.jsp";
             beanPanier monPanier
                     = (beanPanier) session.getAttribute("monPanier");
 
@@ -347,12 +298,7 @@ public class controller extends HttpServlet {
                 }
             }
             if (request.getParameter("add") != null) {
-                monPanier.addO(Integer.valueOf(request.getParameter("add")), request.getParameter("add2"), request.getParameter("add3"));
-//                System.out.println("panier : "+monPanier.listO().toString());
-//                beanPanier liste =  (beanPanier) session.getAttribute("monPanier");
-//                String pan = liste.listO().toString();
-//                System.out.println("liste : " +pan);
-
+                monPanier.addO(Integer.valueOf(request.getParameter("add")), request.getParameter("add2"), request.getParameter("add3"), Float.valueOf(request.getParameter("add4")), Integer.valueOf(request.getParameter("add5")), request.getParameter("add6"));
             }
             if (request.getParameter("dec") != null) {
                 monPanier.decO(Integer.valueOf(request.getParameter("dec")));
@@ -363,7 +309,7 @@ public class controller extends HttpServlet {
             if (request.getParameter("clear") != null) {
                 monPanier.clearO();
             }
-            pageJSP = "/WEB-INF/catPan.jsp";
+
         }
         if ("affichePanier".equals(request.getParameter("section"))) {
             pageJSP = "/WEB-INF/panierCat.jsp";
@@ -377,7 +323,10 @@ public class controller extends HttpServlet {
                     ex.printStackTrace();
                 }
             }
-
+            if (getCookie(request.getCookies(), "login") != null) {
+                Cookie cn = getCookie(request.getCookies(), "login");
+                request.setAttribute("nom", cn.getValue());
+            }
             request.setAttribute("panierVide", monPanier.isEmptyO());
             request.setAttribute("list", monPanier.listO());
         }
@@ -391,7 +340,7 @@ public class controller extends HttpServlet {
                 request.setAttribute("evenements", le);
                 pageJSP = "/WEB-INF/evenementDate.jsp";
             } catch (SQLException ex) {
-                Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             }
         }
         if ("afficher-client".equals(section)) {
@@ -429,22 +378,33 @@ public class controller extends HttpServlet {
 //            }
 
         }
-        Cookie c01 = getCookie(request.getCookies(), "login");
-        if (request.getParameter("voirPanier") != null && "jspPanier".equals(section)) {
+
+        if (request.getParameter("voirPanier") != null || "jspPanier".equals(section)) {
+            Cookie c01 = getCookie(request.getCookies(), "login");
             if (c01 == null) {
                 pageJSP = "/WEB-INF/jspLogin.jsp";
             } else {
-                pageJSP = "/WEB-INF/jspPanier.jsp";
-                Cookie cl = getCookie(request.getCookies(), "email");
-                Client c = bLogin.profilClient(cl.getValue());
-                request.setAttribute("infoClientNom", c.getNom());
-                request.setAttribute("infoClientPrenom", c.getPrenom());
-                beanPanier livres = (beanPanier) session.getAttribute("monPanier");
-                String pan = livres.listO().toString();
-                session.setAttribute("livres", livres);
-                session.setAttribute("voirPanier", pan);
-                System.out.println(session.getAttribute("voirPanier"));
-                System.out.println(session.getAttribute("livres"));
+                try {
+                    pageJSP = "/WEB-INF/jspPanier.jsp";
+                    Cookie cl = getCookie(request.getCookies(), "email");
+                    Client c = bLogin.profilClient(cl.getValue());
+                    request.setAttribute("infoClientNom", c.getNom());
+                    request.setAttribute("infoClientPrenom", c.getPrenom());
+                    beanPanier livres = (beanPanier) session.getAttribute("monPanier");
+                    String pan = livres.listO().toString();
+                    session.setAttribute("livres", livres);
+                    session.setAttribute("voirPanier", pan);
+                    System.out.println(session.getAttribute("voirPanier"));
+                    System.out.println(session.getAttribute("livres"));
+
+                    List<Adresse> mesAdresseF = bAdresse.adresseClient(c.getIdClient(), "FACTURATION");
+                    request.setAttribute("listeAdresseF", mesAdresseF);
+
+                    List<Adresse> mesAdresseL = bAdresse.adresseClient(c.getIdClient(), "LIVRAISON");
+                    request.setAttribute("listeAdresseL", mesAdresseL);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
         if ("jspLivraison".equals(section)) {
@@ -470,21 +430,35 @@ public class controller extends HttpServlet {
                 ex.printStackTrace();
             }
         }
-
+        boolean aff = false;
         if ("historiqueCommande".equals(section)) {
             pageJSP = "/WEB-INF/historiqueCommande.jsp";
             try {
                 Cookie cl = getCookie(request.getCookies(), "email");
-                Cookie cn = getCookie(request.getCookies(), "nom");
+                Cookie cn = getCookie(request.getCookies(), "login");
                 Client c = bLogin.profilClient(cl.getValue());
                 List<Commande> lco = bCommande.findCommande(c.getIdClient());
                 request.setAttribute("listeCommande", lco);
                 request.setAttribute("nom", cn.getValue());
 
+                String numC = request.getParameter("numCommande");
+
+                if (!"".equals(numC) && numC != null) {
+                    aff = true;
+                    request.setAttribute("affLC", aff);
+                    int numCo = Integer.valueOf(numC);
+                    request.setAttribute("numC", numC);
+
+                    List<LigneCommande> lC = bLigneCommande.findLigneCommandeCl(numCo);
+                    request.setAttribute("listeLigneCommande", lC);
+                    
+                }
+
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
         }
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if ("jspCreerNvxCompteClientEtape1".equals(section)) {

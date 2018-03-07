@@ -1,7 +1,8 @@
 
+<link href="/maLibrairieFront/css/maLibrairieCSS.css" rel="stylesheet" type="text/css"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html class="centre">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>CREER UNE ADFRESSE DE FACTURATION</title>
