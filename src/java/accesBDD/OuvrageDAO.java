@@ -19,14 +19,14 @@ public class OuvrageDAO implements Serializable {
     }
 
     public List<Ouvrage> selectAllOuvrages() throws SQLException {
-        String req = "SELECT idOuvrage, titre, imageOuvrage FROM ouvrage  ORDER BY titre";
+        String req = "SELECT idOuvrage, titre, prix, qteStockee, imageOuvrage, nomStatut FROM ouvrage  ORDER BY titre";
         Connection cnt = mc.getConnection();
         java.sql.Statement stm = cnt.createStatement();
         List<Ouvrage> lo = new ArrayList<>();
 
         try (ResultSet rs = stm.executeQuery(req)) {
             while (rs.next()) {
-                Ouvrage o = new Ouvrage(rs.getInt("idOuvrage"), rs.getString("titre"), rs.getString("imageOuvrage"));
+                Ouvrage o = new Ouvrage(rs.getInt("idOuvrage"), rs.getString("titre"), rs.getFloat("prix"), rs.getInt("qteStockee"), rs.getString("imageOuvrage"), rs.getString("nomStatut"));
                 lo.add(o);
             }
         }
@@ -59,4 +59,28 @@ public class OuvrageDAO implements Serializable {
         }
     }
 
+    public String selectAuteur(int idOuvrage) throws SQLException {
+        String req = "SELECT nom, prenom FROM Auteur a JOIN Bibliographie b on a.idAuteur=b.idAuteur JOIN Ouvrage o ON b.idOuvrage=o.idOuvrage WHERE o.idOuvrage = ?";
+        try (Connection cnt = mc.getConnection();
+                PreparedStatement stm = cnt.prepareStatement(req);) {
+            stm.setInt(1, idOuvrage);
+            ResultSet rs = stm.executeQuery();
+            rs.next();
+            String auteur = rs.getString("prenom") + " " + rs.getString("nom");
+            return auteur;
+        }
+    }
+
+    public List<Integer> selectAllIdOuvrage() throws SQLException {
+        String req = "SELECT idOuvrage FROM Ouvrage";
+        try (Connection cnt = mc.getConnection();
+                PreparedStatement stm = cnt.prepareStatement(req);) {
+            ResultSet rs = stm.executeQuery();
+            List<Integer> lid = new ArrayList<>();
+            while (rs.next()) {
+                lid.add(rs.getInt("idOuvrage"));
+            }
+            return lid;
+        }
+    }
 }

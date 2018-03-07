@@ -11,10 +11,10 @@
 .btn_ajout{
     position : absolute;
     left: 300px;
-/*    color: blue;
-    border-radius: 10px;
-    width: auto;
-    height: auto;*/
+    /*    color: blue;
+        border-radius: 10px;
+        width: auto;
+        height: auto;*/
 }
 .btn{
     color: blue;
@@ -37,11 +37,17 @@ p.small{
 } 
 
 
-.centre{
+.centre {
     margin: auto;
     text-align: center;
     border-bottom: 5px solid #38546d;
     background-color:silver;
+}
+.tableau {
+    margin: auto;
+    text-align: center;
+    border-bottom: 5px solid #38546d;
+    background-color : #ffcc99;
 }
 
 .footer {
@@ -53,7 +59,6 @@ p.small{
     bottom: 0;
     width: 100%;
     background-color: blanchedalmond;
-    color: white;
     text-align: center;
 }
 /*
