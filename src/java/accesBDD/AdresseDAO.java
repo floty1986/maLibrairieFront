@@ -8,11 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.NamingException;
 import obj.Adresse;
-import obj.Client;
 
 public class AdresseDAO implements Serializable {
 
@@ -23,7 +20,7 @@ public class AdresseDAO implements Serializable {
     }
     
     public String idClient() throws SQLException{
-        String req02 = "select MAX(idClient)from Client";
+        String req02 = "select MAX (idClient) as idClient from Client";
         String idClient =null; 
         try (Connection cnt = mc.getConnection();
                 Statement stm = cnt.createStatement();) {
@@ -43,9 +40,10 @@ public class AdresseDAO implements Serializable {
                 PreparedStatement stm = cnt.prepareStatement(req);) {
             
 
-            String idClient = this.idClient();
-            stm.setString(1, idClient);
-            stm.setString(2, idClient);
+            String idClients = this.idClient();
+            int idClient = Integer.valueOf(idClients)
+            stm.setInt(1, idClient);
+            stm.setInt(2, idClient);
             stm.setString(3, typeAdresse);
             stm.setString(4, numVoie);
             stm.setString(5, typeVoie);
@@ -63,7 +61,8 @@ public class AdresseDAO implements Serializable {
             int nb = stm.executeUpdate();
             System.out.println("nb:"+ nb);
         } catch ( Exception e) {
-            System.out.println(nom+"insertClient:"+ e.getMessage());
+            System.out.println(nom+" insertClient: "+ e.getMessage());
+            
         }
     }
 
