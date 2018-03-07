@@ -14,7 +14,7 @@
         <br>
         <hr>
         <a href='controller?section=afficher-client'><input type='submit' name='profilClient' value='profil de ${welcome}' /></a>        
-        <a href='controller?section=historiqueCommande'><input type='submit' name='historiqueCommande' value='Histirique de commande de ${welcome}' /></a><br/>
+        <a href='controller?section=historiqueCommande'><input type='submit' name='historiqueCommande' value='Historique de commande de ${welcome}' /></a><br/>
         <hr>
         <h2>CATALOGUE</h2>
         <jsp:include page="/controller?section=catalogue" flush="true"/>
