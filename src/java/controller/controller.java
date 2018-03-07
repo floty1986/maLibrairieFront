@@ -49,7 +49,7 @@ public class controller extends HttpServlet {
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
@@ -156,13 +156,19 @@ public class controller extends HttpServlet {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
+            
+            Cookie c03 = getCookie(request.getCookies(), "email");
+            Cookie c06 = getCookie(request.getCookies(), "login");
+                if (c03 != null) {
+                    pageJSP = "/WEB-INF/jspWelcome.jsp";
+                    request.setAttribute("welcome", c06.getValue());
+                }
 
             if (request.getParameter("doIt") != null) {
 
                 if (bLogin.check(request.getParameter("login"), request.getParameter("password"))) {
                     pageJSP = "/WEB-INF/jspWelcome.jsp";
                     String login = bLogin.nomPrenomClient(request.getParameter("login"));
-
 //                    Cookie cNom = new Cookie("nom", login);
                     request.setAttribute("welcome", login);
                     Cookie c = new Cookie("login", login);
@@ -195,11 +201,7 @@ public class controller extends HttpServlet {
                     }
                 }
 
-                Cookie c03 = getCookie(request.getCookies(), "login");
-                if (c03 != null) {
-                    pageJSP = "/WEB-INF/jspWelcome.jsp";
-                    request.setAttribute("welcome", c03.getValue());
-                }
+                
 
                 if (request.getParameter("deconnect") != null) {
                     pageJSP = "/WEB-INF/jspLogin.jsp";
@@ -271,6 +273,19 @@ public class controller extends HttpServlet {
                 ex.printStackTrace();
             }
         }
+        
+        if ("catalogueA".equals(section)) {
+            try {
+                List<Ouvrage> lo = gestionOuvrages.findOuvrages2();
+                request.setAttribute("liste", lo);
+                HashMap<Integer, String> ma = gestionOuvrages.findAuteur();
+                request.setAttribute("mapAuteurs", ma);
+                pageJSP = "/WEB-INF/catalogueFullA.jsp";
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
 //        if ("catalogue".equals(request.getParameter("section"))) {
 //            try {
 //                List<List<Integer>> OuvPagi = gestionOuvrages.getPagination(3);
@@ -282,10 +297,47 @@ public class controller extends HttpServlet {
 //                Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
 //            }
 //        }
+        if("panierA".equals(request.getParameter("section"))){
+            pageJSP="/WEB-INF/catPan.jsp";
+            beanPanier monPanier
+                    = (beanPanier) session.getAttribute("monPanier");
+
+            if (monPanier == null) {
+                try {
+                    monPanier = new beanPanier();
+                    session.setAttribute("monPanier", monPanier);
+                } catch (NamingException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            if (request.getParameter("add") != null) {
+                monPanier.addO(Integer.valueOf(request.getParameter("add")), request.getParameter("add2"), request.getParameter("add3"), Float.valueOf(request.getParameter("add4")), Integer.valueOf(request.getParameter("add5")), request.getParameter("add6"));
+            }
+            if (request.getParameter("dec") != null) {
+                monPanier.decO(Integer.valueOf(request.getParameter("dec")));
+            }
+            if (request.getParameter("del") != null) {
+                monPanier.delO(Integer.valueOf(request.getParameter("del")));
+            }
+            if (request.getParameter("clear") != null) {
+                monPanier.clearO();
+            }
+        }
 
         if ("panier".equals(request.getParameter("section"))) {
 
-            pageJSP = "/WEB-INF/catPan.jsp";
+            pageJSP = "/WEB-INF/jspWelcome.jsp";
+            Cookie cEmail= getCookie(request.getCookies(), "email");
+            String login = bLogin.nomPrenomClient(cEmail.getValue());
+//                    Cookie cNom = new Cookie("nom", login);
+                    request.setAttribute("welcome", login);
+                    Cookie c = new Cookie("login", login);                    
+                    response.addCookie(c);
+                    response.addCookie(cEmail);
+//                    response.addCookie(cNom);
+                    Cookie c2 = new Cookie("try", "");
+                    c2.setMaxAge(0);
+                    response.addCookie(c2);
             beanPanier monPanier
                     = (beanPanier) session.getAttribute("monPanier");
 
@@ -356,6 +408,7 @@ public class controller extends HttpServlet {
             request.setAttribute("infoClientMotDePasse", c.getMotDePasse());
             request.setAttribute("infoClientNomStatut", c.getNomStatut());
 
+            //try {
             try {
 
                 List<Adresse> mesAdresseF = bAdresse.adresseClient(c.getIdClient(), "FACTURATION");
@@ -460,13 +513,12 @@ public class controller extends HttpServlet {
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//  //en attente de lien avec page login Flo
         if ("jspCreerNvxCompteClientEtape1".equals(section)) {
-            System.out.println(">>>>" + section);
+            //System.out.println(">>>>" + section);
             pageJSP = "/WEB-INF/jspCreerNvxCompteClientEtape1.jsp";
         }
         if ("jspCreerNvxCompteClientEtape2".equals(section)) {
-            System.out.println(">>>>" + section + "/" + request.getParameter("nom"));
+            //System.out.println(">>>>" + section + "/" + request.getParameter("nom"));
             pageJSP = "WEB-INF/jspCreerNvxCompteClientEtape2.jsp";
 
             try {
@@ -478,20 +530,20 @@ public class controller extends HttpServlet {
                 String email = request.getParameter("email");
                 String telephone = request.getParameter("telephone");
                 String motDePasse = request.getParameter("motDePasse");
-                //String statut = ("actif");
 
                 beanClient c = new beanClient();
 
                 try {
                     String nomStatut = ("actif");
-                    //                    request.setAttribute("nom",nom);
-//                    request.setAttribute("prenom",prenom);
-//                    request.setAttribute("genre",genre);
-//                    request.setAttribute("dateNaissance",dateNaissance);
-//                    request.setAttribute("email",email);
-//                    request.setAttribute("telephone",telephone);
-//                    request.setAttribute("motDePasse",motDePasse);
-
+                    request.setAttribute("nom", nom);
+                    request.setAttribute("prenom", prenom);
+                    request.setAttribute("genre", genre);
+                    request.setAttribute("dateNaissance", dateNaissance);
+                    request.setAttribute("email", email);
+                    request.setAttribute("telephone", telephone);
+                    request.setAttribute("motDePasse", motDePasse);
+                    Cookie cEmail = new Cookie("email", email);
+                    response.addCookie(cEmail);
                     c.insertClient(nom, prenom, genre, dateNaissance, email, telephone, motDePasse, nomStatut);
                     //todo: recuperer le nom et prenom pour les mettre dans la 2eme page
                 } catch (SQLException | ParseException ex) {
@@ -503,15 +555,74 @@ public class controller extends HttpServlet {
                 ex.printStackTrace();
             }
         }
-
-//////////////////////////////////////////////////////           
-        if ("jspCreerNvxCompteEtape2".equals(section)) {
-            if (request.getParameter("NvxCompte2") != null) {
-                pageJSP = "/WEB-INF/jspCreerNvxCompteEtape2.jsp";
+        
+        
+        if ("jspCreerNvxCompteClientEtape3".equals(section)) {
+            
+            try {
+                
+                String nom = request.getParameter("nom");
+                String prenom = request.getParameter("prenom");
+                String email = request.getParameter("email");
+                String numVoie = request.getParameter("numVoie");
+                String typeVoie = request.getParameter("typeVoie");
+                String nomVoie = request.getParameter("nomVoie");
+                String ville = request.getParameter("ville");
+                String codePostal = request.getParameter("codePostal");
+                String pays = request.getParameter("pays");
+                String telephone = request.getParameter("telephone");
+                String complement = request.getParameter("complement");
+                
+                beanAdresse a = new beanAdresse();
+                
+                try {
+                    String nomStatut = ("actif");
+                    String typeAdresse = ("LIVRAISON");
+                    request.setAttribute("nom",nom);
+                    request.setAttribute("prenom", prenom);
+                    request.setAttribute("email", email);
+                    request.setAttribute("numVoie", numVoie);
+                    request.setAttribute("typeVoie", typeVoie);
+                    request.setAttribute("nomVoie", nomVoie);
+                    request.setAttribute("ville", ville);
+                    request.setAttribute("codePostal", codePostal);
+                    request.setAttribute("pays", pays);
+                    request.setAttribute("telephone", telephone);                  
+                    request.setAttribute("complement", complement);         
+                    
+                    a.insertAdresse( typeAdresse, numVoie, typeVoie, nomVoie, complement, codePostal, ville, pays, nom, prenom, email, telephone, nomStatut);
+                }catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                
+            } catch (NamingException ex) {
+                ex.printStackTrace();
             }
-//            pageJSP = "/WEB-INF/jspCreerNvxCompteEtape2.jsp";
+            
 
+            pageJSP = "/WEB-INF/jspWelcome.jsp";
+            Cookie cEmail = getCookie(request.getCookies(), "email");
+            String login = bLogin.nomPrenomClient(cEmail.getValue());
+            Cookie cNom = new Cookie("nom", login);
+            request.setAttribute("welcome", login);
+            Cookie c = new Cookie("login", login);
+
+            response.addCookie(c);
+
+            response.addCookie(cNom);
+            Cookie c2 = new Cookie("try", "");
+            c2.setMaxAge(0);
+            response.addCookie(c2);
         }
+
+//////////////////////////////////////////////////////    
+//        if ("jspCreerNvxCompteEtape2".equals(section)) {
+//            if (request.getParameter("NvxCompte2") != null) {
+//                pageJSP = "/WEB-INF/jspCreerNvxCompteEtape2.jsp";
+//            }
+//
+//
+//        }
 //       
 //        
 //  // en attente de lien avec la page facturation de Momo      
@@ -535,7 +646,11 @@ public class controller extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -549,7 +664,11 @@ public class controller extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
