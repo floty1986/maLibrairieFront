@@ -10,6 +10,7 @@ import beans.beanPaiement;
 import beans.beanPanier;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -407,9 +408,7 @@ public class controller extends HttpServlet {
             request.setAttribute("infoClientMotDePasse", c.getMotDePasse());
             request.setAttribute("infoClientNomStatut", c.getNomStatut());
 
-            try {
-
-            
+           
             try {
                 
                 List<Adresse> mesAdresseF = bAdresse.adresseClient(c.getIdClient(), "FACTURATION");
@@ -526,9 +525,7 @@ public class controller extends HttpServlet {
                     
                     c.insertClient(nom, prenom, genre, dateNaissance, email, telephone, motDePasse);
                     //todo: recuperer le nom et prenom pour les mettre dans la 2eme page
-                } catch (SQLException ex) {
-                    Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ParseException ex) {
+                } catch (SQLException | ParseException ex) {
                     Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
                 }
                     
