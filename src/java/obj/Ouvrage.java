@@ -59,7 +59,7 @@ public class Ouvrage {
         this.statut = statut;
     }
 
-    public Ouvrage(int idOuvrage, String titre, float prix, int qteStockee, String imageOuvrage, String statut, int qtePanier) {
+    public Ouvrage(int idOuvrage, String titre,  String imageOuvrage, float prix, int qteStockee, String statut, int qtePanier) {
         this.idOuvrage = idOuvrage;
         this.titre = titre;
         this.prix = prix;
