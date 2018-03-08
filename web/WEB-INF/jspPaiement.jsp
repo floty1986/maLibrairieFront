@@ -17,9 +17,9 @@
                 </c:forEach>
             </ul>
         </c:forEach>
-        <c:url value="controller?section=jspPaiement" var="url05" />
+        <c:url value="controller?section=jspLivraison" var="url05" />
         <a href="${url05}">Précédent</a>
-        <a href="http://www.paypal.com">Valider Paiement</a><br><br>
+        <a href="http://www.paypal.com"><input type="submit" value="PRECEDENT" name="retourPaie" /></a><br><br>
         <form action="controller">
             <input type="submit" value="ajouter une adresse" name="ajouterAdresse" />
         </form>
