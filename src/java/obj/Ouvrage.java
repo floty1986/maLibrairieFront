@@ -17,6 +17,7 @@ public class Ouvrage {
     private String theme;
     private String sousTheme;
     private int qtePanier;
+    private float prixTTC;
 
     public Ouvrage() {
     }
@@ -59,7 +60,7 @@ public class Ouvrage {
         this.statut = statut;
     }
 
-    public Ouvrage(int idOuvrage, String titre, float prix, int qteStockee, String imageOuvrage, String statut, int qtePanier) {
+    public Ouvrage(int idOuvrage, String titre,  String imageOuvrage, float prix, int qteStockee, String statut, int qtePanier) {
         this.idOuvrage = idOuvrage;
         this.titre = titre;
         this.prix = prix;
@@ -69,9 +70,13 @@ public class Ouvrage {
         this.qtePanier = qtePanier;
     }
 
-    
-    
-    
+    public float getPrixTTC() {
+        return prixTTC;
+    }
+
+    public void setPrixTTC(float prixTTC) {
+        this.prixTTC = prixTTC;
+    }
 
     public int getIdOuvrage() {
         return idOuvrage;

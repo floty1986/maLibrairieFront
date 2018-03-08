@@ -168,19 +168,7 @@ public class controller extends HttpServlet {
             if (request.getParameter("doIt") != null) {
 
                 if (bLogin.check(request.getParameter("login"), request.getParameter("password"))) {
-                    
-                     Cookie z = null;
-                    if (z != null){  
-                            pageJSP = "/WEB-INF/jspLivraison.jsp";
-//                            request.setAttribute("infoClientNom", cPanier.getNom());
-//                            request.setAttribute("infoClientPrenom", cPanier.getPrenom());
-//                            
-                            
-                             session.getAttribute("monPanier");
-                            session.getAttribute("livres");
-                            
-                            }else {
-                    
+
                     pageJSP = "/WEB-INF/jspWelcome.jsp";
                     String login = bLogin.nomPrenomClient(request.getParameter("login"));
 //                    Cookie cNom = new Cookie("nom", login);
@@ -193,7 +181,7 @@ public class controller extends HttpServlet {
                     Cookie c2 = new Cookie("try", "");
                     c2.setMaxAge(0);
                     response.addCookie(c2);
-                    }
+
                 } else {
 
                     pageJSP = "/WEB-INF/jspLogin.jsp";
@@ -235,7 +223,9 @@ public class controller extends HttpServlet {
         }
 
         if (request.getParameter("modifierCl") != null) {
-            Cookie cl = getCookie(request.getCookies(), "email");
+            Cookie cl = getCookie(request.getCookies(), "email");            
+            String login = bLogin.nomPrenomClient(cl.getValue());
+            request.setAttribute("welcome", login);
             Client c = bLogin.profilClient(cl.getValue());
             bClient.modifierClient(c.getIdClient(), request.getParameter("nom"),
                     request.getParameter("prenom"), request.getParameter("genre"),
@@ -245,6 +235,9 @@ public class controller extends HttpServlet {
         }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if ("goAccueil".equals(request.getParameter(section))) {
+            pageJSP = "/WEB-INF/jspHome.jsp";
+        }
         if ("catalogueAccueil".equals(section)) {
             pageJSP = "/WEB-INF/catalogueAccueil.jsp";
         }
@@ -324,7 +317,7 @@ public class controller extends HttpServlet {
                 }
             }
             if (request.getParameter("add") != null) {
-                monPanier.addO(Integer.valueOf(request.getParameter("add")), request.getParameter("add2"), request.getParameter("add3"), Float.valueOf(request.getParameter("add4")), Integer.valueOf(request.getParameter("add5")), request.getParameter("add6"));
+                monPanier.addO(Integer.valueOf(request.getParameter("add")), request.getParameter("add2"), request.getParameter("add3"), Float.valueOf(request.getParameter("add4")), Integer.valueOf(request.getParameter("add5")), request.getParameter("add6"), Integer.valueOf(request.getParameter("add7")));
             }
             if (request.getParameter("dec") != null) {
                 monPanier.decO(Integer.valueOf(request.getParameter("dec")));
@@ -363,7 +356,7 @@ public class controller extends HttpServlet {
                 }
             }
             if (request.getParameter("add") != null) {
-                monPanier.addO(Integer.valueOf(request.getParameter("add")), request.getParameter("add2"), request.getParameter("add3"), Float.valueOf(request.getParameter("add4")), Integer.valueOf(request.getParameter("add5")), request.getParameter("add6"));
+                monPanier.addO(Integer.valueOf(request.getParameter("add")), request.getParameter("add2"), request.getParameter("add3"), Float.valueOf(request.getParameter("add4")), Integer.valueOf(request.getParameter("add5")), request.getParameter("add6"), Integer.valueOf(request.getParameter("add7")));
             }
             if (request.getParameter("dec") != null) {
                 monPanier.decO(Integer.valueOf(request.getParameter("dec")));
@@ -444,7 +437,7 @@ public class controller extends HttpServlet {
 
         }
 
-         if ("jspPanier".equals(section)) {
+        if ("jspPanier".equals(section)) {
 
             pageJSP = "/WEB-INF/jspPanier.jsp";
             beanPanier livres = (beanPanier) session.getAttribute("monPanier");
@@ -454,7 +447,7 @@ public class controller extends HttpServlet {
             session.setAttribute("voirPanier", pan);
         }
         if (request.getParameter("validPanier") != null || "jspLivraison".equals(section)) {
-            
+
             Cookie c01 = getCookie(request.getCookies(), "login");
 //            response.addCookie(z);
             if (c01 == null) {
@@ -488,13 +481,13 @@ public class controller extends HttpServlet {
                     List<Adresse> mesAdresseL = bAdresse.adresseClient(c.getIdClient(), "LIVRAISON");
                     request.setAttribute("listeAdresseL", mesAdresseL);
                     
-                    List<Ouvrage> lo;
-            try {
-                lo = gestionOuvrages.findOuvrages2();
-            request.setAttribute("liste", lo);
-            } catch (SQLException ex) {
-            ex.printStackTrace();
-            }
+//                    List<Ouvrage> lo;
+//            try {
+//                lo = gestionOuvrages.findOuvrages2();
+//            request.setAttribute("liste", lo);
+//            } catch (SQLException ex) {
+//            ex.printStackTrace();
+//            }
 
                 } catch (SQLException ex) {
                     ex.printStackTrace();
@@ -719,32 +712,44 @@ public class controller extends HttpServlet {
 
         if ("supprimerAdFact".equals(section)) {
             try {
-                Cookie idC = getCookie(request.getCookies(), "idClient");
-                if (idC == null) {
-                    Cookie cEmail = getCookie(request.getCookies(), "email");
-                    Client cl = bLogin.profilClient(cEmail.getValue());
-                    idC = new Cookie("idClient", String.valueOf(cl.getIdClient()));
-                }
-                int idClient = Integer.valueOf(idC.getValue());
-                bAdresse.supAdresse(idClient);
+
+                int idAdresse = Integer.valueOf(request.getParameter("idAdresse"));
+                bAdresse.supAdresse(idAdresse);
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
+            Cookie cEmail = getCookie(request.getCookies(), "email");
+                String login = bLogin.nomPrenomClient(cEmail.getValue());
+                Cookie cNom = new Cookie("nom", login);
+                request.setAttribute("welcome", login);
+                Cookie c = new Cookie("login", login);
+                response.addCookie(c);
+                response.addCookie(cNom);
+                Cookie c2 = new Cookie("try", "");
+                c2.setMaxAge(0);
+                response.addCookie(c2);
+                pageJSP = "/WEB-INF/jspWelcome.jsp";
         }
         if ("supprimerAdLiv".equals(section)) {
 
             try {
-                Cookie idC = getCookie(request.getCookies(), "idClient");
-                if (idC == null) {
-                    Cookie cEmail = getCookie(request.getCookies(), "email");
-                    Client cl = bLogin.profilClient(cEmail.getValue());
-                    idC = new Cookie("idClient", String.valueOf(cl.getIdClient()));
-                }
-                int idClient = Integer.valueOf(idC.getValue());
-                bAdresse.supAdresse(idClient);
+
+                int idAdresse = Integer.valueOf(request.getParameter("idAdresse"));
+                bAdresse.supAdresse(idAdresse);
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
+            Cookie cEmail = getCookie(request.getCookies(), "email");
+                String login = bLogin.nomPrenomClient(cEmail.getValue());
+                Cookie cNom = new Cookie("nom", login);
+                request.setAttribute("welcome", login);
+                Cookie c = new Cookie("login", login);
+                response.addCookie(c);
+                response.addCookie(cNom);
+                Cookie c2 = new Cookie("try", "");
+                c2.setMaxAge(0);
+                response.addCookie(c2);
+                pageJSP = "/WEB-INF/jspWelcome.jsp";
 
         }
 
