@@ -80,7 +80,8 @@ p.small{
 }*/
 
 .joseph {
-    
-    
+    background-image: url("http://ville-sussargues.fr/wordpress/wp-content/uploads/2014/10/bibliotheque-web.jpg");
+    background-repeat: no-repeat;
+    background-position: center right;
     
 }

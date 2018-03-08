@@ -1,18 +1,26 @@
 <%@page import="obj.Adresse"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link href="/maLibrairieFront/css/maLibrairieCSS.css" rel="stylesheet" type="text/css"/>
-<img url="http://ville-sussargues.fr/wordpress/wp-content/uploads/2014/10/bibliotheque-web.jpg"/>
+<link href="/maLibrairieFrontTest/web/css/maLibrairieCSS.css" rel="stylesheet" type="text/css"/>
 
 <!DOCTYPE html>
-<html>
+<html class="joseph">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+            body
+           {background-color: silver;
+            background-image: url(images/bibliotheque-web.jpg);
+            background-repeat: no-repeat;
+            background-position: right;
+            }
+        </style>
+                
         <title>Profil client</title>
     </head>
     <body>
         
         <h1>Mes coordonnées</h1>
-        <hr> 
+        <hr>
         <form action='controller' method='post'>
             Nom : &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="nom" value='${infoClientNom}' />
             <br>
@@ -26,10 +34,10 @@
             Date de Naissance : <input type="text" name="dateNaissance" value='${infoClientDateNaissance}' /> <!--format date jj-mm-aaaa -->
             <br>
             <br>
-            E-mail : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="email" value='${infoClientEmail}' />
+            E-mail : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="email" value='${infoClientEmail}' />
             <br>
             <br>
-            Telephone : &nbsp;&nbsp;&nbsp;<input type="text" name="telephone" value='${infoClientTelephone}' />
+            Telephone : &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="telephone" value='${infoClientTelephone}' />
             <br>
             <br>
             Mot de passe : <input type="text" name="motDePasse" value='${infoClientMotDePasse}' />
