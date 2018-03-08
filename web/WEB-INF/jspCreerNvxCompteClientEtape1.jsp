@@ -28,23 +28,24 @@
             <br>
             Mot de Passe: <input type="text" name="motDePasse" value="" /><br>
             <br>
-            Entrer le mot de passe à nouveau: <input type="text" name="motDePasseConf" value="" /><br>
+            Entrer le mot de passe à nouveau: <input type="text" name="motDePasseConf" value="" /><br>            
             <br>
-            <br>
-           En créant votre compte, vous acceptez bla, bla, bla,....<br>
+            <p>En créant votre compte, vous acceptez l'intégralité de<br>
+               nos conditions générales de vente, notre politique de<br>
+               gestion de Vos informations personnelles et notre <br>
+               politique cookies et publicité sur internet.
+            </p><br>
             <br>
             <input type="submit" value="Créer votre compte" name="NvxCompte1" />
         </form>
         <br>
         <form action="controller?section=login" method="POST">
-            Vous possédez dèjà un compte?
-            <input type="submit" value="Identifiez-vous ici" name="doIt" />
+
         </form>
 
-       
-        
-    
-
+        <c:url value="controller?section=login" var="url01"/>
+        Vous possédez déjà un compte?:<a href="${url01}"><input type="submit" value="Identifiez-vous ici" name="login" /></a>
+            
 
     </body>
 </html>
