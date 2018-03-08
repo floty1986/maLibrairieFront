@@ -20,16 +20,16 @@
         </c:forEach>
         <br>
 
-<div class="test">                      
-        <table border="1">
-            <td><h4>MON PANIER</h4></td>
-            <c:forEach items="${voirPanier}" var="p">
-                <tr>                 
-                    <td>${p.titre}</td>                  
-                </tr>
-            </c:forEach>
-        </table>
-    </div>
+        <div class="test">                      
+            <table border="1">
+                <td><h4>MON PANIER</h4></td>
+                <c:forEach items="${voirPanier}" var="p">
+                    <tr>                 
+                        <td>${p.titre}</td>                  
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
 
         <br>
         <table border="0">
