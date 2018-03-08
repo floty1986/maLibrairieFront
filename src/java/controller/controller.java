@@ -708,6 +708,17 @@ public class controller extends HttpServlet {
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
+            Cookie cEmail = getCookie(request.getCookies(), "email");
+                String login = bLogin.nomPrenomClient(cEmail.getValue());
+                Cookie cNom = new Cookie("nom", login);
+                request.setAttribute("welcome", login);
+                Cookie c = new Cookie("login", login);
+                response.addCookie(c);
+                response.addCookie(cNom);
+                Cookie c2 = new Cookie("try", "");
+                c2.setMaxAge(0);
+                response.addCookie(c2);
+                pageJSP = "/WEB-INF/jspWelcome.jsp";
         }
         if ("supprimerAdLiv".equals(section)) {
 
@@ -718,6 +729,17 @@ public class controller extends HttpServlet {
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
+            Cookie cEmail = getCookie(request.getCookies(), "email");
+                String login = bLogin.nomPrenomClient(cEmail.getValue());
+                Cookie cNom = new Cookie("nom", login);
+                request.setAttribute("welcome", login);
+                Cookie c = new Cookie("login", login);
+                response.addCookie(c);
+                response.addCookie(cNom);
+                Cookie c2 = new Cookie("try", "");
+                c2.setMaxAge(0);
+                response.addCookie(c2);
+                pageJSP = "/WEB-INF/jspWelcome.jsp";
 
         }
 
