@@ -157,13 +157,13 @@ public class controller extends HttpServlet {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
         if ("login".equals(section)) {
             pageJSP = "/WEB-INF/jspLogin.jsp";
-            
+
             Cookie c03 = getCookie(request.getCookies(), "email");
             Cookie c06 = getCookie(request.getCookies(), "login");
-                if (c03 != null) {
-                    pageJSP = "/WEB-INF/jspWelcome.jsp";
-                    request.setAttribute("welcome", c06.getValue());
-                }
+            if (c03 != null) {
+                pageJSP = "/WEB-INF/jspWelcome.jsp";
+                request.setAttribute("welcome", c06.getValue());
+            }
 
             if (request.getParameter("doIt") != null) {
 
@@ -216,8 +216,6 @@ public class controller extends HttpServlet {
 //                     Cookie z = new Cookie("validationPanier", request.getParameter("monPanier")); 
                 }
 
-                
-
                 if (request.getParameter("deconnect") != null) {
                     pageJSP = "/WEB-INF/jspLogin.jsp";
                     request.setAttribute("login", c03.getValue());
@@ -243,7 +241,7 @@ public class controller extends HttpServlet {
                     request.getParameter("prenom"), request.getParameter("genre"),
                     request.getParameter("dateNaissance"), request.getParameter("email"),
                     request.getParameter("telephone"), request.getParameter("motDePasse"));
-            pageJSP = "/WEB-INF/profilClient.jsp";
+            pageJSP = "/WEB-INF/jspWelcome.jsp";
         }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -288,7 +286,7 @@ public class controller extends HttpServlet {
                 ex.printStackTrace();
             }
         }
-        
+
         if ("catalogueA".equals(section)) {
             try {
                 List<Ouvrage> lo = gestionOuvrages.findOuvrages2();
@@ -312,8 +310,8 @@ public class controller extends HttpServlet {
 //                Logger.getLogger(controller.class.getName()).log(Level.SEVERE, null, ex);
 //            }
 //        }
-        if("panierA".equals(request.getParameter("section"))){
-            pageJSP="/WEB-INF/catPan.jsp";
+        if ("panierA".equals(request.getParameter("section"))) {
+            pageJSP = "/WEB-INF/catPan.jsp";
             beanPanier monPanier
                     = (beanPanier) session.getAttribute("monPanier");
 
@@ -342,17 +340,17 @@ public class controller extends HttpServlet {
         if ("panier".equals(request.getParameter("section"))) {
 
             pageJSP = "/WEB-INF/jspWelcome.jsp";
-            Cookie cEmail= getCookie(request.getCookies(), "email");
+            Cookie cEmail = getCookie(request.getCookies(), "email");
             String login = bLogin.nomPrenomClient(cEmail.getValue());
 //                    Cookie cNom = new Cookie("nom", login);
-                    request.setAttribute("welcome", login);
-                    Cookie c = new Cookie("login", login);                    
-                    response.addCookie(c);
-                    response.addCookie(cEmail);
+            request.setAttribute("welcome", login);
+            Cookie c = new Cookie("login", login);
+            response.addCookie(c);
+            response.addCookie(cEmail);
 //                    response.addCookie(cNom);
-                    Cookie c2 = new Cookie("try", "");
-                    c2.setMaxAge(0);
-                    response.addCookie(c2);
+            Cookie c2 = new Cookie("try", "");
+            c2.setMaxAge(0);
+            response.addCookie(c2);
             beanPanier monPanier
                     = (beanPanier) session.getAttribute("monPanier");
 
@@ -535,14 +533,13 @@ public class controller extends HttpServlet {
 
                     List<LigneCommande> lC = bLigneCommande.findLigneCommandeCl(numCo);
                     request.setAttribute("listeLigneCommande", lC);
-                    
+
                 }
 
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
         }
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if ("jspCreerNvxCompteClientEtape1".equals(section)) {
@@ -587,12 +584,11 @@ public class controller extends HttpServlet {
                 ex.printStackTrace();
             }
         }
-        
-        
+
         if ("jspCreerNvxCompteClientEtape3".equals(section)) {
-            
+
             try {
-                
+
                 String nom = request.getParameter("nom");
                 String prenom = request.getParameter("prenom");
                 String email = request.getParameter("email");
@@ -604,13 +600,13 @@ public class controller extends HttpServlet {
                 String pays = request.getParameter("pays");
                 String telephone = request.getParameter("telephone");
                 String complement = request.getParameter("complement");
-                
+
                 beanAdresse a = new beanAdresse();
-                
+
                 try {
                     String nomStatut = ("actif");
                     String typeAdresse = ("LIVRAISON");
-                    request.setAttribute("nom",nom);
+                    request.setAttribute("nom", nom);
                     request.setAttribute("prenom", prenom);
                     request.setAttribute("email", email);
                     request.setAttribute("numVoie", numVoie);
@@ -619,18 +615,34 @@ public class controller extends HttpServlet {
                     request.setAttribute("ville", ville);
                     request.setAttribute("codePostal", codePostal);
                     request.setAttribute("pays", pays);
-                    request.setAttribute("telephone", telephone);                  
-                    request.setAttribute("complement", complement);         
-                    
-                    a.insertAdresse( typeAdresse, numVoie, typeVoie, nomVoie, complement, codePostal, ville, pays, nom, prenom, email, telephone, nomStatut);
-                }catch (SQLException ex) {
+                    request.setAttribute("telephone", telephone);
+                    request.setAttribute("complement", complement);
+
+                    a.insertAdresse(typeAdresse, numVoie, typeVoie, nomVoie, complement, codePostal, ville, pays, nom, prenom, email, telephone, nomStatut);
+                } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-                
-            } catch (NamingException ex) {
+                if ("oui".equals(request.getParameter("adrFacturation"))) {
+                    String nomStatut = ("actif");
+                    String typeAdresse = ("FACTURATION");
+                    request.setAttribute("nom", nom);
+                    request.setAttribute("prenom", prenom);
+                    request.setAttribute("email", email);
+                    request.setAttribute("numVoie", numVoie);
+                    request.setAttribute("typeVoie", typeVoie);
+                    request.setAttribute("nomVoie", nomVoie);
+                    request.setAttribute("ville", ville);
+                    request.setAttribute("codePostal", codePostal);
+                    request.setAttribute("pays", pays);
+                    request.setAttribute("telephone", telephone);
+                    request.setAttribute("complement", complement);
+
+                    a.insertAdresse(typeAdresse, numVoie, typeVoie, nomVoie, complement, codePostal, ville, pays, nom, prenom, email, telephone, nomStatut);
+                }
+
+            } catch (NamingException | SQLException ex) {
                 ex.printStackTrace();
             }
-            
 
             pageJSP = "/WEB-INF/jspWelcome.jsp";
             Cookie cEmail = getCookie(request.getCookies(), "email");
@@ -645,6 +657,88 @@ public class controller extends HttpServlet {
             Cookie c2 = new Cookie("try", "");
             c2.setMaxAge(0);
             response.addCookie(c2);
+        }
+        if (request.getParameter("ajouterAdresse") != null) {
+            Cookie cn = getCookie(request.getCookies(), "login");
+            Cookie cEmail = getCookie(request.getCookies(), "email");
+            request.setAttribute("nom", cn.getValue());
+            Client cl = bLogin.profilClient(cEmail.getValue());
+            Cookie idC = new Cookie("idClient", String.valueOf(cl.getIdClient()));
+            response.addCookie(idC);
+            pageJSP = "/WEB-INF/jspAjouterAdresse.jsp";
+
+        }
+
+        if ("ajouterAdresse".equals(section)) {
+
+            if (request.getParameter("ajout") != null) {
+                Cookie cEmail = getCookie(request.getCookies(), "email");
+                String login = bLogin.nomPrenomClient(cEmail.getValue());
+                Cookie cNom = new Cookie("nom", login);
+                request.setAttribute("welcome", login);
+                Cookie c = new Cookie("login", login);
+                response.addCookie(c);
+                response.addCookie(cNom);
+                Cookie c2 = new Cookie("try", "");
+                c2.setMaxAge(0);
+                response.addCookie(c2);
+                pageJSP = "/WEB-INF/jspWelcome.jsp";
+                try {
+                    String nomStatut = ("actif");
+                    String typeAdresse = request.getParameter("typeAdresse");
+                    String nom = request.getParameter("nom");
+                    String prenom = request.getParameter("prenom");
+                    String email = request.getParameter("email");
+                    String numVoie = request.getParameter("numVoie");
+                    String typeVoie = request.getParameter("typeVoie");
+                    String nomVoie = request.getParameter("nomVoie");
+                    String ville = request.getParameter("ville");
+                    String codePostal = request.getParameter("codePostal");
+                    String pays = request.getParameter("pays");
+                    String telephone = request.getParameter("telephone");
+                    String complement = request.getParameter("complement");
+
+                    beanAdresse a = new beanAdresse();
+                    int idClient = Integer.valueOf(getCookie(request.getCookies(), "idClient").getValue());
+
+                    a.ajouterAdresse(idClient, typeAdresse, numVoie, typeVoie, nomVoie, complement, codePostal, ville, pays, nom, prenom, email, telephone, nomStatut);
+
+                } catch (NamingException | SQLException ex) {
+                    ex.printStackTrace();
+                }
+
+            }
+        }
+
+        if ("supprimerAdFact".equals(section)) {
+            try {
+                Cookie idC = getCookie(request.getCookies(), "idClient");
+                if (idC == null) {
+                    Cookie cEmail = getCookie(request.getCookies(), "email");
+                    Client cl = bLogin.profilClient(cEmail.getValue());
+                    idC = new Cookie("idClient", String.valueOf(cl.getIdClient()));
+                }
+                int idClient = Integer.valueOf(idC.getValue());
+                bAdresse.supAdresse(idClient);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        if ("supprimerAdLiv".equals(section)) {
+
+            try {
+                Cookie idC = getCookie(request.getCookies(), "idClient");
+                if (idC == null) {
+                    Cookie cEmail = getCookie(request.getCookies(), "email");
+                    Client cl = bLogin.profilClient(cEmail.getValue());
+                    idC = new Cookie("idClient", String.valueOf(cl.getIdClient()));
+                }
+                int idClient = Integer.valueOf(idC.getValue());
+                bAdresse.supAdresse(idClient);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+
         }
 
 //////////////////////////////////////////////////////    
