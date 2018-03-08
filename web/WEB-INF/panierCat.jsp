@@ -22,7 +22,7 @@
             </tr>        
         </c:forEach>
     </table>
-    <a href='controller?section=panier&clear'><input type="submit" value="Vider le Panier !" name="vider" /></a>
+    <a href='controller?section=panierA&clear'><input type="submit" value="Vider le Panier !" name="vider" /></a>
         <c:url value="controller?section=jspPanier" var="url03" />
     <a href="${url03}"><input type="submit" value="Voir Panier !" name="see" /></a>
     </c:if>
