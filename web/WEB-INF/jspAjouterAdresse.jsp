@@ -5,21 +5,23 @@
 <html class="centre">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>CREER UN NOUVEAU COMPTE CLIENT ETAPE 2</title>
+        <title>AJOUTER ADRESSE</title>
     </head>
     <body>
-        <h1>Entrer une adresse de livraison</h1>
-        <p>Lorsque vous aurez terminé, cliquez sur le bouton "Continuer" </p>
+        <h1>Entrer une adresse pour ${nom} </h1>
     
-        <form action="controller" method="POST">
-                    <input type="hidden" name="section" value="jspCreerNvxCompteClientEtape3" />
-
-            Nom:<input type="text" name="nom" value="${nom}" /><br>
+        <form action="controller?section=ajouterAdresse" method="POST">
+                    
+            <hr>
+            LIVRAISON:<input type="radio" name="typeAdresse" value="LIVRAISON" /><br>
+            FACTURATION:<input type="radio" name="typeAdresse" value="FACTURATION" /><br>
+            <hr>
+            Nom:<input type="text" name="nom" value="" /><br>
             <br>
-            Prenom:<input type="text" name="prenom" value="${prenom}" /><br>
+            Prenom:<input type="text" name="prenom" value="" /><br>
             <br>
-            E-mail:<input type="text" name="email" value="${email}" /> <br>
-             <br>
+            E-mail:<input type="text" name="email" value="" /><br>
+            <br>
             Numero de voie:<input type="text" name="numVoie" value="" /><br>
             <br>
             Type de voie:<input type="text" name="typeVoie" value="" /><br>
@@ -36,15 +38,8 @@
             <br>
             Complément d'adresse:<input type="text" name="complement" value="" /><br>
             <br>           
-            <input type="submit" value="Continuer" name="NvxCompte2" />      
+            <input type="submit" value="Ajouter" name="ajout" />      
         </form>
-            
-             Cette adresse est-elle également votre adresse de facturation?<br>
-            <br>
-            Oui:<input type="radio" name="adrFacturation" value="oui" /><br>
-            Non:<input type="radio" name="adrFacturation" value="non" /><br>
-            <br>
-       
     
     </body>
 </html>

@@ -96,6 +96,11 @@ strong3{
     width: 100%;
     height: 7%;
     font-size : x-large;
+
+.test{
+    position:relative;
+    background-color:darkgray;
+    float: right;
 }
 /*
 .btn_ajout{
@@ -114,3 +119,10 @@ strong3{
     width: auto;
     height: auto;
 }*/
+
+.joseph {
+    background-image: url("http://ville-sussargues.fr/wordpress/wp-content/uploads/2014/10/bibliotheque-web.jpg");
+    background-repeat: no-repeat;
+    background-position: center right;
+    
+}
