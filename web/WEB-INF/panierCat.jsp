@@ -16,9 +16,9 @@
             <tr>
                 <td class="tableau">${i.titre}</td>
                 <td class="tableau">${i.qtePanier}</td>
-                <td class="tableau"><a href='controller?section=panier&add=${i.idOuvrage}&add2=${i.titre}&add3=${i.imageOuvrage}&add4=${i.prix}&add5=${i.qteStockee}&add6=${i.statut}'>(+1)</a></td>
-                <td class="tableau"><a href='controller?section=panier&dec=${i.idOuvrage}'>(-1)</a></td>
-                <td class="tableau"><a href='controller?section=panier&del=${i.idOuvrage}'>(X)</a></td>
+                <td class="tableau"><a href='controller?section=panierA&add=${i.idOuvrage}&add2=${i.titre}&add3=${i.imageOuvrage}&add4=${i.prix}&add5=${i.qteStockee}&add6=${i.statut}'>(+1)</a></td>
+                <td class="tableau"><a href='controller?section=panierA&dec=${i.idOuvrage}'>(-1)</a></td>
+                <td class="tableau"><a href='controller?section=panierA&del=${i.idOuvrage}'>(X)</a></td>
             </tr>        
         </c:forEach>
     </table>
