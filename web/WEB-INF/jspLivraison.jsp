@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="obj.Adresse"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,10 +17,46 @@
                 </c:forEach>
             </ul>
         </c:forEach>
-         <c:url value="controller?section=jspLivraison" var="url06" />
-        <a href="${url06}">Précédent</a>
         <br>
-        <c:url value="controller?section=jspPaiement" var="url04" />
-        <a href="${url04}">Confirmer la livraison</a>
-    </body>
-</html>
+
+        ${infoClientNom}
+        ${infoClientPrenom}
+
+        <br>
+
+        <h4>Adresse de facturation<h4/> 
+
+            <c:forEach items="${listeAdresseF}" var="p">
+                ${p.nom} ${p.prenom} <br>
+                ${p.numVoie} ${p.typeVoie} ${p.nomVoie} <br>
+                ${p.complement} <br>
+                ${p.codePostal} ${p.ville}, ${p.pays}
+            </c:forEach>
+
+            <h4>Adresse de Livraison<h4/><a href="controller?section=jspCreerNvxCompteClientEtape2">changer<a/> <br/>
+                    <c:forEach items="${listeAdresseL}" var="p">
+                        ${p.nom} ${p.prenom} <br>
+                        ${p.numVoie} ${p.typeVoie} ${p.nomVoie} <br>
+                        ${p.complement} <br>
+                        ${p.codePostal} ${p.ville}, ${p.pays}
+                    </c:forEach>
+
+
+
+
+                    <table border="1">
+                        <td><h4>MON PANIER</h4></td>
+                        <c:forEach items="${voirPanier}" var="p">
+                            <tr>                 
+                                <td>${p.titre}</td>                  
+                            </tr>
+                        </c:forEach>
+                    </table>
+
+                    <c:url value="controller?section=jspLivraison" var="url06" />
+                    <a href="${url06}">Précédent</a>
+                    <br>
+                    <c:url value="controller?section=jspPaiement" var="url04" />
+                    <a href="${url04}"><input type="submit" value="VALIDER MA LIVRAISON" name="validLivraison" /></a>
+                    </body>
+                    </html>

@@ -59,14 +59,21 @@ public class OuvrageDAO implements Serializable {
 
     public String selectAuteur(int idOuvrage) throws SQLException {
         String req = "SELECT nom, prenom FROM Auteur a JOIN Bibliographie b on a.idAuteur=b.idAuteur JOIN Ouvrage o ON b.idOuvrage=o.idOuvrage WHERE o.idOuvrage = ?";
+        String auteur = null;
         try (Connection cnt = mc.getConnection();
                 PreparedStatement stm = cnt.prepareStatement(req);) {
             stm.setInt(1, idOuvrage);
+            
             ResultSet rs = stm.executeQuery();
-            rs.next();
-            String auteur = rs.getString("prenom") + " " + rs.getString("nom");
-            return auteur;
+            if(rs.next()){
+                  
+            auteur = rs.getString("prenom") + " " + rs.getString("nom");
+            
+//            return auteur;
+            }
         }
+        return auteur;
+        
     }
 
     public List<Integer> selectAllIdOuvrage() throws SQLException {

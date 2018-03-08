@@ -8,7 +8,7 @@
         <title>Catalogue-Panier</title>
     </head>
     <body>
-        <jsp:include page="/controller?section=catalogue" flush="true"/>
+        <jsp:include page="/controller?section=catalogueA" flush="true"/>
         <hr>   
         <div class="footer">
             <h3>Panier : </h3>

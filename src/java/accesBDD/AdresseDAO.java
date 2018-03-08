@@ -8,11 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.naming.NamingException;
 import obj.Adresse;
-import obj.Client;
 
 public class AdresseDAO implements Serializable {
 
@@ -23,7 +20,7 @@ public class AdresseDAO implements Serializable {
     }
     
     public String idClient() throws SQLException{
-        String req02 = "select MAX(idClient)from Client";
+        String req02 = "select MAX (idClient) as idClient from Client";
         String idClient =null; 
         try (Connection cnt = mc.getConnection();
                 Statement stm = cnt.createStatement();) {
@@ -43,9 +40,10 @@ public class AdresseDAO implements Serializable {
                 PreparedStatement stm = cnt.prepareStatement(req);) {
             
 
-            String idClient = this.idClient();
-            stm.setString(1, idClient);
-            stm.setString(2, idClient);
+            String idClients = this.idClient();
+            int idClient = Integer.valueOf(idClients);
+            stm.setInt(1, idClient);
+            stm.setInt(2, idClient);
             stm.setString(3, typeAdresse);
             stm.setString(4, numVoie);
             stm.setString(5, typeVoie);
@@ -63,18 +61,53 @@ public class AdresseDAO implements Serializable {
             int nb = stm.executeUpdate();
             System.out.println("nb:"+ nb);
         } catch ( Exception e) {
-            System.out.println(nom+"insertClient:"+ e.getMessage());
+            System.out.println(nom+" insertClient: "+ e.getMessage());
+            
+        }
+    }
+    
+    public void ajouterAdresse(int idClient,String typeAdresse, String numVoie, String typeVoie, String nomVoie, String complement, String codePostal, String ville, String pays, String nom, String prenom, String email, String telephone, String nomStatut) throws SQLException {
+        String req = "INSERT INTO Adresse(idClientCreer, idClientUtiliser, typeAdresse, numVoie, typeVoie, nomVoie, complement, codePostal, ville, pays, nom, prenom, email, telephone, nomStatut ) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+   
+        try (Connection cnt = mc.getConnection();
+                PreparedStatement stm = cnt.prepareStatement(req);) {
+            
+
+            
+            
+            stm.setInt(1, idClient);
+            stm.setInt(2, idClient);
+            stm.setString(3, typeAdresse);
+            stm.setString(4, numVoie);
+            stm.setString(5, typeVoie);
+            stm.setString(6, nomVoie);
+            stm.setString(7, complement);
+            stm.setString(8, codePostal);
+            stm.setString(9, ville);
+            stm.setString(10, pays);
+            stm.setString(11, nom);
+            stm.setString(12, prenom);
+            stm.setString(13, email);
+            stm.setString(14, telephone);
+            stm.setString(15, nomStatut);
+
+            int nb = stm.executeUpdate();
+            System.out.println("nb:"+ nb);
+        } catch ( Exception e) {
+            System.out.println(nom+" insertClient: "+ e.getMessage());
+            
         }
     }
 
     public List<Adresse> adresseClient(int idClient, String typeAdresse) throws SQLException {
-        String req = "SELECT idAdresse, idClientCreer, idClientUtiliser, typeAdresse, numVoie, typeVoie, nomVoie, complement, codePostal, ville, pays, nom, prenom, email, telephone, nomStatut FROM Adresse WHERE idClientCreer=? AND typeAdresse=?";
+        String req = "SELECT idAdresse, idClientCreer, idClientUtiliser, typeAdresse, numVoie, typeVoie, nomVoie, complement, codePostal, ville, pays, nom, prenom, email, telephone, nomStatut FROM Adresse WHERE idClientCreer=? AND typeAdresse=? AND nomStatut<>?";
         List<Adresse> mesAdresses = new ArrayList<>();
         
         try (Connection cnt = mc.getConnection();
                 PreparedStatement stm = cnt.prepareStatement(req);) {
             stm.setInt(1, idClient);
             stm.setString(2, typeAdresse);
+            stm.setString(3, "inactif");
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Adresse a = new Adresse(rs.getInt("idAdresse"), rs.getInt("idClientCreer"), rs.getInt("idClientUtiliser"), rs.getString("typeAdresse"), rs.getString("numVoie"), rs.getString("typeVoie"), rs.getString("nomVoie"), rs.getString("complement"), rs.getString("codePostal"), rs.getString("ville"), rs.getString("pays"), rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("nomStatut"));
@@ -84,6 +117,23 @@ public class AdresseDAO implements Serializable {
         }
         return mesAdresses;
 
+    }
+    
+     public void supAdresse(int idClient) throws SQLException {
+        String req = "UPDATE Adresse SET nomStatut=? where idClientCreer like ?";
+       
+        
+        try (Connection cnt = mc.getConnection();
+                PreparedStatement stm = cnt.prepareStatement(req);) {
+            stm.setString(1, "inactif");
+            stm.setInt(2, idClient);
+            
+            int nb = stm.executeUpdate();
+            System.out.println("nombre de ligne affectée : " + nb);
+
+            
+        }
+        
     }
 }
 
