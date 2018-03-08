@@ -6,10 +6,16 @@
 <html class="centre">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+            body
+           {background-color: silver;
+            text-align: center
+            }
+        </style>
         <title>Historique de commandes</title>
-    </head>
+    </head> 
     <body                        
-        <h1>Historique des Commande de ${nom}</h1>
+        <h1>Historique des commandes de ${nom}</h1>
 
             <c:forEach items="${listeCommande}" var="p">
                 <p class="small">
@@ -21,7 +27,7 @@
 
             <c:if test="${affLC}">
                 <hr>
-                <h3>Historique des lignes de Commande de la commande numero ${numC}<h3/>
+                <h3>Historique des lignes de Commande de la commande numero ${numC}</h3>
                     <c:forEach items="${listeLigneCommande}" var="p">
                         <p class="small">
                             ref ouvrage : ${p.titre}<br/>

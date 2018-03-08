@@ -32,7 +32,7 @@
             <br>
             <p>En créant votre compte, vous acceptez l'intégralité de<br>
                nos conditions générales de vente, notre politique de<br>
-               gestion de Vos informations personnelles et notre <br>
+               gestion de vos informations personnelles et notre <br>
                politique cookies et publicité sur internet.
             </p><br>
             <br>

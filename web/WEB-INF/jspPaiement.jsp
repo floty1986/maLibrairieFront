@@ -18,11 +18,12 @@
             </ul>
         </c:forEach>
         <c:url value="controller?section=jspLivraison" var="url05" />
-        <a href="${url05}"><input type="submit" value="PRECEDENT" name="retourPaie" /></a>
-        <a href="http://www.paypal.com"><input type="submit" value="VALIDER PAIEMENT" name="validPaie" /></a>
+        <a href="${url05}">Précédent</a>
+        <a href="http://www.paypal.com"><input type="submit" value="PRECEDENT" name="retourPaie" /></a><br><br>
+        <form action="controller">
+            <input type="submit" value="ajouter une adresse" name="ajouterAdresse" />
+        </form>
         
-        <c:url value="controller?section=jspCreerAdresseFacturation" var="url01"/>
-        <a href="${url02}"><input type="submit" value="Créer une adresse de facturation" name="AdresseFacturation" /></a>
         
     </body>
 </html>
