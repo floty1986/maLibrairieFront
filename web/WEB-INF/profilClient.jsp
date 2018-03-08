@@ -55,7 +55,7 @@
                         ${p.numVoie}, ${p.typeVoie} ${p.nomVoie}<br/>
                         ${p.complement}<br/>
                         ${p.codePostal}, ${p.ville}, ${p.pays}
-                        <a href="controller?section=supprimerAdFact"><input type="submit" value="Supprimer" name="sup" /></a>
+                        <a href="controller?section=supprimerAdFact&idAdresse=${p.idAdresse}"><input type="submit" value="Supprimer" name="sup" /></a>
                     <p/>
                     <br/>
                 </c:forEach>
@@ -69,7 +69,7 @@
                         ${p.numVoie}, ${p.typeVoie} ${p.nomVoie}<br/>
                         ${p.complement}<br/>
                         ${p.codePostal}, ${p.ville}, ${p.pays}
-                        <a href="controller?section=supprimerAdLiv"><input type="submit" value="Supprimer" name="sup" /></a>
+                        <a href="controller?section=supprimerAdLiv&idAdresse=${p.idAdresse}"><input type="submit" value="Supprimer" name="sup" /></a>
                     <p/>
                     <br/>
                 </c:forEach>

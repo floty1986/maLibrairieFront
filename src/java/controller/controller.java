@@ -712,14 +712,9 @@ public class controller extends HttpServlet {
 
         if ("supprimerAdFact".equals(section)) {
             try {
-                Cookie idC = getCookie(request.getCookies(), "idClient");
-                if (idC == null) {
-                    Cookie cEmail = getCookie(request.getCookies(), "email");
-                    Client cl = bLogin.profilClient(cEmail.getValue());
-                    idC = new Cookie("idClient", String.valueOf(cl.getIdClient()));
-                }
-                int idClient = Integer.valueOf(idC.getValue());
-                bAdresse.supAdresse(idClient);
+                
+                int idAdresse = Integer.valueOf(request.getParameter("idAdresse"));
+                bAdresse.supAdresse(idAdresse);
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -727,14 +722,9 @@ public class controller extends HttpServlet {
         if ("supprimerAdLiv".equals(section)) {
 
             try {
-                Cookie idC = getCookie(request.getCookies(), "idClient");
-                if (idC == null) {
-                    Cookie cEmail = getCookie(request.getCookies(), "email");
-                    Client cl = bLogin.profilClient(cEmail.getValue());
-                    idC = new Cookie("idClient", String.valueOf(cl.getIdClient()));
-                }
-                int idClient = Integer.valueOf(idC.getValue());
-                bAdresse.supAdresse(idClient);
+                
+                int idAdresse = Integer.valueOf(request.getParameter("idAdresse"));
+                bAdresse.supAdresse(idAdresse);
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }

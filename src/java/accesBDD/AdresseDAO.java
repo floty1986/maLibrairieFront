@@ -119,14 +119,14 @@ public class AdresseDAO implements Serializable {
 
     }
     
-     public void supAdresse(int idClient) throws SQLException {
-        String req = "UPDATE Adresse SET nomStatut=? where idClientCreer like ?";
+     public void supAdresse(int idAdresse) throws SQLException {
+        String req = "UPDATE Adresse SET nomStatut=? where idAdresse like ?";
        
         
         try (Connection cnt = mc.getConnection();
                 PreparedStatement stm = cnt.prepareStatement(req);) {
             stm.setString(1, "inactif");
-            stm.setInt(2, idClient);
+            stm.setInt(2, idAdresse);
             
             int nb = stm.executeUpdate();
             System.out.println("nombre de ligne affectée : " + nb);
