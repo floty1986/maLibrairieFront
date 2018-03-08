@@ -43,7 +43,12 @@
             Mot de passe : <input type="text" name="motDePasse" value='${infoClientMotDePasse}' />
             <br>
             <br>
-            <input type='submit' name='modifierCl' value='Modifier' />
+            <input type='submit' name='modifierCl' value='Modifier' /><br/>
+            <br>
+            
+            <input type="submit" value="Ajouter Une Adresse" name="ajouterAdresse" />
+            
+            
         </form>
         <hr> 
         <h1>Mes Adresses</h1>
@@ -58,6 +63,7 @@
                         ${p.numVoie}, ${p.typeVoie} ${p.nomVoie}<br/>
                         ${p.complement}<br/>
                         ${p.codePostal}, ${p.ville}, ${p.pays}
+                        <a href="controller?section=supprimerAdFact"><input type="submit" value="Supprimer" name="sup" /></a>
                     <p/>
                     <br/>
                 </c:forEach>
@@ -71,6 +77,7 @@
                         ${p.numVoie}, ${p.typeVoie} ${p.nomVoie}<br/>
                         ${p.complement}<br/>
                         ${p.codePostal}, ${p.ville}, ${p.pays}
+                        <a href="controller?section=supprimerAdLiv"><input type="submit" value="Supprimer" name="sup" /></a>
                     <p/>
                     <br/>
                 </c:forEach>

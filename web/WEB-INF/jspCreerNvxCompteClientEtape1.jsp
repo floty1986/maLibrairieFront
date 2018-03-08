@@ -18,7 +18,7 @@
             <br>
             Votre prenom: <input type="text" name="prenom" value="" /><br>
             <br>
-            Genre: H<input type="radio" name="genre" value="M" />F<input type="radio" name="genre" value="F" />N<input type="radio" name="genre" value="N" /><br>
+            Genre: M<input type="radio" name="genre" value="M" />F<input type="radio" name="genre" value="F" />N<input type="radio" name="genre" value="N" /><br>
             <br>            
             date de naissance:<input type="text" name="dateNaissance" value="" /><br>
             <br>
@@ -28,28 +28,24 @@
             <br>
             Mot de Passe: <input type="text" name="motDePasse" value="" /><br>
             <br>
-            Entrer le mot de passe à nouveau: <input type="text" name="motDePasseConf" value="" /><br>
+            Entrer le mot de passe à nouveau: <input type="text" name="motDePasseConf" value="" /><br>            
             <br>
-
-            <!--<input type="submit" value="Créer votre compte" name="doIt1" /><br>
-            -->
+            <p>En créant votre compte, vous acceptez l'intégralité de<br>
+               nos conditions générales de vente, notre politique de<br>
+               gestion de Vos informations personnelles et notre <br>
+               politique cookies et publicité sur internet.
+            </p><br>
             <br>
-
-
-            En créant votre compte, vous acceptez bla, bla, bla,....<br>
-            <br>
-
-            Vous possédez dèjà un compte?
-            <input type="submit" value="Identifiez-vous ici" name="doIt" />
+            <input type="submit" value="Créer votre compte" name="NvxCompte1" />
         </form>
-        <form action="controller?section=jspCreerNvxCompteClientEtape2" method="POST">
-            <input type="submit" value="Créer votre compte" name="NvxCompte2" />
+        <br>
+        <form action="controller?section=login" method="POST">
+
         </form>
 
-       
-        
-    
-
+        <c:url value="controller?section=login" var="url01"/>
+        Vous possédez déjà un compte?:<a href="${url01}"><input type="submit" value="Identifiez-vous ici" name="login" /></a>
+            
 
     </body>
 </html>

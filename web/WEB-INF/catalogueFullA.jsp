@@ -24,10 +24,10 @@
     <c:forEach items="${liste}" var="o" >
         <tr>
             <td class="tableau">
-                <a href='controller?section=panier&add=${o.idOuvrage}&add2=${o.titre}&add3=${o.imageOuvrage}&add4=${o.prix}&add5=${o.qteStockee}&add6=${o.statut}'>***Titre : ${o.titre}***<br>***Auteur : ${mapAuteurs.get(o.idOuvrage)}***</a></td>
-            <td class="tableau"><p><a href='controller?section=panier&add=${o.idOuvrage}&add2=${o.titre}&add3=${o.imageOuvrage}&add4=${o.prix}&add5=${o.qteStockee}&add6=${o.statut}'> <img src='${o.imageOuvrage}' alt='${o.titre}'/></a></P></td>
+                <a href='controller?section=panierA&add=${o.idOuvrage}&add2=${o.titre}&add3=${o.imageOuvrage}&add4=${o.prix}&add5=${o.qteStockee}&add6=${o.statut}'>***Titre : ${o.titre}***<br>***Auteur : ${mapAuteurs.get(o.idOuvrage)}***</a></td>
+            <td class="tableau"><p><a href='controller?section=panierA&add=${o.idOuvrage}&add2=${o.titre}&add3=${o.imageOuvrage}&add4=${o.prix}&add5=${o.qteStockee}&add6=${o.statut}'> <img src='${o.imageOuvrage}' alt='${o.titre}'/></a></P></td>
             <td class="tableau">
-                <a href='controller?section=panier&add=${o.idOuvrage}&add2=${o.titre}&add3=${o.imageOuvrage}&add4=${o.prix}&add5=${o.qteStockee}&add6=${o.statut}'>***Prix : ${o.prix}€***<br><br>***${o.qteStockee} unité(s) disponible(s)***</a></td>
+                <a href='controller?section=panierA&add=${o.idOuvrage}&add2=${o.titre}&add3=${o.imageOuvrage}&add4=${o.prix}&add5=${o.qteStockee}&add6=${o.statut}'>***Prix : ${o.prix}€***<br><br>***${o.qteStockee} unité(s) disponible(s)***</a></td>
         </tr>     
     </c:forEach>
 </table>
@@ -35,11 +35,11 @@
 <div class="footer">
     <h3>Panier : </h3>
     <jsp:include page="/controller?section=affichePanier" flush="true"/>
+    
     <hr>
     <c:url value="controller?section=login" var="url01" />                                    
-    
-    
-
+    <a href="${url01}"><input type="submit" value="LOGIN" name="Connexion" /></a>
+   
 </div>
     </body>
 </html>

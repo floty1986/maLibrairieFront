@@ -10,7 +10,7 @@
     <body>
         <h1> Ma librairie </h1>
         <nav>
-            <c:url value="controller?section=panier" var="url02" />
+            <c:url value="controller?section=panierA" var="url02" />
             <a href="${url02}"><input type="submit" value="Catalogue" name="afficheCatalogue" /></a>
            
             

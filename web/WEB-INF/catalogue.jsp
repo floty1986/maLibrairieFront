@@ -21,5 +21,3 @@
 <h2>Panier : </h2>
 <jsp:include page="/controller?section=affichePanier" flush="true"/>
     <br>
-    <c:url value="controller?section=jspPanier" var="url03" />
-<a href="${url03}"><input type="submit" value="Valider Panier !" name="jspPanier" /></a>

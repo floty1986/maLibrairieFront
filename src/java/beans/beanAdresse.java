@@ -16,9 +16,15 @@ public class beanAdresse implements Serializable {
         aDAO = new AdresseDAO();
     }
     
-    public void insertAdresseBA (int idClientCreer,int idClientUtiliser,String typeAdresse,String numVoie,String typeVoie,String nomVoie,String complement,String codePostal,String ville,String pays,String nom,String prenom, String email,String telephone) throws SQLException{
+    public void insertAdresse (String typeAdresse,String numVoie,String typeVoie,String nomVoie,String complement,String codePostal,String ville,String pays,String nom,String prenom, String email,String telephone, String nomStatut) throws SQLException{
         
-            aDAO.insertAdresse(idClientCreer, idClientUtiliser, typeAdresse, numVoie, typeVoie, nomVoie, complement, codePostal, ville, pays, nom, prenom, email, telephone);
+            aDAO.insertAdresse( typeAdresse, numVoie, typeVoie, nomVoie, complement, codePostal, ville, pays, nom, prenom, email, telephone, nomStatut);
+        
+    }
+    
+    public void ajouterAdresse (int idClient, String typeAdresse,String numVoie,String typeVoie,String nomVoie,String complement,String codePostal,String ville,String pays,String nom,String prenom, String email,String telephone, String nomStatut) throws SQLException{
+        
+            aDAO.ajouterAdresse(idClient, typeAdresse, numVoie, typeVoie, nomVoie, complement, codePostal, ville, pays, nom, prenom, email, telephone, nomStatut);
         
     }
     
@@ -27,7 +33,9 @@ public class beanAdresse implements Serializable {
         return mesAdresses;
     }
     
-    
+    public void supAdresse(int idClient) throws SQLException{
+        aDAO.supAdresse(idClient);
+    }
     
     
    

@@ -32,9 +32,12 @@ public class beanPanier implements Serializable {
         this.map = map;
     }
     
-    public List<String> getLC(){
+     public List<String> getLC(){
         List<String> ligneCmd = new ArrayList();
+        ligneCmd.add("Reference");
         ligneCmd.add("Article");
+        ligneCmd.add("Quantité");
+        ligneCmd.add("Prix");
         return ligneCmd;
     }
     

@@ -1,18 +1,19 @@
 package beans;
 
 import accesBDD.CommandeDAO;
+import accesBDD.LigneCommandeDAO;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
 import obj.Commande;
+import obj.LigneCommande;
 
 
 
 public class beanCommande implements Serializable {
- 
-   ArrayList<Commande> listeCo;
+   
    
    private CommandeDAO coDAO;
     
@@ -25,6 +26,8 @@ public class beanCommande implements Serializable {
        return lco;
             
     }
+    
+    
 }
 
     

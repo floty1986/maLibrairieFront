@@ -13,11 +13,28 @@
 
             <c:forEach items="${listeCommande}" var="p">
                 <p class="small">
-                    numéro de commande : ${p.numCommande}<br/> 
+                    numéro de commande : <a href="controller?section=historiqueCommande&numCommande=${p.numCommande}">${p.numCommande}</a><br/> 
                     date de la commande : ${p.dateCommande}<br/>
                     <br/>
                 <p/>                
             </c:forEach>
+
+            <c:if test="${affLC}">
+                <hr>
+                <h3>Historique des lignes de Commande de la commande numero ${numC}<h3/>
+                    <c:forEach items="${listeLigneCommande}" var="p">
+                        <p class="small">
+                            ref ouvrage : ${p.titre}<br/>
+                            prix        : ${p.prix}<br/>
+                            Qt commandé : ${p.qteCommandee}<br/>
+                            remise      : ${p.remise}<br/>
+                            tva         : ${p.tvaLC}
+                            <br/>
+                        <p/>                
+                    </c:forEach>
+                    <hr>
+
+                </c:if>         
 
     </body>
 </html>

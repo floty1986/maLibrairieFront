@@ -8,18 +8,19 @@
         <title>Catalogue-Panier</title>
     </head>
     <body>
-        <jsp:include page="/controller?section=catalogue" flush="true"/>
+        <jsp:include page="/controller?section=catalogueA" flush="true"/>
         <hr>   
         <div class="footer">
             <h3>Panier : </h3>
             <jsp:include page="/controller?section=affichePanier" flush="true" />
-            <c:url value="controller?section=jspPanier" var="url03" />
-            <a href="${url03}">Valider panier</a>
+            
+            
             <hr>
             <c:url value="controller?section=login" var="url01" />                                    
             <a href="${url01}"><input type="submit" value="LOGIN" name="Connexion" /></a>
-            <a href = 'controller?section=jspPanier'><input type="submit" value="Voir Panier !" name="voirPanier" /></a>            
+                       
 
         </div>
     </body>
+    
 </html>
