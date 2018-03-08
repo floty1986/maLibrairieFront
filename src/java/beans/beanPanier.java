@@ -38,6 +38,7 @@ public class beanPanier implements Serializable {
         ligneCmd.add("Article");
         ligneCmd.add("Quantité");
         ligneCmd.add("Prix");
+        ligneCmd.add("Montant");
         return ligneCmd;
     }
     

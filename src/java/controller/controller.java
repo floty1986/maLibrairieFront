@@ -490,13 +490,13 @@ public class controller extends HttpServlet {
                     List<Adresse> mesAdresseL = bAdresse.adresseClient(c.getIdClient(), "LIVRAISON");
                     request.setAttribute("listeAdresseL", mesAdresseL);
                     
-                    List<Ouvrage> lo;
-            try {
-                lo = gestionOuvrages.findOuvrages2();
-            request.setAttribute("liste", lo);
-            } catch (SQLException ex) {
-            ex.printStackTrace();
-            }
+//                    List<Ouvrage> lo;
+//            try {
+//                lo = gestionOuvrages.findOuvrages2();
+//            request.setAttribute("liste", lo);
+//            } catch (SQLException ex) {
+//            ex.printStackTrace();
+//            }
 
                 } catch (SQLException ex) {
                     ex.printStackTrace();
