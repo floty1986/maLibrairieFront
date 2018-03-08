@@ -19,14 +19,14 @@ public class OuvrageDAO implements Serializable {
     }
 
     public List<Ouvrage> selectAllOuvrages() throws SQLException {
-        String req = "SELECT idOuvrage, titre, prix, qteStockee, imageOuvrage, nomStatut FROM ouvrage  ORDER BY titre";
+        String req = "SELECT idOuvrage, titre, prix, qteStockee, imageOuvrage, nomStatut, qtePanier FROM ouvrage  ORDER BY titre";
         Connection cnt = mc.getConnection();
         java.sql.Statement stm = cnt.createStatement();
         List<Ouvrage> lo = new ArrayList<>();
 
         try (ResultSet rs = stm.executeQuery(req)) {
             while (rs.next()) {
-                Ouvrage o = new Ouvrage(rs.getInt("idOuvrage"), rs.getString("titre"), rs.getString("imageOuvrage"), rs.getFloat("prix"), rs.getInt("qteStockee"), rs.getString("nomStatut"), Integer.valueOf("0"));
+                Ouvrage o = new Ouvrage(rs.getInt("idOuvrage"), rs.getString("titre"), rs.getString("imageOuvrage"), rs.getFloat("prix"), rs.getInt("qteStockee"), rs.getString("nomStatut"), rs.getInt("qtePanier"));
                 lo.add(o);
             }
         }
@@ -39,7 +39,7 @@ public class OuvrageDAO implements Serializable {
     }
 
     public List<Ouvrage> selectOuvrageByTitre(String titre) throws SQLException {
-        String req = "SELECT idOuvrage, titre, prix, qteStockee, imageOuvrage, nomStatut FROM Ouvrage where titre LIKE ? ORDER BY titre";
+        String req = "SELECT idOuvrage, titre, prix, qteStockee, imageOuvrage, nomStatut, qtePanier FROM Ouvrage where titre LIKE ? ORDER BY titre";
 
         
         try (Connection cnt = mc.getConnection();
@@ -49,7 +49,7 @@ public class OuvrageDAO implements Serializable {
             ResultSet rs = stm.executeQuery();
             List<Ouvrage> lo = new ArrayList<>();
             while (rs.next()) {
-                Ouvrage o = new Ouvrage(rs.getInt("idOuvrage"), rs.getString("titre"), rs.getFloat("prix"), rs.getInt("qteStockee"), rs.getString("imageOuvrage"), rs.getString("nomStatut"));
+                Ouvrage o = new Ouvrage(rs.getInt("idOuvrage"), rs.getString("titre"), rs.getString("imageOuvrage"), rs.getFloat("prix"), rs.getInt("qteStockee"), rs.getString("nomStatut"), rs.getInt("qtePanier"));
                 
                 lo.add(o);
             }

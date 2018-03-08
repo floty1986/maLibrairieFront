@@ -31,10 +31,10 @@
             <c:forEach items="${liste}" var="o" >
                 <tr>
                     <td class="tableau">
-                        <a href='controller?section=panierA&add=${o.idOuvrage}&add2=${o.titre}&add3=${o.imageOuvrage}&add4=${o.prix}&add5=${o.qteStockee}&add6=${o.statut}$add7=${o.qtePanier}'>***Titre : <strong>${o.titre}</strong>***<br>Auteur : <strong2>${mapAuteurs.get(o.idOuvrage)}</strong2></a></td>
-                    <td class="tableau"><p><a href='controller?section=panierA&add=${o.idOuvrage}&add2=${o.titre}&add3=${o.imageOuvrage}&add4=${o.prix}&add5=${o.qteStockee}&add6=${o.statut}$add7=${o.qtePanier}'> <img src='${o.imageOuvrage}' alt='${o.titre}'/></a></P></td>
+                        <a href='controller?section=panierA&add=${o.idOuvrage}&add2=${o.titre}&add3=${o.imageOuvrage}&add4=${o.prix}&add5=${o.qteStockee}&add6=${o.statut}'>***Titre : <strong>${o.titre}</strong>***<br>Auteur : <strong2>${mapAuteurs.get(o.idOuvrage)}</strong2></a></td>
+                    <td class="tableau"><p><a href='controller?section=panierA&add=${o.idOuvrage}&add2=${o.titre}&add3=${o.imageOuvrage}&add4=${o.prix}&add5=${o.qteStockee}&add6=${o.statut}'> <img src='${o.imageOuvrage}' alt='${o.titre}'/></a></P></td>
                     <td class="tableau">
-                        <a href='controller?section=panierA&add=${o.idOuvrage}&add2=${o.titre}&add3=${o.imageOuvrage}&add4=${o.prix}&add5=${o.qteStockee}&add6=${o.statut}$add7=${o.qtePanier}'>***Prix : <strong3>${o.prix}</strong3>€***<br><br><strong3>${o.qteStockee-o.qtePanier}</strong3> unité(s) disponible(s)</a></td>
+                        <a href='controller?section=panierA&add=${o.idOuvrage}&add2=${o.titre}&add3=${o.imageOuvrage}&add4=${o.prix}&add5=${o.qteStockee}&add6=${o.statut}'>***Prix : <strong3>${o.prix}</strong3>€***<br><br>Cet ouvrage est : <strong3>${o.statut}</strong3></a></td>
                 </tr>     
             </c:forEach>
         </table>
