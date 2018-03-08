@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="obj.Adresse"%>
+<link href="/maLibrairieFront/css/maLibrairieCSS.css" rel="stylesheet" type="text/css"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,7 +22,7 @@
 
         ${infoClientNom}
         ${infoClientPrenom}
-
+        
         <br>
 
         <h4>Adresse de facturation<h4/> 
@@ -43,6 +44,7 @@
 
                     <br/>
                     <br/>
+                    <div class="test">                      
                     <table border="1">
                         <td><h4>MON PANIER</h4></td>
                         <c:forEach items="${voirPanier}" var="p">
@@ -51,6 +53,7 @@
                             </tr>
                         </c:forEach>
                     </table>
+                    </div>
                     <br/>
                     <br/>
                     <c:url value="controller?section=jspPanier" var="url06" />

@@ -2,6 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="beans.beanPanier"%>
 <%@page import="obj.Ouvrage"%>
+<link href="/maLibrairieFront/css/maLibrairieCSS.css" rel="stylesheet" type="text/css"/>
 
 <!DOCTYPE html>
 <html>

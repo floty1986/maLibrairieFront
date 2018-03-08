@@ -67,6 +67,12 @@ strong {
 .btn_cat {
     color : #ff3333;
 }
+
+.test{
+    position:relative;
+    background-color:darkgray;
+    float: right;
+}
 /*
 .btn_ajout{
     position : absolute;
