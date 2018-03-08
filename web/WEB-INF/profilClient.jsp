@@ -78,7 +78,7 @@
                         ${p.complement}<br/>
                         ${p.codePostal}, ${p.ville}, ${p.pays}
                         <a href="controller?section=supprimerAdLiv"><input type="submit" value="Supprimer" name="sup" /></a>
-                    <p/>
+                    </p>
                     <br/>
                 </c:forEach>
         </body>
