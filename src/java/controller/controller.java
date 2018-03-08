@@ -651,12 +651,7 @@ public class controller extends HttpServlet {
             c2.setMaxAge(0);
             response.addCookie(c2);
         }
-/////////////////////////////////////////////////////////////////////////////////////////////////        
-        
-         if ("jspCreerAdresseFacturation".equals(section)) {
-            //System.out.println(">>>>" + section);
-            pageJSP = "/WEB-INF/jspCreerAdresseFacturation.jsp";
-        }
+
         
         if (request.getParameter("ajouterAdresse") != null) {
             Cookie cn = getCookie(request.getCookies(), "login");
