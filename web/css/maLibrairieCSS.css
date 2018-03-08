@@ -22,7 +22,9 @@
     width: auto;
     height: auto;
 }
-
+.error {
+    background-color: #ff6600;
+}
 p.small{
     font-size: small;
 }
@@ -38,12 +40,27 @@ p.small{
 
 strong {
     color : red;
+    font-size: x-large;
+}
+strong2 {
+     color : blue;
+    font-size: x-large;
+}
+strong3{
+    color : green;
+    font-size: x-large;
+}
+.center{
+    float:center;
 }
 .centre {
     margin: auto;
     text-align: center;
     border-bottom: 5px solid #38546d;
     background-color:silver;
+}
+.left{
+    float:left;
 }
 .tableau {
     margin: auto;
@@ -63,9 +80,27 @@ strong {
     background-color: blanchedalmond;
     text-align: center;
 }
-
+.nav1 form{
+    display: inline-block;
+}
 .btn_cat {
     color : #ff3333;
+}
+.btn_cat2 {
+    width: 100%;
+    height : 10%;
+    font-size : xx-large;
+}
+
+.btn_eve {
+    width: 100%;
+    height: 7%;
+    font-size : x-large;
+
+.test{
+    position:relative;
+    background-color:darkgray;
+    float: right;
 }
 /*
 .btn_ajout{

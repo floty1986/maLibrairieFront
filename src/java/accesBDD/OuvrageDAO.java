@@ -26,7 +26,7 @@ public class OuvrageDAO implements Serializable {
 
         try (ResultSet rs = stm.executeQuery(req)) {
             while (rs.next()) {
-                Ouvrage o = new Ouvrage(rs.getInt("idOuvrage"), rs.getString("titre"), rs.getFloat("prix"), rs.getInt("qteStockee"), rs.getString("imageOuvrage"), rs.getString("nomStatut"));
+                Ouvrage o = new Ouvrage(rs.getInt("idOuvrage"), rs.getString("titre"), rs.getString("imageOuvrage"), rs.getFloat("prix"), rs.getInt("qteStockee"), rs.getString("nomStatut"), Integer.valueOf("0"));
                 lo.add(o);
             }
         }

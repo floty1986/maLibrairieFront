@@ -3,7 +3,7 @@
 <link href="/maLibrairieFrontTest/web/css/maLibrairieCSS.css" rel="stylesheet" type="text/css"/>
 
 <!DOCTYPE html>
-<html class="joseph">
+<html class="centre">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <style>
@@ -63,7 +63,7 @@
                         ${p.numVoie}, ${p.typeVoie} ${p.nomVoie}<br/>
                         ${p.complement}<br/>
                         ${p.codePostal}, ${p.ville}, ${p.pays}
-                        <a href="controller?section=supprimerAdFact"><input type="submit" value="Supprimer" name="sup" /></a>
+                        <a href="controller?section=supprimerAdFact&idAdresse=${p.idAdresse}"><input type="submit" value="Supprimer" name="sup" /></a>
                     <p/>
                     <br/>
                 </c:forEach>
@@ -77,8 +77,8 @@
                         ${p.numVoie}, ${p.typeVoie} ${p.nomVoie}<br/>
                         ${p.complement}<br/>
                         ${p.codePostal}, ${p.ville}, ${p.pays}
-                        <a href="controller?section=supprimerAdLiv"><input type="submit" value="Supprimer" name="sup" /></a>
-                    </p>
+                        <a href="controller?section=supprimerAdLiv&idAdresse=${p.idAdresse}"><input type="submit" value="Supprimer" name="sup" /></a>
+                    <p/>
                     <br/>
                 </c:forEach>
         </body>

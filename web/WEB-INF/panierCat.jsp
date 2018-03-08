@@ -10,7 +10,7 @@
             <th scope="col" class="tableau">Quantité Panier</th>
             <th scope="col" class="tableau">Ajouter 1</th>
             <th scope="col" class="tableau">Retirer 1</th>
-            <th scope="col" class="tableau">Supprimer Panier</th>
+            <th scope="col" class="tableau">Supprimer du Panier</th>
         </tr>
         <c:forEach var="i" items="${list}">
             <tr>
