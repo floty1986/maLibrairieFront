@@ -73,7 +73,7 @@ public class beanPanier implements Serializable {
             this.map.put(ref, i);
         }
     }
-     public void addO(int idOuvrage, String titre, String imageOuvrage, float prix, int qteStockee, String statut, int qtePanier) {
+     public void addO(int idOuvrage, String titre, String imageOuvrage, float prix, int qteStockee, String statut) {
         if( this.mapO.containsKey(idOuvrage)) {
             Ouvrage o= this.mapO.get(idOuvrage);
             o.changeQty(+1);
