@@ -33,8 +33,8 @@ public class beanAdresse implements Serializable {
         return mesAdresses;
     }
     
-    public void supAdresse(int idClient) throws SQLException{
-        aDAO.supAdresse(idClient);
+    public void supAdresse(int idAdresse) throws SQLException{
+        aDAO.supAdresse(idAdresse);
     }
     
     

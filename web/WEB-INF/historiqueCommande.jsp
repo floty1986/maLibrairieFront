@@ -9,7 +9,7 @@
         <title>Historique de commandes</title>
     </head>
     <body                        
-        <h1>Historique des Commande de ${nom}<h1/>
+        <h1>Historique des Commande de ${nom}</h1>
 
             <c:forEach items="${listeCommande}" var="p">
                 <p class="small">
